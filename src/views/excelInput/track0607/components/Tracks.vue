@@ -9,46 +9,47 @@
       <el-table-column
         prop="id"
         label="ID"
-        width="80">
-      </el-table-column>
+        width="80"
+      />
       <el-table-column
         prop="Track_ID_before_jump"
         label="Track_ID_before_jump"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="Track_ID_after_jump"
         label="Track_ID_after_jump"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="KP_before_jump"
         label="KP_before_jump"
-        width="150">
-      </el-table-column>
+        width="150"
+      />
       <el-table-column
         prop="KP_after_jump"
         label="KP_after_jump"
-        width="150">
-      </el-table-column>
+        width="150"
+      />
       <el-table-column
         prop="Jump_length"
         label="Jump_length"
-        width="150">
-      </el-table-column>
+        width="150"
+      />
       <el-table-column
         prop="Correction_applied_to_KP"
         label="Correction_applied_to_KP"
-        width="220">
-      </el-table-column>
+        width="220"
+      />
       <el-table-column
         prop="Distance_from_track_origin_to_jump_point"
         label="Distance_from_track_origin_to_jump_point"
-        width="300">
-      </el-table-column>
-      <el-table-column 
-        label="操作" 
-        width="200">
+        width="300"
+      />
+      <el-table-column
+        label="操作"
+        width="200"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -107,7 +108,7 @@ export default {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 确认删除提示
@@ -118,10 +119,10 @@ export default {
       }).then(() => {
         // 删除数据
         this.sheetData.splice(index, 1)
-        
+
         // 重新设置ID
         this.updateRowIds()
-        
+
         // 提示删除成功
         this.$message({
           type: 'success',
@@ -131,12 +132,12 @@ export default {
         // 取消删除
       })
     },
-    
+
     // 添加新行数据
     addNewRow(componentName, rowData) {
       // 只处理当前组件的数据
       if (componentName !== 'Tracks') return
-      
+
       // 构造新行数据，包含默认值
       const newRow = {
         id: this.sheetData.length + 1,
@@ -148,7 +149,7 @@ export default {
         Correction_applied_to_KP: rowData.Correction_applied_to_KP || '0',
         Distance_from_track_origin_to_jump_point: rowData.Distance_from_track_origin_to_jump_point || ''
       }
-      
+
       // 根据insertPosition决定在哪里插入新行
       if (rowData.index >= 0 && rowData.index < this.sheetData.length) {
         // 在指定位置插入
@@ -157,17 +158,17 @@ export default {
         // 在末尾插入
         this.sheetData.push(newRow)
       }
-      
+
       // 更新所有行的ID
       this.updateRowIds()
-      
+
       // 提示添加成功
       this.$message({
         type: 'success',
         message: '添加行成功!'
       })
     },
-    
+
     // 更新所有行的ID
     updateRowIds() {
       this.sheetData.forEach((row, index) => {
@@ -182,4 +183,4 @@ export default {
 .tracks-container {
   padding: 0;
 }
-</style> 
+</style>

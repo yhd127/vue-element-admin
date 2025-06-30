@@ -9,12 +9,13 @@
       <el-table-column
         prop="id"
         label="ID"
-        width="80">
-      </el-table-column>
+        width="80"
+      />
       <el-table-column
         prop="T1"
         label="T1"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.T1" size="small" />
         </template>
@@ -22,7 +23,8 @@
       <el-table-column
         prop="T2"
         label="T2"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.T2" size="small" />
         </template>
@@ -30,7 +32,8 @@
       <el-table-column
         prop="Track1"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Track1" size="small" />
         </template>
@@ -38,7 +41,8 @@
       <el-table-column
         prop="KP_of_platform_center"
         label="KP of platform center"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.KP_of_platform_center" :controls="false" size="small" />
         </template>
@@ -46,7 +50,8 @@
       <el-table-column
         prop="Name_of_station"
         label="Name of station"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Name_of_station" size="small" />
         </template>
@@ -54,7 +59,8 @@
       <el-table-column
         prop="Track2"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Track2" size="small" />
         </template>
@@ -62,7 +68,8 @@
       <el-table-column
         prop="KP_of_SSP"
         label="KP of SSP"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.KP_of_SSP" :controls="false" size="small" />
         </template>
@@ -70,7 +77,8 @@
       <el-table-column
         prop="KP_correction"
         label="KP correction"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.KP_correction" size="small" />
         </template>
@@ -78,7 +86,8 @@
       <el-table-column
         prop="Distance_of_PF_center"
         label="Distance of PF center"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Distance_of_PF_center" :controls="false" size="small" />
         </template>
@@ -86,14 +95,16 @@
       <el-table-column
         prop="Distance_of_SSP"
         label="Distance of SSP"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Distance_of_SSP" :controls="false" size="small" />
         </template>
       </el-table-column>
-      <el-table-column 
-        label="操作" 
-        width="200">
+      <el-table-column
+        label="操作"
+        width="200"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -155,7 +166,7 @@ export default {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 确认删除提示
@@ -166,10 +177,10 @@ export default {
       }).then(() => {
         // 删除数据
         this.sheetData.splice(index, 1)
-        
+
         // 重新设置ID
         this.updateRowIds()
-        
+
         // 提示删除成功
         this.$message({
           type: 'success',
@@ -179,12 +190,12 @@ export default {
         // 取消删除
       })
     },
-    
+
     // 添加新行数据
     addNewRow(componentName, rowData) {
       // 只处理当前组件的数据
       if (componentName !== 'Stations') return
-      
+
       // 构造新行数据，包含默认值
       const newRow = {
         id: this.sheetData.length + 1,
@@ -199,7 +210,7 @@ export default {
         Distance_of_PF_center: rowData.Distance_of_PF_center || '0',
         Distance_of_SSP: rowData.Distance_of_SSP || '0'
       }
-      
+
       // 根据insertPosition决定在哪里插入新行
       if (rowData.index >= 0 && rowData.index < this.sheetData.length) {
         // 在指定位置插入
@@ -208,17 +219,17 @@ export default {
         // 在末尾插入
         this.sheetData.push(newRow)
       }
-      
+
       // 更新所有行的ID
       this.updateRowIds()
-      
+
       // 提示添加成功
       this.$message({
         type: 'success',
         message: '添加行成功!'
       })
     },
-    
+
     // 更新所有行的ID
     updateRowIds() {
       this.sheetData.forEach((row, index) => {
@@ -233,4 +244,4 @@ export default {
 .stations-container {
   padding: 0;
 }
-</style> 
+</style>

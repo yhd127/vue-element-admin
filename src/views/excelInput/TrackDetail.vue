@@ -2,7 +2,7 @@
   <div class="track-detail-container">
     <!-- 顶部操作区 -->
     <div class="top-actions">
-      <el-button type="primary" @click="showMinHeadwayDetail" :loading="loadingMinHeadwayDetail">计算</el-button>
+      <el-button type="primary" :loading="loadingMinHeadwayDetail" @click="showMinHeadwayDetail">计算</el-button>
     </div>
 
     <!-- 最小间隔时间详情对话框 -->
@@ -11,8 +11,9 @@
       :visible.sync="detailDialogVisible"
       width="90%"
       :before-close="handleCloseDetail"
-      class="headway-detail-dialog">
-      <div class="detail-container" v-loading="loadingMinHeadwayDetail">
+      class="headway-detail-dialog"
+    >
+      <div v-loading="loadingMinHeadwayDetail" class="detail-container">
         <!-- 发车模块 -->
         <div class="detail-module module1">
           <div class="left-column">
@@ -50,7 +51,7 @@
         </div>
 
         <!-- 区间模块 - 可能有多个区段 -->
-        <div class="detail-module module2" v-for="(block, index) in detailData.module2" :key="'block-'+index">
+        <div v-for="(block, index) in detailData.module2" :key="'block-'+index" class="detail-module module2">
           <div class="left-column">
             <div class="interval-title">{{ block.intervalTitle }}</div>
             <div class="interval-items">
@@ -172,14 +173,14 @@ export default {
     return {
       // 加载状态
       loadingMinHeadwayDetail: false,
-      
+
       // 对话框可见性控制
       detailDialogVisible: false,
       imageDialogVisible: false,
-      
+
       // 当前选中行
       selectedRow: null,
-      
+
       // 详情数据
       detailData: {
         module1: {
@@ -202,11 +203,11 @@ export default {
           trainInterval: '0.00 秒'
         }
       },
-      
+
       // 图片相关
       currentImageUrl: '',
       currentImageFileName: ''
-    };
+    }
   },
   methods: {
     // 显示最小间隔时间详情
@@ -216,77 +217,77 @@ export default {
         departureStation: '上海',
         arrivalStation: '北京',
         _index: 0
-      };
-      
+      }
+
       // 显示加载状态
-      this.loadingMinHeadwayDetail = true;
-      
+      this.loadingMinHeadwayDetail = true
+
       // 获取行ID用于加载数据
-      const rowId = this.getRowId(this.selectedRow);
-      
+      const rowId = this.getRowId(this.selectedRow)
+
       // 构建JSON文件路径
-      const jsonPath = `/data/result/min_headway_detail_${rowId}.json`;
-      
+      const jsonPath = `/data/result/min_headway_detail_${rowId}.json`
+
       // 通过fetch API获取JSON数据
       fetch(jsonPath)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`HTTP错误! 状态: ${response.status}`);
+            throw new Error(`HTTP错误! 状态: ${response.status}`)
           }
-          return response.json();
+          return response.json()
         })
         .then(data => {
           // 解析各模块数据
-          this.processHeadwayDetailData(data);
-          
+          this.processHeadwayDetailData(data)
+
           // 显示详情对话框
-          this.detailDialogVisible = true;
+          this.detailDialogVisible = true
         })
         .catch(error => {
           // 错误处理
-          console.error('加载最小间隔时间详情失败:', error);
-          this.$message.error('加载详情数据失败，使用默认数据显示');
-          
+          console.error('加载最小间隔时间详情失败:', error)
+          this.$message.error('加载详情数据失败，使用默认数据显示')
+
           // 加载默认数据
-          this.loadDefaultHeadwayDetailData();
+          this.loadDefaultHeadwayDetailData()
         })
         .finally(() => {
           // 关闭加载状态
-          this.loadingMinHeadwayDetail = false;
-        });
+          this.loadingMinHeadwayDetail = false
+        })
     },
-    
+
     // 行ID生成方法
     getRowId(row) {
       // 针对Running list表格的行
       if (row.departureStation && row.arrivalStation) {
-        const departureStation = row.departureStation.replace(/\s+/g, '');
-        const arrivalStation = row.arrivalStation.replace(/\s+/g, '');
-        const index = row._index || 0;
-        return `${departureStation}-${arrivalStation}-${index}`;
+        const departureStation = row.departureStation.replace(/\s+/g, '')
+        const arrivalStation = row.arrivalStation.replace(/\s+/g, '')
+        const index = row._index || 0
+        return `${departureStation}-${arrivalStation}-${index}`
       }
-      
+
       // 针对其他表格的行
-      return `row-${row._index || 0}`;
+      return `row-${row._index || 0}`
     },
-    
+
     // 加载默认数据
     loadDefaultHeadwayDetailData() {
       fetch('/data/result/default_min_headway_detail.json')
         .then(response => response.json())
         .then(data => {
-          this.processHeadwayDetailData(data);
-          this.detailDialogVisible = true;
+          this.processHeadwayDetailData(data)
+          this.detailDialogVisible = true
         })
         .catch(error => {
-          console.error('加载默认数据也失败:', error);
-          this.$message.error('无法加载任何数据，请检查网络连接');
-          
+          console.error('加载默认数据也失败:', error)
+          this.$message.error('无法加载任何数据，请检查网络连接')
+
           // 使用硬编码的示例数据
-          this.useHardcodedExampleData();
-        });
+          this.useHardcodedExampleData()
+        })
     },
-    
+
     // 使用硬编码示例数据
     useHardcodedExampleData() {
       // 模块1数据 - 发车模块
@@ -323,174 +324,174 @@ export default {
         rearTrainToStopTime: '27.50 秒',
         trainInterval: '100.00 秒'
       }
-      
+
       // 显示详情对话框
-      this.detailDialogVisible = true;
+      this.detailDialogVisible = true
     },
-    
+
     // 处理最小间隔时间详情数据
     processHeadwayDetailData(data) {
       // 处理发车模块数据
-      this.processDepatureData(data);
-      
+      this.processDepatureData(data)
+
       // 处理区间模块数据
-      this.processBlocksData(data);
-      
+      this.processBlocksData(data)
+
       // 处理接车模块数据
-      this.processArriverData(data);
+      this.processArriverData(data)
     },
-    
+
     // 处理发车模块数据
     processDepatureData(data) {
-      if (!data.departure) return;
-      
+      if (!data.departure) return
+
       const departureTotal = this.calcTotal(
         data.departure.timeFromDepartureToBlockClear || 0,
         data.departure.cleanDelayTime || 0,
         data.departure.departureRouteTime || 0
-      );
+      )
 
       this.detailData.module1 = {
-        intervalTitle: '间隔值: ' + this.formatDetailValue(departureTotal) + ' 秒',  // 左侧标题框
-        time1: this.formatDetailValue(data.departure.timeFromDepartureToBlockClear) + ' 秒',  // 发车点至出清点时间
-        time2: this.formatDetailValue(data.departure.cleanDelayTime) + ' 秒',  // 出清延迟时间
-        time3: this.formatDetailValue(data.departure.departureRouteTime) + ' 秒',  // 发车进路办理时间
-        interval: this.formatDetailValue(departureTotal) + ' 秒'  // 右侧总时间
+        intervalTitle: '间隔值: ' + this.formatDetailValue(departureTotal) + ' 秒', // 左侧标题框
+        time1: this.formatDetailValue(data.departure.timeFromDepartureToBlockClear) + ' 秒', // 发车点至出清点时间
+        time2: this.formatDetailValue(data.departure.cleanDelayTime) + ' 秒', // 出清延迟时间
+        time3: this.formatDetailValue(data.departure.departureRouteTime) + ' 秒', // 发车进路办理时间
+        interval: this.formatDetailValue(departureTotal) + ' 秒' // 右侧总时间
       }
     },
-    
+
     // 处理区间模块数据
     processBlocksData(data) {
-      if (!data.blocks || !Array.isArray(data.blocks)) return;
-      
+      if (!data.blocks || !Array.isArray(data.blocks)) return
+
       this.detailData.module2 = data.blocks.map((block, index) => {
         const blockTotal = this.calcTotal(
           block.timeFromBottleneckToBlockClear || 0,
           block.cleanDelayTime || 0
-        );
+        )
 
         return {
-          intervalTitle: '间隔值: ' + this.formatDetailValue(blockTotal) + ' 秒',  // 左侧标题框
-          startPoint: this.formatDetailValue(block.blockStartDistance) + ' m',     // 区段起始点
-          endPoint: this.formatDetailValue(block.blockEndDistance) + ' m',         // 区段终点
-          bottleneckPosition: this.formatDetailValue(block.blockBottleneckPoint) + ' m',  // 瓶颈点位置
-          clearPosition: this.formatDetailValue(block.blockClearPoint) + ' m',     // 出清点位置
-          dangerPosition: this.formatDetailValue(block.blockDangerPoint) + ' m',   // 危险点位置
-          bottleneckToClearTime: this.formatDetailValue(block.timeFromBottleneckToBlockClear) + ' 秒',  // 瓶颈点至出清点时间
-          clearDelayTime: this.formatDetailValue(block.cleanDelayTime) + ' 秒',    // 出清延迟时间
-          sectionInterval: this.formatDetailValue(blockTotal) + ' 秒'              // 区段总时间间隔
-        };
-      });
+          intervalTitle: '间隔值: ' + this.formatDetailValue(blockTotal) + ' 秒', // 左侧标题框
+          startPoint: this.formatDetailValue(block.blockStartDistance) + ' m', // 区段起始点
+          endPoint: this.formatDetailValue(block.blockEndDistance) + ' m', // 区段终点
+          bottleneckPosition: this.formatDetailValue(block.blockBottleneckPoint) + ' m', // 瓶颈点位置
+          clearPosition: this.formatDetailValue(block.blockClearPoint) + ' m', // 出清点位置
+          dangerPosition: this.formatDetailValue(block.blockDangerPoint) + ' m', // 危险点位置
+          bottleneckToClearTime: this.formatDetailValue(block.timeFromBottleneckToBlockClear) + ' 秒', // 瓶颈点至出清点时间
+          clearDelayTime: this.formatDetailValue(block.cleanDelayTime) + ' 秒', // 出清延迟时间
+          sectionInterval: this.formatDetailValue(blockTotal) + ' 秒' // 区段总时间间隔
+        }
+      })
     },
-    
+
     // 处理接车模块数据
     processArriverData(data) {
-      if (!data.arriver) return;
-      
+      if (!data.arriver) return
+
       const arriverTotal = this.calcTotal(
         data.arriver.stionStopTime || 0,
         data.arriver.blockClearPoint || 0,
         data.arriver.timeClearDelay || 0,
         data.arriver.arriverRouteTime || 0,
         data.arriver.timeFromBottleneckToStop || 0
-      );
+      )
 
       this.detailData.module3 = {
-        intervalTitle: '间隔值: ' + this.formatDetailValue(arriverTotal) + ' 秒',  // 左侧标题框
-        entranceBottleneck: this.formatDetailValue(data.arriver.blockBottleneckPoint) + ' m',  // 进站瓶颈点
-        stopPoint: this.formatDetailValue(data.arriver.stationStopPoint) + ' m',  // 停车点
-        platformStopTime: this.formatDetailValue(data.arriver.stionStopTime) + ' 秒',  // 站台停车时间
-        frontTrainToClearTime: this.formatDetailValue(data.arriver.blockClearPoint) + ' 秒',  // 前车从发车点至股道出清点时间
-        clearDelayTime: this.formatDetailValue(data.arriver.timeClearDelay) + ' 秒',  // 出清延迟时间
-        receiveTrainTime: this.formatDetailValue(data.arriver.arriverRouteTime) + ' 秒',  // 接车进路办理时间
-        rearTrainToStopTime: this.formatDetailValue(data.arriver.timeFromBottleneckToStop) + ' 秒',  // 后车从瓶颈点至停车点时间
-        trainInterval: this.formatDetailValue(arriverTotal) + ' 秒'  // 接车总时间间隔
+        intervalTitle: '间隔值: ' + this.formatDetailValue(arriverTotal) + ' 秒', // 左侧标题框
+        entranceBottleneck: this.formatDetailValue(data.arriver.blockBottleneckPoint) + ' m', // 进站瓶颈点
+        stopPoint: this.formatDetailValue(data.arriver.stationStopPoint) + ' m', // 停车点
+        platformStopTime: this.formatDetailValue(data.arriver.stionStopTime) + ' 秒', // 站台停车时间
+        frontTrainToClearTime: this.formatDetailValue(data.arriver.blockClearPoint) + ' 秒', // 前车从发车点至股道出清点时间
+        clearDelayTime: this.formatDetailValue(data.arriver.timeClearDelay) + ' 秒', // 出清延迟时间
+        receiveTrainTime: this.formatDetailValue(data.arriver.arriverRouteTime) + ' 秒', // 接车进路办理时间
+        rearTrainToStopTime: this.formatDetailValue(data.arriver.timeFromBottleneckToStop) + ' 秒', // 后车从瓶颈点至停车点时间
+        trainInterval: this.formatDetailValue(arriverTotal) + ' 秒' // 接车总时间间隔
       }
     },
-    
+
     // 计算总和
     calcTotal(...values) {
-      return values.reduce((sum, value) => sum + parseFloat(value || 0), 0);
+      return values.reduce((sum, value) => sum + parseFloat(value || 0), 0)
     },
-    
+
     // 格式化数值显示
     formatDetailValue(value) {
-      if (value === undefined || value === null) return '0.00';
-      return parseFloat(value).toFixed(2);
+      if (value === undefined || value === null) return '0.00'
+      return parseFloat(value).toFixed(2)
     },
-    
+
     // 关闭详情对话框
     handleCloseDetail() {
-      this.detailDialogVisible = false;
+      this.detailDialogVisible = false
     },
-    
+
     // 查看图片
     viewImage(moduleType, blockIndex = 0) {
-      let imagePath = '';
-      const origin = this.selectedRow?.departureStation?.replace(/\s+/g, '') || 'SH';
-      const destination = this.selectedRow?.arrivalStation?.replace(/\s+/g, '') || 'BJ';
-      
-      switch(moduleType) {
+      let imagePath = ''
+      const origin = this.selectedRow?.departureStation?.replace(/\s+/g, '') || 'SH'
+      const destination = this.selectedRow?.arrivalStation?.replace(/\s+/g, '') || 'BJ'
+
+      switch (moduleType) {
         case 'departure':
-          imagePath = `/data/result/departure/${origin}-${destination}.png`;
-          this.currentImageFileName = `发车模块_${origin}-${destination}.png`;
-          break;
+          imagePath = `/data/result/departure/${origin}-${destination}.png`
+          this.currentImageFileName = `发车模块_${origin}-${destination}.png`
+          break
         case 'blocks':
-          imagePath = `/data/result/blocks/block-${blockIndex + 1}.png`;
-          this.currentImageFileName = `区间模块${blockIndex + 1}_${origin}-${destination}.png`;
-          break;
+          imagePath = `/data/result/blocks/block-${blockIndex + 1}.png`
+          this.currentImageFileName = `区间模块${blockIndex + 1}_${origin}-${destination}.png`
+          break
         case 'arrival':
-          imagePath = `/data/result/arrival/${origin}-${destination}.png`;
-          this.currentImageFileName = `接车模块_${origin}-${destination}.png`;
-          break;
+          imagePath = `/data/result/arrival/${origin}-${destination}.png`
+          this.currentImageFileName = `接车模块_${origin}-${destination}.png`
+          break
       }
-      
-      this.currentImageUrl = imagePath;
-      this.imageDialogVisible = true;
+
+      this.currentImageUrl = imagePath
+      this.imageDialogVisible = true
     },
-    
+
     // 导出Excel
     exportExcel(moduleType, blockIndex = 0) {
-      const origin = this.selectedRow?.departureStation?.replace(/\s+/g, '') || 'SH';
-      const destination = this.selectedRow?.arrivalStation?.replace(/\s+/g, '') || 'BJ';
-      const timestamp = new Date().getTime();
-      let fileName = '';
-      
-      switch(moduleType) {
+      const origin = this.selectedRow?.departureStation?.replace(/\s+/g, '') || 'SH'
+      const destination = this.selectedRow?.arrivalStation?.replace(/\s+/g, '') || 'BJ'
+      const timestamp = new Date().getTime()
+      let fileName = ''
+
+      switch (moduleType) {
         case 'departure':
-          fileName = `发车模块_${origin}-${destination}_${timestamp}.xlsx`;
-          break;
+          fileName = `发车模块_${origin}-${destination}_${timestamp}.xlsx`
+          break
         case 'blocks':
-          fileName = `区间模块${blockIndex + 1}_${origin}-${destination}_${timestamp}.xlsx`;
-          break;
+          fileName = `区间模块${blockIndex + 1}_${origin}-${destination}_${timestamp}.xlsx`
+          break
         case 'arrival':
-          fileName = `接车模块_${origin}-${destination}_${timestamp}.xlsx`;
-          break;
+          fileName = `接车模块_${origin}-${destination}_${timestamp}.xlsx`
+          break
       }
-      
+
       // 模拟Excel导出
-      this.$message.success(`正在生成Excel文件: ${fileName}`);
-      
+      this.$message.success(`正在生成Excel文件: ${fileName}`)
+
       // 在实际应用中，这里应该调用后端接口生成并下载Excel文件
       setTimeout(() => {
-        this.$message.success(`Excel文件已生成并下载`);
-      }, 1500);
+        this.$message.success(`Excel文件已生成并下载`)
+      }, 1500)
     },
-    
+
     // 下载图片
     downloadImage() {
-      if (!this.currentImageUrl) return;
-      
+      if (!this.currentImageUrl) return
+
       // 创建一个虚拟链接用于下载
-      const link = document.createElement('a');
-      link.href = this.currentImageUrl;
-      link.download = this.currentImageFileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const link = document.createElement('a')
+      link.href = this.currentImageUrl
+      link.download = this.currentImageFileName
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -640,22 +641,22 @@ export default {
   .detail-module {
     flex-direction: column;
   }
-  
+
   .left-column, .middle-column, .right-column {
     padding: 10px 0;
     width: 100%;
   }
-  
+
   .right-column {
     margin-top: 15px;
   }
-  
+
   .interval-result {
     text-align: left;
   }
-  
+
   .action-buttons {
     justify-content: flex-start;
   }
 }
-</style> 
+</style>

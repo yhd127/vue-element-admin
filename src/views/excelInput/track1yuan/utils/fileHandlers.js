@@ -16,7 +16,7 @@ export const sheetNameMapping = {
   '线路限速(PSR)': 'PSR',
   '分相区(Unbridgeable gap)': 'Unbridgeable gap',
   '轨道区段(Block description)': 'Block description',
-  
+
   // 旧名称到新名称的映射（反向映射）
   'Gen. Param.': '总体参数(Gen. Param.)',
   'Tracks': '长短链(Tracks)',
@@ -25,7 +25,7 @@ export const sheetNameMapping = {
   'PSR': '线路限速(PSR)',
   'Unbridgeable gap': '分相区(Unbridgeable gap)',
   'Block description': '轨道区段(Block description)'
-};
+}
 
 /**
  * 获取工作表的内部名称（用于数据存储）
@@ -33,7 +33,7 @@ export const sheetNameMapping = {
  * @returns {string} 内部名称
  */
 export function getInternalSheetName(displayName) {
-  return sheetNameMapping[displayName] || displayName;
+  return sheetNameMapping[displayName] || displayName
 }
 
 /**
@@ -45,10 +45,10 @@ export function getDisplaySheetName(internalName) {
   // 查找内部名称对应的显示名称
   for (const [displayName, internal] of Object.entries(sheetNameMapping)) {
     if (internal === internalName) {
-      return displayName;
+      return displayName
     }
   }
-  return internalName;
+  return internalName
 }
 
 /**
@@ -156,8 +156,8 @@ export function createDefaultSheets() {
         { prop: 'Unbridgable_gap', label: 'Unbridgable gap' }
       ],
       data: []
-    },
-    
+    }
+
   }
 }
 
@@ -338,7 +338,7 @@ export async function downloadExcel(sheets, filename) {
       autoWidth: true,
       bookType: 'xlsx'
     })
-    
+
     return {
       success: true,
       message: '文件下载成功'
@@ -350,4 +350,4 @@ export async function downloadExcel(sheets, filename) {
       message: `文件下载失败: ${error.message || '未知错误'}`
     }
   }
-} 
+}

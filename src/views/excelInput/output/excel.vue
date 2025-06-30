@@ -95,4 +95,4 @@ export default {
 .box-card {
   width: 100%;
 }
-</style> 
+</style>

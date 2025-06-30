@@ -9,7 +9,7 @@
     @close="handleClose"
   >
     <div class="full-screen-image-container">
-      <img v-if="imageInfo" :src="imageInfo.path" class="full-screen-image" />
+      <img v-if="imageInfo" :src="imageInfo.path" class="full-screen-image">
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">关闭</el-button>
@@ -35,10 +35,10 @@ export default {
     handleClose() {
       this.$emit('update:visible', false)
     },
-    
+
     downloadImage() {
       if (!this.imageInfo || !this.imageInfo.path) return
-      
+
       // 创建临时链接并触发下载
       const link = document.createElement('a')
       link.href = this.imageInfo.path
@@ -46,7 +46,7 @@ export default {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      
+
       this.$message.success('图片下载已开始')
     }
   }
@@ -80,4 +80,4 @@ export default {
   flex: 1;
   overflow: auto;
 }
-</style> 
+</style>

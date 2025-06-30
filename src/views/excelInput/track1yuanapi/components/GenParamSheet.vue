@@ -32,7 +32,7 @@
 <script>
 export default {
   name: 'GenParamSheet',
-  
+
   props: {
     // 工作表数据
     sheetData: {
@@ -40,7 +40,7 @@ export default {
       required: true
     }
   },
-  
+
   methods: {
     /**
      * 处理输入变化
@@ -48,7 +48,7 @@ export default {
     handleInputChange(prop, row) {
       // 通知父组件数据已修改
       this.$emit('data-modified')
-      
+
       // 检测特定参数的变化
       if (row.paramName === 'Direction') {
         // 方向参数变化时，触发更新
@@ -64,7 +64,7 @@ export default {
         this.$emit('train-length-changed', row.value)
       }
     },
-    
+
     /**
      * 获取列的最小宽度
      */
@@ -76,7 +76,7 @@ export default {
       }
       return widthMap[prop] || 120
     },
-    
+
     /**
      * 判断是否应该显示tooltip
      */
@@ -84,7 +84,7 @@ export default {
       if (value === null || value === undefined || value === '') return false
       return String(value).length > 10
     },
-    
+
     /**
      * 判断字段是否应该禁用
      */
@@ -104,4 +104,4 @@ export default {
 .text-center >>> input {
   text-align: center;
 }
-</style> 
+</style>

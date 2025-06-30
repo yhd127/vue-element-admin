@@ -26,41 +26,41 @@ service.interceptors.request.use(
     }
 
     // 确保所有请求都携带user_id参数
-    const token = getToken();
-    let userId = null;
-    
+    const token = getToken()
+    let userId = null
+
     // 1. 尝试从token中提取，如果是旧格式
     if (token && token.startsWith('user_id_')) {
-      userId = token.replace('user_id_', '');
+      userId = token.replace('user_id_', '')
     }
-    
+
     // 2. 如果无法从token提取，尝试从store获取
     if (!userId && store.getters.userId) {
-      userId = store.getters.userId;
+      userId = store.getters.userId
     }
-    
+
     // 3. 尝试从localStorage直接获取
     if (!userId) {
-      const storedUserId = localStorage.getItem('userId');
+      const storedUserId = localStorage.getItem('userId')
       if (storedUserId) {
-        userId = storedUserId;
+        userId = storedUserId
       }
     }
-    
+
     // 4. 最后的默认值
     if (!userId) {
-      userId = '7'; // 使用已知的正确用户ID作为后备
+      userId = '7' // 使用已知的正确用户ID作为后备
     }
-    
+
     // 为所有请求添加user_id参数
     if (config.params) {
-      config.params.user_id = config.params.user_id || userId;
+      config.params.user_id = config.params.user_id || userId
     } else {
-      config.params = { user_id: userId };
+      config.params = { user_id: userId }
     }
-    
-    console.log('最终请求参数:', config.params);
-    
+
+    console.log('最终请求参数:', config.params)
+
     return config
   },
   error => {
@@ -90,15 +90,15 @@ service.interceptors.response.use(
     if (res.user_id !== undefined && res.code === undefined) {
       return res
     }
-    
+
     // 处理成功但返回数组的情况 - 通常是列表数据
     if (Array.isArray(res)) {
-      return res;
+      return res
     }
-    
+
     // 处理普通对象但没有code字段的情况
     if (typeof res === 'object' && res !== null && res.code === undefined) {
-      return res;
+      return res
     }
 
     // 处理有code字段的标准响应 - 接受code为0和20000的响应

@@ -77,12 +77,12 @@ export function getInfo() {
  * @returns {Promise}
  */
 export function createOrUpdateUser(data) {
-  const params = {};
+  const params = {}
 
   // 如果是编辑模式（存在临时保存的userId），添加到请求参数
   if (data._userId) {
-    params.user_id = data._userId;
-    delete data._userId; // 删除临时字段
+    params.user_id = data._userId
+    delete data._userId // 删除临时字段
   }
 
   return request({

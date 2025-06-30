@@ -38,8 +38,8 @@
           </div>
           <div class="action-column" style="position: relative; padding: 0; width: 20%;">
             <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-              <el-button size="small" type="primary" @click="viewImage(1)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-              <el-button size="small" type="success" @click="exportExcel(1)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+              <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(1)">查看图片</el-button>
+              <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(1)">导出Excel</el-button>
             </div>
           </div>
         </div>
@@ -100,8 +100,8 @@
           </div>
           <div class="action-column" style="position: relative; padding: 0; width: 20%;">
             <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-              <el-button size="small" type="primary" @click="viewImage(2, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-              <el-button size="small" type="success" @click="exportExcel(2, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+              <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(2, index)">查看图片</el-button>
+              <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(2, index)">导出Excel</el-button>
             </div>
           </div>
         </div>
@@ -156,8 +156,8 @@
           </div>
           <div class="action-column" style="position: relative; padding: 0; width: 20%;">
             <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-              <el-button size="small" type="primary" @click="viewImage(3)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-              <el-button size="small" type="success" @click="exportExcel(3)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+              <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(3)">查看图片</el-button>
+              <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(3)">导出Excel</el-button>
             </div>
           </div>
         </div>
@@ -215,21 +215,21 @@ export default {
     handleInputChange() {
       // 通知父组件数据已修改
       this.$emit('data-changed', this.detailData)
-      
+
       // 计算新的值（这里假设父组件会处理实际计算）
       this.$emit('recalculate')
     },
-    
+
     viewImage(moduleType, index = 0) {
       // 通知父组件显示图片
       this.$emit('view-image', { moduleType, index })
     },
-    
+
     exportExcel(moduleType, index = 0) {
       // 通知父组件导出Excel
       this.$emit('export-excel', { moduleType, index })
     },
-    
+
     handleClose() {
       this.$emit('update:visible', false)
     }

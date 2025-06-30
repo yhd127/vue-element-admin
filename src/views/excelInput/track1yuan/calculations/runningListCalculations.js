@@ -19,7 +19,7 @@ export const calculateTravelTime = (row, rowIndex) => {
     239.00, // 第5行
     418.00, // 第6行
     164.50, // 第7行
-    251.00  // 第8行
+    251.00 // 第8行
   ]
 
   // 获取当前行的计算时间，如果超出范围则使用默认值
@@ -36,7 +36,7 @@ export const calculateTravelTime = (row, rowIndex) => {
 export const calculateMinHeadway = (row, rowIndex, travelTime) => {
   // 基于行索引生成模拟数据
   const minHeadway = 2.5 + (rowIndex * 0.5)
-  
+
   // 生成详细数据
   const detailData = {
     // 模块1：发车间隔
@@ -74,7 +74,7 @@ export const calculateMinHeadway = (row, rowIndex, travelTime) => {
       trainInterval: (155 + rowIndex * 20).toFixed(1)
     }
   }
-  
+
   return {
     minHeadway: minHeadway.toFixed(1),
     detailData: detailData,
@@ -129,7 +129,7 @@ export const formatDetailData = (detailData) => {
       }
     }
   }
-  
+
   // 返回已格式化的数据
   return detailData
-} 
+}

@@ -115,7 +115,7 @@
       </el-form>
       <span slot="footer">
         <el-button @click="showNewVersionDialog = false">取消</el-button>
-        <el-button type="primary" @click="submitNewVersion" :loading="submittingVersion">确认</el-button>
+        <el-button type="primary" :loading="submittingVersion" @click="submitNewVersion">确认</el-button>
       </span>
     </el-dialog>
 
@@ -199,8 +199,8 @@
                   查看所有文件 <i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item 
-                    v-for="file in currentFolderFiles" 
+                  <el-dropdown-item
+                    v-for="file in currentFolderFiles"
                     :key="file.id"
                     :command="file.id"
                   >
@@ -209,23 +209,23 @@
                 </el-dropdown-menu>
               </el-dropdown>
 
-              <el-button 
-                type="success" 
-                class="flat-button add-version-btn" 
+              <el-button
+                type="success"
+                class="flat-button add-version-btn"
                 @click="handleAddNewVersion"
               >新增文件版本</el-button>
-              <el-button 
-                type="danger" 
+              <el-button
+                type="danger"
                 class="flat-button delete-btn"
-                @click="handleDeleteFile"
                 :disabled="!activeFile"
+                @click="handleDeleteFile"
               >删除当前文件</el-button>
-              <el-button 
-                type="success" 
+              <el-button
+                type="success"
                 class="flat-button api-save-btn"
-                @click="handleSaveToBackend"
                 :disabled="!activeFile"
                 :loading="savingToBackend"
+                @click="handleSaveToBackend"
               >保存到后端</el-button>
             </div>
           </div>
@@ -325,10 +325,10 @@
 
             <!-- 工作表内容 - 直接使用组件，不添加额外标题 -->
             <div class="sheet-content">
-              <component 
-                :is="activeSheet" 
-                ref="currentComponent" 
-                :active-sheet="activeSheet" 
+              <component
+                :is="activeSheet"
+                ref="currentComponent"
+                :active-sheet="activeSheet"
                 :file-data="activeFileData"
                 @insert-row="handleInsertRow"
                 @travel-time-calculated="handleTravelTimeCalculated"
@@ -433,7 +433,7 @@ export default {
       },
       savingToBackend: false,
       currentFolderFiles: [], // 当前文件夹下的文件列表
-      globalTravelTimeCalculated: false,
+      globalTravelTimeCalculated: false
     }
   },
   computed: {
@@ -658,7 +658,7 @@ export default {
           this.activeFolderId = folderId
           const selectedFile = this.findFileById(index)
           this.activeFile = selectedFile
-          
+
           // 设置当前文件数据，如果是从API获取的文件，则data属性中包含完整数据
           if (selectedFile && selectedFile.data) {
             this.activeFileData = selectedFile.data
@@ -778,7 +778,7 @@ export default {
     handleAddNewVersion() {
       // 重置表单数据
       this.resetNewVersionForm()
-      
+
       // 根据当前文件夹设置默认值
       if (this.activeFolderId === 'folder-running') {
         this.newVersionData.name = `新建运行文件_${new Date().getTime()}`
@@ -786,11 +786,11 @@ export default {
       } else if (this.activeFolderId === 'folder-track') {
         // Track文件夹的默认值设置 - 未来可以在这里添加
       }
-      
+
       // 显示对话框
       this.showNewVersionDialog = true
     },
-    
+
     // 重置新版本表单
     resetNewVersionForm() {
       this.newVersionData = {
@@ -817,29 +817,29 @@ export default {
         project_id: 0
       }
     },
-    
+
     // 提交新版本表单
     submitNewVersion() {
       // 根据当前文件夹类型调用不同的API
       if (this.activeFolderId === 'folder-running') {
         this.submittingVersion = true
-        
+
         // 准备URL查询参数，从系统中获取而不是硬编码
         const params = {
           project_id: parseInt(this.projectId) || 0,
           version: this.projectInfo ? parseInt(this.projectInfo.version) : 1,
           user_id: this.$store.getters.userId || 0
         }
-        
+
         // 设置项目ID (在请求体中也需要包含)
         this.newVersionData.project_id = params.project_id
-        
+
         // 调用API创建Running Profile文件
         createRunningProfile(this.newVersionData, params)
           .then(response => {
             this.$message.success('新文件版本创建成功')
             this.showNewVersionDialog = false
-            
+
             // 刷新文件列表
             this.fetchRunningFiles()
           })
@@ -858,7 +858,7 @@ export default {
     // 处理删除当前文件
     handleDeleteFile() {
       if (!this.activeFile) return
-      
+
       // 确认删除
       this.$confirm(`确认删除文件 "${this.activeFile.label}" 吗?`, '提示', {
         confirmButtonText: '确定',
@@ -872,19 +872,19 @@ export default {
             this.$message.error('无法获取文件ID，删除失败')
             return
           }
-          
+
           // 获取用户ID
           const userId = this.$store.getters.userId || 0
-          
+
           // 调用删除API
           deleteRunningProfile(fileId, userId)
             .then(response => {
               this.$message.success('文件删除成功')
-              
+
               // 清除当前选中文件
               this.activeFile = null
               this.activeFileData = null
-              
+
               // 刷新文件列表
               this.fetchRunningFiles()
             })
@@ -905,9 +905,9 @@ export default {
         this.$message.warning('当前没有选中文件或文件数据为空')
         return
       }
-      
+
       this.savingToBackend = true
-      
+
       if (this.activeFolderId === 'folder-running') {
         // 获取要更新的Running Profile文件ID
         const fileId = this.activeFileData.idx
@@ -916,14 +916,14 @@ export default {
           this.savingToBackend = false
           return
         }
-        
+
         // 获取用户ID
         const userId = this.$store.getters.userId || 0
-        
+
         // 准备保存数据 - 获取组件中的最新数据
         const componentInstance = this.$refs.currentComponent
-        let updatedData = {...this.activeFileData}
-        
+        let updatedData = { ...this.activeFileData }
+
         // 如果组件实例存在并且有sheetData
         if (componentInstance && componentInstance.sheetData && componentInstance.sheetData.length > 0) {
           // 将组件中的数据合并到updatedData中
@@ -939,15 +939,15 @@ export default {
             train_load: sheetData.train_load
           }
         }
-        
+
         // 调用更新API
         updateRunningProfile(fileId, updatedData, userId)
           .then(response => {
             this.$message.success('文件保存成功')
-            
+
             // 更新当前文件数据
             this.activeFileData = response
-            
+
             // 刷新文件列表
             this.fetchRunningFiles()
           })
@@ -1004,7 +1004,7 @@ export default {
     // 处理通行时间计算完成事件
     handleTravelTimeCalculated(value) {
       this.globalTravelTimeCalculated = value
-    },
+    }
   }
 }
 </script>

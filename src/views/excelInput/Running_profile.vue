@@ -159,7 +159,7 @@ export default {
         }
       }
     }
-    
+
     return {
       excelFiles: initialExcelFiles,
       activeExcel: 'running_profile.xls',
@@ -170,11 +170,6 @@ export default {
       showDeleteConfirm: false,
       deleteTarget: ''
     }
-  },
-
-  created() {
-    // 在组件创建时加载JSON数据
-    this.loadJsonData()
   },
 
   computed: {
@@ -191,6 +186,11 @@ export default {
     }
   },
 
+  created() {
+    // 在组件创建时加载JSON数据
+    this.loadJsonData()
+  },
+
   methods: {
     // 添加加载JSON数据的方法
     async loadJsonData() {
@@ -200,7 +200,7 @@ export default {
           throw new Error('Failed to load JSON data')
         }
         const jsonData = await response.json()
-        
+
         // 转换数据格式
         const convertedData = jsonData.map(item => ({
           Departure_Station_name: item.start_node,
@@ -218,7 +218,7 @@ export default {
           Profile_Type_1: '',
           Running_profile_1: ''
         }))
-        
+
         // 更新组件数据
         this.$set(this.excelFiles['running_profile.xls']['Running list'], 'data', convertedData)
         this.$message.success('数据加载成功')
@@ -345,7 +345,7 @@ export default {
       })
 
       this.downloadLoading = false
-      
+
       // 保存JSON数据
       try {
         const sheetData = this.currentSheets['Running list'].data
@@ -361,11 +361,11 @@ export default {
             sequence: 1
           }
         })
-        
+
         // 创建一个Blob对象
         const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' })
         const url = URL.createObjectURL(blob)
-        
+
         // 创建一个下载链接
         const link = document.createElement('a')
         link.href = url
@@ -374,7 +374,6 @@ export default {
         link.click()
         document.body.removeChild(link)
         URL.revokeObjectURL(url)
-        
       } catch (error) {
         console.error('保存JSON数据失败:', error)
         this.$message.error(`保存JSON数据失败: ${error.message}`)

@@ -12,35 +12,35 @@ import { saveAs } from 'file-saver'
 export function parseExcelToJson(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    
+
     reader.onload = (e) => {
       try {
         const data = new Uint8Array(e.target.result)
         const workbook = XLSX.read(data, { type: 'array' })
-        
+
         // 创建用于存储所有表数据的对象
         const result = {}
-        
+
         // 遍历所有工作表
         workbook.SheetNames.forEach(sheetName => {
           // 将每个工作表转换为JSON
           const worksheet = workbook.Sheets[sheetName]
           const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' })
-          
+
           // 存储到结果对象
           result[sheetName] = jsonData
         })
-        
+
         resolve(result)
       } catch (error) {
         reject(new Error('解析Excel文件失败: ' + error.message))
       }
     }
-    
+
     reader.onerror = () => {
       reject(new Error('读取文件失败'))
     }
-    
+
     // 以二进制格式读取文件
     reader.readAsArrayBuffer(file)
   })
@@ -55,24 +55,24 @@ export function exportJsonToExcel(data, fileName) {
   try {
     // 创建新的工作簿
     const workbook = XLSX.utils.book_new()
-    
+
     // 遍历数据对象中的每个表
     Object.keys(data).forEach(sheetName => {
       const sheetData = data[sheetName]
-      
+
       // 创建工作表
       const worksheet = XLSX.utils.json_to_sheet(sheetData)
-      
+
       // 将工作表添加到工作簿
       XLSX.utils.book_append_sheet(workbook, worksheet, sheetName)
     })
-    
+
     // 生成Excel文件的二进制数据
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
-    
+
     // 创建Blob对象
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' })
-    
+
     // 下载文件
     saveAs(blob, `${fileName}.xlsx`)
   } catch (error) {
@@ -89,7 +89,7 @@ export function exportJsonToExcel(data, fileName) {
 export function parseJsonFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    
+
     reader.onload = (e) => {
       try {
         const jsonData = JSON.parse(e.target.result)
@@ -98,11 +98,11 @@ export function parseJsonFile(file) {
         reject(new Error('解析JSON文件失败: ' + error.message))
       }
     }
-    
+
     reader.onerror = () => {
       reject(new Error('读取文件失败'))
     }
-    
+
     // 以文本格式读取文件
     reader.readAsText(file)
   })
@@ -117,10 +117,10 @@ export function exportJsonToFile(data, fileName) {
   try {
     // 将数据转换为JSON字符串，使用2个空格缩进
     const jsonString = JSON.stringify(data, null, 2)
-    
+
     // 创建Blob对象
     const blob = new Blob([jsonString], { type: 'application/json' })
-    
+
     // 下载文件
     saveAs(blob, `${fileName}.json`)
   } catch (error) {
@@ -202,4 +202,4 @@ export default {
   getFileExtension,
   isExcelFile,
   isJsonFile
-} 
+}

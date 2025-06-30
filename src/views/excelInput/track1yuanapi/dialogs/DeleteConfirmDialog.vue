@@ -34,11 +34,11 @@ export default {
       // 发送事件通知父组件
       this.$emit('confirm', this.deleteTarget)
     },
-    
+
     handleCancel() {
       this.$emit('cancel')
     },
-    
+
     handleClose() {
       this.$emit('update:visible', false)
     }
@@ -48,4 +48,4 @@ export default {
 
 <style scoped>
 /* 组件特定样式 */
-</style> 
+</style>

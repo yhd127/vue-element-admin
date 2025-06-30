@@ -45,23 +45,23 @@ export function deepClone(obj) {
   if (obj === null || typeof obj !== 'object') {
     return obj
   }
-  
+
   // 处理Date对象
   if (obj instanceof Date) {
     return new Date(obj.getTime())
   }
-  
+
   // 处理Array对象
   if (Array.isArray(obj)) {
     return obj.map(item => deepClone(item))
   }
-  
+
   // 处理普通对象
   const clonedObj = {}
   Object.keys(obj).forEach(key => {
     clonedObj[key] = deepClone(obj[key])
   })
-  
+
   return clonedObj
 }
 
@@ -76,12 +76,12 @@ export function formatNumber(num, digits = 2, keepZero = true) {
   if (num === '' || num === undefined || num === null) {
     return ''
   }
-  
+
   const numValue = Number(num)
   if (isNaN(numValue)) {
     return num.toString()
   }
-  
+
   if (keepZero) {
     return numValue.toFixed(digits)
   } else {
@@ -111,7 +111,7 @@ export function toNumber(value, defaultValue = 0) {
   if (value === '' || value === undefined || value === null) {
     return defaultValue
   }
-  
+
   const num = Number(value)
   return isNaN(num) ? defaultValue : num
 }
@@ -125,7 +125,7 @@ export function average(values) {
   if (!values || values.length === 0) {
     return 0
   }
-  
+
   const sum = values.reduce((total, val) => total + toNumber(val, 0), 0)
   return sum / values.length
 }
@@ -160,10 +160,10 @@ export function lerp(a, b, t) {
  */
 export function generateUniqueId(obj, keys = []) {
   if (!obj) return 'undefined'
-  
+
   // 如果没有指定键，则使用对象的所有键
   const keysToUse = keys.length > 0 ? keys : Object.keys(obj)
-  
+
   return keysToUse.map(key => {
     const value = obj[key]
     if (value === undefined || value === null) {
@@ -212,4 +212,4 @@ export default {
   generateUniqueId,
   isEmptyObject,
   groupBy
-} 
+}

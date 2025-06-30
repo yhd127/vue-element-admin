@@ -238,20 +238,23 @@ export default {
       default: 1
     }
   },
-  
-  created() {
-    // 组件创建时初始化计算值
-    this.$nextTick(() => {
-      this.initializeCalculatedValues()
-    })
+
+  computed: {
+    regularColumns() {
+      return this.sheetData.headers.filter(header =>
+        !header.prop.startsWith('SubBlock_') &&
+        !header.prop.startsWith('Overlap_') &&
+        !['Track2', 'KP_correction'].includes(header.prop)
+      )
+    }
   },
-  
+
   watch: {
     // 监听方向值变化
     directionValue() {
       this.updateAllDistances()
     },
-    
+
     // 监听Tracks表数据变化
     tracksData: {
       handler() {
@@ -259,7 +262,7 @@ export default {
       },
       deep: true
     },
-    
+
     // 监听数据变化
     'sheetData.data': {
       handler(newVal) {
@@ -270,17 +273,14 @@ export default {
       deep: true
     }
   },
-  
-  computed: {
-    regularColumns() {
-      return this.sheetData.headers.filter(header => 
-        !header.prop.startsWith('SubBlock_') && 
-        !header.prop.startsWith('Overlap_') &&
-        !['Track2', 'KP_correction'].includes(header.prop)
-      )
-    }
+
+  created() {
+    // 组件创建时初始化计算值
+    this.$nextTick(() => {
+      this.initializeCalculatedValues()
+    })
   },
-  
+
   methods: {
     /**
      * 初始化所有计算值
@@ -289,7 +289,7 @@ export default {
       if (!this.sheetData || !this.sheetData.data || !Array.isArray(this.sheetData.data)) {
         return
       }
-      
+
       // 为每一行更新计算字段
       for (let i = 0; i < this.sheetData.data.length; i++) {
         this.updateStartT1(i)
@@ -299,22 +299,22 @@ export default {
         this.updateStartDistance(i)
       }
     },
-    
+
     cellClassName({ column, row }) {
       // 为计算字段添加不同的样式
       const calculatedFields = ['Start_T1', 'Start_T2', 'Track2', 'KP_correction', 'SubBlock_StartDistance']
-      
+
       // ID列居中
       if (column.property === 'id') {
         return 'id-column'
       }
-      
+
       if (calculatedFields.includes(column.property)) {
         return 'calculated-cell'
       }
       return ''
     },
-    
+
     getColumnMinWidth(prop) {
       const minWidthMap = {
         'id': 80,
@@ -335,18 +335,18 @@ export default {
       }
       return minWidthMap[prop] || 100
     },
-    
+
     shouldShowTooltip(value) {
       if (value === null || value === undefined || value === '') return false
       return String(value).length > 10
     },
-    
+
     isFieldDisabled(prop) {
       // 这些字段是计算得出的，用户不能直接编辑
       const disabledFields = ['Start_T1', 'Start_T2', 'Track2', 'KP_correction', 'SubBlock_StartDistance', 'id']
       return disabledFields.includes(prop)
     },
-    
+
     handleInputChange(prop, row, index) {
       // 处理输入变化并计算相关字段
       if (prop === 'SubBlock_Start') {
@@ -356,38 +356,38 @@ export default {
         this.updateKPCorrection(index)
         this.updateStartDistance(index)
       }
-      
+
       if (prop === 'SubBlock_Track') {
         this.updateKPCorrection(index)
         this.updateStartDistance(index)
       }
-      
+
       if (prop === 'Start_Track') {
         this.updateTrack2(index)
         // Track2更新后，需要更新依赖于Track2的其他字段
         this.updateKPCorrection(index)
         this.updateStartDistance(index)
       }
-      
+
       // 发出数据修改事件
       this.$emit('data-modified')
     },
-    
+
     // 找到Tracks表中匹配指定KP的行索引
     findMatchIndexInTracks(columnName, numericValue, tracksData, dir) {
       let matchIndex = -1
-      
+
       // 根据dir的值决定查找方式
       if (dir === 1) {
         // dir=1时，假设数据是升序排列，查找小于等于numericValue的最大值
         for (let i = 0; i < tracksData.length; i++) {
           const rawValue = tracksData[i][columnName]
-          
+
           // 跳过空行或值为空字符串的行
           if (rawValue === '' || rawValue === undefined) {
             continue
           }
-          
+
           const rowValue = Number(rawValue) || 0
           if (rowValue <= numericValue) {
             matchIndex = i
@@ -399,12 +399,12 @@ export default {
         // dir=-1时，假设数据是降序排列，查找大于等于numericValue的最小值
         for (let i = 0; i < tracksData.length; i++) {
           const rawValue = tracksData[i][columnName]
-          
+
           // 跳过空行或值为空字符串的行
           if (rawValue === '' || rawValue === undefined) {
             continue
           }
-          
+
           const rowValue = Number(rawValue) || 0
           if (rowValue >= numericValue) {
             matchIndex = i
@@ -413,38 +413,38 @@ export default {
           }
         }
       }
-      
+
       return matchIndex
     },
-    
+
     // 根据SubBlock_Start(Start_KP)在Tracks表中找到对应的Track_ID_before_jump
     updateStartT1(index) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       const currentRow = this.sheetData.data[index]
-      const startKp = currentRow.SubBlock_Start  // Start_KP字段
-      
+      const startKp = currentRow.SubBlock_Start // Start_KP字段
+
       // 获取Direction值
-      let dir = Number(this.directionValue) || 1
-      
+      const dir = Number(this.directionValue) || 1
+
       // 获取Tracks表数据
       const tracksData = this.tracksData || []
       if (tracksData.length === 0 || startKp === '' || startKp === undefined) {
         currentRow.Start_T1 = ''
         return
       }
-      
+
       // 应用公式：=IF($Start_KP="","",IF(INDEX(Tracks!C:C,MATCH($Start_KP,Tracks!C:C,dir))=$Start_KP,INDEX(Tracks!B:B,MATCH($Start_KP,Tracks!C:C,dir)),INDEX(Tracks!B:B,MATCH($Start_KP,Tracks!C:C,dir)+1)))
-      
+
       const numericKP = Number(startKp)
       // 在Tracks表中查找匹配的KP before jump
       const matchIndex = this.findMatchIndexInTracks('KP_before_jump', numericKP, tracksData, dir)
-      
+
       if (matchIndex === -1) {
         currentRow.Start_T1 = ''
         return
       }
-      
+
       // 检查找到的值是否与startKP完全匹配
       const matchedKP = Number(tracksData[matchIndex].KP_before_jump) || 0
       if (matchedKP === numericKP) {
@@ -459,52 +459,52 @@ export default {
         }
       }
     },
-    
+
     // 根据SubBlock_Start(Start_KP)在Tracks表中找到对应的Track_ID_after_jump
     updateStartT2(index) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       const currentRow = this.sheetData.data[index]
-      const startKp = currentRow.SubBlock_Start  // Start_KP字段
-      
+      const startKp = currentRow.SubBlock_Start // Start_KP字段
+
       // 获取Direction值
-      let dir = Number(this.directionValue) || 1
-      
+      const dir = Number(this.directionValue) || 1
+
       // 获取Tracks表数据
       const tracksData = this.tracksData || []
       if (tracksData.length === 0 || startKp === '' || startKp === undefined) {
         currentRow.Start_T2 = ''
         return
       }
-      
+
       // 应用公式：=IF($Start_KP="","",INDEX(Tracks!E:E,MATCH($Start_KP,Tracks!D:D,dir)))
       // D列是KP after jump (m)，E列是Track ID after jump
-      
+
       const numericKP = Number(startKp)
       // 在Tracks表中查找匹配的KP after jump
       const matchIndex = this.findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-      
+
       if (matchIndex === -1) {
         currentRow.Start_T2 = ''
         return
       }
-      
+
       // 返回对应行的Track_ID_after_jump
       currentRow.Start_T2 = tracksData[matchIndex].Track_ID_after_jump
     },
-    
+
     // 根据Start_T1, Start_T2和Start_Track计算Track2
     updateTrack2(index) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       const currentRow = this.sheetData.data[index]
       const startT1 = currentRow.Start_T1
       const startT2 = currentRow.Start_T2
       const startTrack = currentRow.Start_Track
-      
+
       // 应用公式: =IF(AND(D3="",B3=C3),B3,IF(D3="","",D3))
       // D3=Start_Track, B3=Start_T1, C3=Start_T2
-      
+
       // 第一层判断：如果Start_Track为空且Start_T1等于Start_T2
       if ((!startTrack || startTrack === '') && startT1 === startT2) {
         // 返回Start_T1的值
@@ -520,95 +520,95 @@ export default {
         currentRow.Track2 = startTrack
       }
     },
-    
+
     // 根据SubBlock_Start和SubBlock_Track计算KP_correction
     updateKPCorrection(index) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       const currentRow = this.sheetData.data[index]
-      const startKP = currentRow.SubBlock_Start  // G列: SubBlock_Start
-      const trackValue = currentRow.SubBlock_Track  // I列: SubBlock_Track
-      const track2Value = currentRow.Track2  // 考虑Track2值
-      
+      const startKP = currentRow.SubBlock_Start // G列: SubBlock_Start
+      const trackValue = currentRow.SubBlock_Track // I列: SubBlock_Track
+      const track2Value = currentRow.Track2 // 考虑Track2值
+
       // 如果Start-KP为空，返回空值
       if (!startKP || startKP === '') {
         currentRow.KP_correction = ''
         return
       }
-      
+
       // 获取Direction值
-      let dir = Number(this.directionValue) || 1
-      
+      const dir = Number(this.directionValue) || 1
+
       // 获取Tracks表数据
       const tracksData = this.tracksData || []
       if (tracksData.length === 0) {
         currentRow.KP_correction = '#N/A'
         return
       }
-      
+
       // 使用SubBlock_Track或Track2值进行查找
       const trackToUse = trackValue || track2Value
-      
+
       // 如果没有可用的Track值，返回#N/A
       if (!trackToUse) {
         currentRow.KP_correction = '#N/A'
         return
       }
-      
+
       // 核心匹配逻辑：在Tracks表的KP_after_jump列中查找匹配Start-KP的位置
       const numericKP = Number(startKP)
       const matchIndex = this.findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-      
+
       if (matchIndex === -1) {
         currentRow.KP_correction = '#N/A'
         return
       }
-      
+
       // 三层判断逻辑：
       // 1. 检查匹配行的Track_ID_after_jump是否等于要使用的Track值
       if (tracksData[matchIndex].Track_ID_after_jump === trackToUse) {
         currentRow.KP_correction = tracksData[matchIndex].Correction_applied_to_KP
         return
       }
-      
+
       // 2. 检查匹配行的下一行
       if (matchIndex + 1 < tracksData.length &&
           tracksData[matchIndex + 1].Track_ID_after_jump === trackToUse) {
         currentRow.KP_correction = tracksData[matchIndex + 1].Correction_applied_to_KP
         return
       }
-      
+
       // 3. 检查匹配行的上一行
       if (matchIndex > 0 &&
           tracksData[matchIndex - 1].Track_ID_after_jump === trackToUse) {
         currentRow.KP_correction = tracksData[matchIndex - 1].Correction_applied_to_KP
         return
       }
-      
+
       // 如果所有条件都不满足，返回#N/A
       currentRow.KP_correction = '#N/A'
     },
-    
+
     // 根据SubBlock_Start和KP_correction计算Start distance
     updateStartDistance(index) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       const currentRow = this.sheetData.data[index]
-      const startKP = currentRow.SubBlock_Start  // G列: SubBlock_Start
-      const kpCorrection = currentRow.KP_correction  // J列: KP_correction
-      
+      const startKP = currentRow.SubBlock_Start // G列: SubBlock_Start
+      const kpCorrection = currentRow.KP_correction // J列: KP_correction
+
       // 获取Direction参数
-      let dir = Number(this.directionValue) || 1
-      
+      const dir = Number(this.directionValue) || 1
+
       // 应用公式: =IF(ISTEXT(G3),-100000,IF(G3="",MAX(100000,K3+1),(G3+J3)*dir))
-      
+
       // 第一层判断：检查Start-KP是否为文本
       if (typeof startKP === 'string' && isNaN(Number(startKP)) && startKP !== '') {
         // 如果是文本且不是空字符串，返回-100000
         currentRow.SubBlock_StartDistance = -100000
         return
       }
-      
+
       // 第二层判断：检查Start-KP是否为空
       if (!startKP || startKP === '') {
         // 获取上一行的Start distance + 1（如果存在）
@@ -623,33 +623,33 @@ export default {
         currentRow.SubBlock_StartDistance = maxValue
         return
       }
-      
+
       // 最终计算：(Start-KP + KP correction) * dir
       // KP correction可能是#N/A或空值，需要处理
       let kpCorrectionValue = 0
       if (kpCorrection !== '#N/A' && kpCorrection !== '' && !isNaN(Number(kpCorrection))) {
         kpCorrectionValue = Number(kpCorrection)
       }
-      
+
       // 计算结果
       const result = (Number(startKP) + kpCorrectionValue) * dir
       currentRow.SubBlock_StartDistance = !isNaN(result) ? result : 0
     },
-    
+
     // 更新所有行的Distance值
     updateAllDistances() {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       for (let i = 0; i < this.sheetData.data.length; i++) {
         this.updateStartDistance(i)
       }
     },
-    
+
     handleInsertRow(index) {
       // 通知父组件在指定位置插入新行
       this.$emit('insert-row', index)
     },
-    
+
     handleDeleteRow(index) {
       // 通知父组件删除指定行
       this.$emit('delete-row', index)
@@ -683,4 +683,4 @@ export default {
 .block-description-sheet .el-table .el-table__body td:first-child .el-input .el-input__inner {
   text-align: center !important;
 }
-</style> 
+</style>

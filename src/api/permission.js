@@ -54,4 +54,4 @@ export function updateProjectUsers(projectId, userIds) {
       user_ids: userIds
     }
   })
-} 
+}

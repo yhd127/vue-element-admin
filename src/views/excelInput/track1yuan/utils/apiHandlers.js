@@ -39,7 +39,7 @@ export async function fetchTrackRecords(projectId, direction = 'down') {
 export async function saveTrackToApi(tracksData, projectId, direction) {
   try {
     // 将数字类型的direction转换为字符串类型（1='down', 0='up'）
-    const directionStr = typeof direction === 'number' 
+    const directionStr = typeof direction === 'number'
       ? (direction === 0 ? 'up' : 'down')
       : direction
 
@@ -222,4 +222,4 @@ export function convertApiRunningDataToExcel(runningProfileData) {
       data: runningListData
     }
   }
-} 
+}

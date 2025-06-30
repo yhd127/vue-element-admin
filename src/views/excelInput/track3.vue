@@ -229,8 +229,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(1, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(1, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(1, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(1, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -291,8 +291,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(2, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(2, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(2, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(2, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -347,8 +347,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(3, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(3, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(3, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(3, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -901,7 +901,7 @@
       custom-class="full-screen-image-dialog"
     >
       <div class="full-screen-image-container">
-        <img v-if="previewImageInfo" :src="previewImageInfo.path" class="full-screen-image" />
+        <img v-if="previewImageInfo" :src="previewImageInfo.path" class="full-screen-image">
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="imagePreviewVisible = false">关闭</el-button>
@@ -4183,8 +4183,8 @@ export default {
 
       if (calculationType === 'minHeadway') {
         // 对于最小间隔时间，显示详情表单
-      this.generateRandomDetailData()
-      this.detailDialogVisible = true
+        this.generateRandomDetailData()
+        this.detailDialogVisible = true
         return
       }
 
@@ -4196,8 +4196,8 @@ export default {
           if (data && Array.isArray(data) && rowIndex < data.length) {
             // 获取对应行号的JSON数据
             const jsonData = data[rowIndex]
-            const departureStation = jsonData["Departure Station name"]
-            const arrivalStation = jsonData["Arrival Station name"]
+            const departureStation = jsonData['Departure Station name']
+            const arrivalStation = jsonData['Arrival Station name']
 
             // 去掉站名中的数字"1"构建图片文件名
             const departureStationNoDigit = departureStation.replace(/\d+/g, '')
@@ -4298,9 +4298,9 @@ export default {
               data.departure.timeFromDepartureToBlockClear || 0,
               data.departure.cleanDelayTime || 0,
               data.departure.departureRouteTime || 0
-            );
+            )
 
-      this.detailData.module1 = {
+            this.detailData.module1 = {
               intervalTitle: '间隔值: ' + this.formatDetailValue(departureTotal) + ' 秒',
               time1: this.formatDetailValue(data.departure.timeFromDepartureToBlockClear) + ' 秒',
               time2: this.formatDetailValue(data.departure.cleanDelayTime) + ' 秒',
@@ -4316,7 +4316,7 @@ export default {
               const blockTotal = this.calcTotal(
                 block.timeFromBottleneckToBlockClear || 0,
                 block.cleanDelayTime || 0
-              );
+              )
 
               return {
                 intervalTitle: '间隔值: ' + this.formatDetailValue(blockTotal) + ' 秒',
@@ -4329,7 +4329,7 @@ export default {
                 clearDelayTime: this.formatDetailValue(block.cleanDelayTime) + ' 秒',
                 sectionInterval: this.formatDetailValue(blockTotal) + ' 秒'
               }
-            });
+            })
           }
 
           // 3. 处理接车模块数据
@@ -4341,7 +4341,7 @@ export default {
               data.arriver.timeClearDelay || 0,
               data.arriver.arriverRouteTime || 0,
               data.arriver.timeFromBottleneckToStop || 0
-            );
+            )
 
             this.detailData.module3 = {
               intervalTitle: '间隔值: ' + this.formatDetailValue(arriverTotal) + ' 秒',
@@ -4384,10 +4384,10 @@ export default {
           }]
 
           // 模块3数据 - 接车模块
-      this.detailData.module3 = {
+          this.detailData.module3 = {
             intervalTitle: '间隔值: 30.00 秒',
-        entranceBottleneck: '进站瓶颈点A',
-        stopPoint: '停车点B',
+            entranceBottleneck: '进站瓶颈点A',
+            stopPoint: '停车点B',
             platformStopTime: '20.00 秒',
             frontTrainToClearTime: '30.00 秒',
             clearDelayTime: '12.50 秒',
@@ -4612,7 +4612,7 @@ export default {
         239.00, // 第5行
         418.00, // 第6行
         164.50, // 第7行
-        251.00  // 第8行
+        251.00 // 第8行
       ]
 
       // 获取当前行的计算时间，如果超出范围则使用默认值
@@ -4743,7 +4743,7 @@ export default {
         if (matchedKP === numericKP) {
           // 完全匹配，返回当前行的Track_ID_before_jump
           currentRow.Start_T1 = tracksData[matchIndex].Track_ID_before_jump
-          return; // 添加return语句，防止继续执行下面的代码
+          return // 添加return语句，防止继续执行下面的代码
         }
 
         // 不完全匹配，尝试返回下一行的Track_ID_before_jump
@@ -4755,7 +4755,7 @@ export default {
         }
 
         // 在这里添加一个console.log进行调试，查看计算的结果
-        console.log(`计算 Block description 第 ${index+1} 行的 Start_T1: ${currentRow.Start_T1}, KP值: ${startKp}`);
+        console.log(`计算 Block description 第 ${index + 1} 行的 Start_T1: ${currentRow.Start_T1}, KP值: ${startKp}`)
       }
     },
 
@@ -4815,7 +4815,7 @@ export default {
         }
 
         // 在这里添加一个console.log进行调试，查看计算的结果
-        console.log(`计算 Block description 第 ${index+1} 行的 Start_T1: ${currentRow.Start_T1}, KP值: ${startKp}`);
+        console.log(`计算 Block description 第 ${index + 1} 行的 Start_T1: ${currentRow.Start_T1}, KP值: ${startKp}`)
       }
     },
 
@@ -4955,10 +4955,10 @@ export default {
       if (!this.activeSheet || !this.currentSheets[this.activeSheet]) return
 
       // 设置插入位置为-1，表示在末尾添加
-      this.insertPosition = -1;
+      this.insertPosition = -1
 
       // 初始化新行数据
-      this.newRowData = {};
+      this.newRowData = {}
 
       // 根据不同的工作表，设置要显示的字段
       if (this.activeSheet === 'Tracks') {
@@ -5036,7 +5036,7 @@ export default {
 
         // 检查图片是否存在
         fetch(path)
-        .catch(error => {
+          .catch(error => {
             console.error(`区间图片不存在: ${path}`, error)
             this.$message.warning(`未找到区间图片: block-${index}.png，可能文件不存在`)
           })
@@ -5102,7 +5102,7 @@ export default {
 
           // 使用fetch HEAD请求检查文件是否存在
           fetch(imagePath, { method: 'HEAD' })
-        .then(response => {
+            .then(response => {
               checkedCount++
               if (response.ok) {
                 // 文件存在
@@ -5239,7 +5239,7 @@ export default {
           239.00, // 第5行
           418.00, // 第6行
           164.50, // 第7行
-          251.00  // 第8行
+          251.00 // 第8行
         ]
 
         // 更新所有行的计算状态为"正在计算中"
@@ -5433,13 +5433,13 @@ export default {
             // 加载对应行的JSON数据
             fetch('/data/result/running_profile_up_slow.json')
               .then(response => response.json())
-        .then(data => {
+              .then(data => {
                 if (data && Array.isArray(data) && index < data.length) {
                   // 获取对应行号的JSON数据
                   const jsonData = data[index]
                   // 添加站点信息，方便区分数据来源
-                  const departureStation = jsonData["Departure Station name"] || row.departureStation || `站点${index+1}`
-                  const arrivalStation = jsonData["Arrival Station name"] || row.arrivalStation || `站点${index+2}`
+                  const departureStation = jsonData['Departure Station name'] || row.departureStation || `站点${index + 1}`
+                  const arrivalStation = jsonData['Arrival Station name'] || row.arrivalStation || `站点${index + 2}`
                   jsonData._rowLabel = `${departureStation}-${arrivalStation}`
 
                   // 将数据添加到合并数组
@@ -5521,8 +5521,8 @@ export default {
                 if (data && Array.isArray(data) && index < data.length) {
                   // 获取对应行号的JSON数据
                   const jsonData = data[index]
-                  const departureStation = jsonData["Departure Station name"]
-                  const arrivalStation = jsonData["Arrival Station name"]
+                  const departureStation = jsonData['Departure Station name']
+                  const arrivalStation = jsonData['Arrival Station name']
 
                   // 去掉站名中的数字"1"构建图片文件名
                   const departureStationNoDigit = departureStation.replace(/\d+/g, '')
@@ -5653,8 +5653,8 @@ export default {
                 type: 'success',
                 message: '所有图片文件已打包下载成功'
               })
-        })
-        .catch(error => {
+            })
+            .catch(error => {
               console.error('创建ZIP文件失败:', error)
               this.$message.error('创建ZIP文件失败')
             })
@@ -5729,8 +5729,8 @@ export default {
                   if (data && Array.isArray(data) && index < data.length) {
                     // 获取对应行号的JSON数据
                     const jsonData = data[index]
-                    const departureStation = jsonData["Departure Station name"]
-                    const arrivalStation = jsonData["Arrival Station name"]
+                    const departureStation = jsonData['Departure Station name']
+                    const arrivalStation = jsonData['Arrival Station name']
 
                     // 去掉站名中的数字"1"构建图片文件名
                     const departureStationNoDigit = departureStation.replace(/\d+/g, '')

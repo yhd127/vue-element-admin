@@ -49,25 +49,25 @@ export default {
   methods: {
     handleConfirm() {
       if (!this.excelName) return
-      
+
       // 添加.xls扩展名
       const fullName = `${this.excelName}.xls`
-      
+
       // 发送事件通知父组件
       this.$emit('confirm', fullName)
       this.resetForm()
     },
-    
+
     handleCancel() {
       this.$emit('cancel')
       this.resetForm()
     },
-    
+
     handleClose() {
       this.$emit('update:visible', false)
       this.resetForm()
     },
-    
+
     resetForm() {
       this.excelName = ''
     }
@@ -77,4 +77,4 @@ export default {
 
 <style scoped>
 /* 组件特定样式 */
-</style> 
+</style>

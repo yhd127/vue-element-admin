@@ -9,7 +9,8 @@
       <el-table-column
         prop="Distance"
         label="Distance (m)"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Distance" :controls="false" size="small" />
         </template>
@@ -17,14 +18,16 @@
       <el-table-column
         prop="Unbridgable_gap"
         label="Unbridgable_gap"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Unbridgable_gap" size="small" />
         </template>
       </el-table-column>
-      <el-table-column 
-        label="操作" 
-        width="200">
+      <el-table-column
+        label="操作"
+        width="200"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -77,7 +80,7 @@ export default {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 确认删除提示
@@ -88,7 +91,7 @@ export default {
       }).then(() => {
         // 删除数据
         this.sheetData.splice(index, 1)
-        
+
         // 提示删除成功
         this.$message({
           type: 'success',
@@ -98,18 +101,18 @@ export default {
         // 取消删除
       })
     },
-    
+
     // 添加新行数据
     addNewRow(componentName, rowData) {
       // 只处理当前组件的数据
       if (componentName !== 'UnbridgeableGap') return
-      
+
       // 构造新行数据，包含默认值
       const newRow = {
         Distance: rowData.Distance || '0',
         Unbridgable_gap: rowData.Unbridgable_gap || '1'
       }
-      
+
       // 根据insertPosition决定在哪里插入新行
       if (rowData.index >= 0 && rowData.index < this.sheetData.length) {
         // 在指定位置插入
@@ -118,7 +121,7 @@ export default {
         // 在末尾插入
         this.sheetData.push(newRow)
       }
-      
+
       // 提示添加成功
       this.$message({
         type: 'success',
@@ -133,4 +136,4 @@ export default {
 .unbridgeable-gap-container {
   padding: 0;
 }
-</style> 
+</style>

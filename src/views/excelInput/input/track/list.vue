@@ -2,18 +2,18 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <el-menu :default-active="activeIndex" mode="horizontal" @select="handleSelect" class="track-menu">
+        <el-menu :default-active="activeIndex" mode="horizontal" class="track-menu" @select="handleSelect">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-document"></i>
+              <i class="el-icon-document" />
               <span>Track文件列表</span>
             </template>
             <el-menu-item v-for="file in excelFiles" :key="file.name" :index="file.name">
-              <i class="el-icon-document-copy"></i>
+              <i class="el-icon-document-copy" />
               {{ file.name }} ({{ file.displayName }})
             </el-menu-item>
             <el-menu-item index="refresh" @click.native.stop="getExcelFiles">
-              <i class="el-icon-refresh"></i>
+              <i class="el-icon-refresh" />
               刷新文件列表
             </el-menu-item>
           </el-submenu>

@@ -246,4 +246,4 @@ export default {
   calculateGradientDistance,
   calculateGradientSlopePermille,
   updateAllGradientFields
-} 
+}

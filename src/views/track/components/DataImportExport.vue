@@ -4,7 +4,7 @@
       <div slot="header" class="clearfix">
         <span>数据导入/导出</span>
       </div>
-      
+
       <el-row :gutter="20">
         <el-col :span="12">
           <el-card shadow="hover">
@@ -16,7 +16,7 @@
                 <el-radio-button label="json">JSON文件</el-radio-button>
                 <el-radio-button label="excel">Excel文件</el-radio-button>
               </el-radio-group>
-              
+
               <el-upload
                 class="upload-area"
                 :action="'#'"
@@ -29,25 +29,25 @@
                 :file-list="fileList"
                 drag
               >
-                <i class="el-icon-upload"></i>
+                <i class="el-icon-upload" />
                 <div class="el-upload__text">
                   拖拽文件到此处，或<em>点击上传</em>
                 </div>
-                <div class="el-upload__tip" slot="tip">
+                <div slot="tip" class="el-upload__tip">
                   {{ importType === 'json' ? '只能上传JSON文件' : '只能上传Excel文件(.xlsx, .xls)' }}
                 </div>
               </el-upload>
-              
+
               <div class="button-area">
-                <el-button 
-                  type="primary" 
+                <el-button
+                  type="primary"
                   size="small"
                   :disabled="!selectedFile"
                   @click="importData"
                 >
                   导入数据
                 </el-button>
-                <el-button 
+                <el-button
                   size="small"
                   @click="resetImport"
                 >
@@ -57,7 +57,7 @@
             </div>
           </el-card>
         </el-col>
-        
+
         <el-col :span="12">
           <el-card shadow="hover">
             <div slot="header">
@@ -68,20 +68,20 @@
                 <el-radio-button label="json">JSON文件</el-radio-button>
                 <el-radio-button label="excel">Excel文件</el-radio-button>
               </el-radio-group>
-              
+
               <el-form :model="exportForm" label-width="100px" size="small">
                 <el-form-item label="文件名称">
-                  <el-input 
-                    v-model="exportForm.fileName" 
+                  <el-input
+                    v-model="exportForm.fileName"
                     placeholder="请输入文件名称"
                   />
                 </el-form-item>
-                
+
                 <el-form-item label="导出内容">
                   <el-checkbox-group v-model="exportForm.tables">
-                    <el-checkbox 
-                      v-for="table in availableTables" 
-                      :key="table.value" 
+                    <el-checkbox
+                      v-for="table in availableTables"
+                      :key="table.value"
                       :label="table.value"
                     >
                       {{ table.label }}
@@ -89,17 +89,17 @@
                   </el-checkbox-group>
                 </el-form-item>
               </el-form>
-              
+
               <div class="button-area">
-                <el-button 
-                  type="primary" 
+                <el-button
+                  type="primary"
                   size="small"
                   :disabled="!canExport"
                   @click="exportData"
                 >
                   导出数据
                 </el-button>
-                <el-button 
+                <el-button
                   size="small"
                   @click="resetExport"
                 >
@@ -150,10 +150,10 @@ export default {
   methods: {
     handleFileChange(file) {
       // 检查文件类型是否符合当前选择的导入类型
-      const isValidType = this.importType === 'json' 
+      const isValidType = this.importType === 'json'
         ? isJsonFile(file.name)
         : isExcelFile(file.name)
-      
+
       if (!isValidType) {
         const fileType = this.importType === 'json' ? 'JSON' : 'Excel'
         this.$message.error(`请上传${fileType}文件！`)
@@ -161,7 +161,7 @@ export default {
         this.selectedFile = null
         return
       }
-      
+
       this.selectedFile = file
     },
     handleExceed() {
@@ -175,21 +175,21 @@ export default {
         this.$message.warning('请先选择文件')
         return
       }
-      
+
       try {
         this.$emit('import-start')
-        
+
         let importedData = null
-        
+
         if (this.importType === 'json') {
           importedData = await parseJsonFile(this.selectedFile.raw)
         } else {
           importedData = await parseExcelToJson(this.selectedFile.raw)
         }
-        
+
         // 发送导入成功事件
         this.$emit('import-success', importedData)
-        
+
         this.$message.success('数据导入成功')
         this.resetImport()
       } catch (error) {
@@ -205,39 +205,39 @@ export default {
         this.$message.warning('请先填写文件名和选择要导出的表')
         return
       }
-      
+
       try {
         this.$emit('export-start')
-        
+
         // 准备要导出的数据
         const exportData = {}
-        
+
         this.exportForm.tables.forEach(tableKey => {
           // 如果该表数据存在，则添加到导出数据中
           if (this.dataSource[tableKey]) {
             exportData[tableKey] = deepClone(this.dataSource[tableKey])
           }
         })
-        
+
         if (Object.keys(exportData).length === 0) {
           this.$message.warning('没有可导出的数据')
           return
         }
-        
+
         // 根据选择的导出类型执行导出
         if (this.exportType === 'json') {
           exportJsonToFile(exportData, this.exportForm.fileName)
         } else {
           exportJsonToExcel(exportData, this.exportForm.fileName)
         }
-        
+
         // 发送导出成功事件
         this.$emit('export-success', {
           type: this.exportType,
           fileName: this.exportForm.fileName,
           tables: this.exportForm.tables
         })
-        
+
         this.$message.success('数据导出成功')
       } catch (error) {
         console.error('导出数据失败:', error)
@@ -275,4 +275,4 @@ export default {
   margin-top: 15px;
   text-align: right;
 }
-</style> 
+</style>

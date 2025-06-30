@@ -151,8 +151,8 @@ export default {
             this.$message.success('删除成功')
           } catch (error) {
             console.error('删除角色失败:', error)
-            const errorMsg = error.response && error.response.data && error.response.data.detail 
-              ? error.response.data.detail 
+            const errorMsg = error.response && error.response.data && error.response.data.detail
+              ? error.response.data.detail
               : (error.message || '未知错误')
             this.$message.error(`删除失败: ${errorMsg}`)
           }
@@ -173,7 +173,7 @@ export default {
             role_description: this.roleForm.role_description
           }
           console.log('提交数据:', data)
-          
+
           if (isEdit) {
             // 编辑角色时使用updateRoleV1，不再传入userId
             console.log('调用updateRoleV1, idx:', this.roleForm.idx)
@@ -187,8 +187,8 @@ export default {
               this.getRoles()
             }).catch(error => {
               console.error('更新角色失败:', error)
-              const errorMsg = error.response && error.response.data && error.response.data.detail 
-                ? error.response.data.detail 
+              const errorMsg = error.response && error.response.data && error.response.data.detail
+                ? error.response.data.detail
                 : (error.message || '未知错误')
               this.$message.error(`更新失败: ${errorMsg}`)
             })
@@ -206,15 +206,15 @@ export default {
             }).catch(error => {
               console.error('创建角色失败:', error)
               // 获取错误消息
-              let errorMsg = error.response && error.response.data && error.response.data.detail 
-                ? error.response.data.detail 
+              let errorMsg = error.response && error.response.data && error.response.data.detail
+                ? error.response.data.detail
                 : (error.message || '未知错误')
-              
+
               // 翻译特定的英文错误消息为中文
               if (errorMsg === 'The role with this name already exists in the system.') {
                 errorMsg = '该角色名称已存在，请使用其他名称'
               }
-              
+
               this.$message.error(`创建失败: ${errorMsg}`)
             })
           }
@@ -237,4 +237,4 @@ export default {
     margin-bottom: 30px;
   }
 }
-</style> 
+</style>

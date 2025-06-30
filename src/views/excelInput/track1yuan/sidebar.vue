@@ -60,7 +60,7 @@ import { getFolderTreeData } from './services/folderManager'
 
 export default {
   name: 'Sidebar',
-  
+
   props: {
     // 当前选中的菜单项
     activeMenuIndex: {
@@ -83,7 +83,7 @@ export default {
       default: () => ({})
     }
   },
-  
+
   data() {
     return {
       filterText: '',
@@ -92,7 +92,7 @@ export default {
       permanentlyExpandedFolders: []
     }
   },
-  
+
   watch: {
     filterText(val) {
       this.$nextTick(() => {
@@ -100,12 +100,12 @@ export default {
       })
     }
   },
-  
+
   created() {
     // 初始化树形数据
     this.updateFolderTreeData()
   },
-  
+
   methods: {
     /**
      * 更新文件夹树形结构数据
@@ -119,7 +119,7 @@ export default {
         this.folderTreeData = [] // 出错时使用空数组
       }
     },
-    
+
     /**
      * 清空搜索过滤器
      */
@@ -127,7 +127,7 @@ export default {
       this.filterText = ''
       this.applyMenuFilter('')
     },
-    
+
     /**
      * 应用菜单过滤器
      */
@@ -178,7 +178,7 @@ export default {
         }
       })
     },
-    
+
     /**
      * 显示所有菜单项
      */
@@ -188,14 +188,14 @@ export default {
         item.style.display = ''
       })
     },
-    
+
     /**
      * 处理菜单选择事件
      */
     handleMenuSelect(index) {
       this.$emit('menu-select', index)
     },
-    
+
     /**
      * 处理菜单点击事件
      */
@@ -218,11 +218,11 @@ export default {
           this.expandedFolders.push(folderId)
         }
       }
-      
+
       // 触发点击事件
       this.$emit('folder-click', folderId)
     },
-    
+
     /**
      * 判断文件夹是否永久展开
      */
@@ -271,4 +271,4 @@ export default {
   margin-left: 5px;
   flex: 1;
 }
-</style> 
+</style>

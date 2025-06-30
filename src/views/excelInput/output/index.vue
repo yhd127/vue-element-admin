@@ -4,10 +4,10 @@
       <div slot="header" class="clearfix">
         <span>输出文件</span>
       </div>
-      
+
       <!-- 子路由视图 -->
       <router-view />
-      
+
       <!-- 当没有子路由匹配时的默认内容 -->
       <div v-if="showDefault" class="default-content">
         <p>请选择要查看的文件类型</p>
@@ -17,17 +17,17 @@
               <span>Excel文件</span>
             </div>
             <div class="card-content">
-              <i class="el-icon-document"></i>
+              <i class="el-icon-document" />
               <p>查看和管理系统生成的Excel文件</p>
             </div>
           </el-card>
-          
+
           <el-card shadow="hover" class="category-card" @click.native="goToImageFiles">
             <div slot="header" class="clearfix">
               <span>图片文件</span>
             </div>
             <div class="card-content">
-              <i class="el-icon-picture"></i>
+              <i class="el-icon-picture" />
               <p>查看和管理系统生成的图片文件</p>
             </div>
           </el-card>
@@ -45,15 +45,6 @@ export default {
       showDefault: true
     }
   },
-  created() {
-    // 根据当前路由判断是否显示默认内容
-    const path = this.$route.path
-    if (path === '/excelInput/output') {
-      this.showDefault = true
-    } else {
-      this.showDefault = false
-    }
-  },
   watch: {
     $route(to, from) {
       // 监听路由变化，更新显示状态
@@ -63,6 +54,15 @@ export default {
       } else {
         this.showDefault = false
       }
+    }
+  },
+  created() {
+    // 根据当前路由判断是否显示默认内容
+    const path = this.$route.path
+    if (path === '/excelInput/output') {
+      this.showDefault = true
+    } else {
+      this.showDefault = false
     }
   },
   methods: {
@@ -134,4 +134,4 @@ export default {
 .card-content p {
   color: #606266;
 }
-</style> 
+</style>

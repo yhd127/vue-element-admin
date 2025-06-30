@@ -82,26 +82,26 @@
             >
               <div class="excel-list">
                 <div class="excel-list-title">土建参数{{ scope.row.version }}</div>
-                <el-divider></el-divider>
+                <el-divider />
                 <div
                   v-for="file in getCivilExcelFiles(scope.row.id)"
                   :key="file.id"
                   class="excel-item"
-                  @click="handleViewExcel(file)"
                   :title="file.displayName || file.file"
+                  @click="handleViewExcel(file)"
                 >
-                  <i class="el-icon-document"></i>
+                  <i class="el-icon-document" />
                   <span>{{ file.displayName || file.file }}</span>
                 </div>
-                <div class="excel-list-empty" v-if="getCivilExcelFiles(scope.row.id).length === 0">
-                  <i class="el-icon-document"></i><span class="clickable-version" @click="handleViewTrack0607(scope.row)">土建版本{{ scope.row.version }}</span>
+                <div v-if="getCivilExcelFiles(scope.row.id).length === 0" class="excel-list-empty">
+                  <i class="el-icon-document" /><span class="clickable-version" @click="handleViewTrack0607(scope.row)">土建版本{{ scope.row.version }}</span>
                 </div>
-                <el-divider v-if="getCivilExcelFiles(scope.row.id).length > 0" class="dashed-divider"></el-divider>
+                <el-divider v-if="getCivilExcelFiles(scope.row.id).length > 0" class="dashed-divider" />
                 <div
                   class="excel-item new-version"
                   @click="handleAddVersion(scope.row, 'civil')"
                 >
-                  <i class="el-icon-plus"></i>
+                  <i class="el-icon-plus" />
                   <span>新建版本</span>
                 </div>
               </div>
@@ -130,14 +130,14 @@
             >
               <div class="excel-list">
                 <div class="excel-list-title">车辆参数{{ scope.row.version }}</div>
-                <el-divider></el-divider>
+                <el-divider />
                 <div
                   v-for="file in getVehicleExcelFiles(scope.row.id)"
                   :key="file.id"
                   class="excel-item"
                 >
-                  <div class="excel-item-content" @click="handleViewExcel(file)" :title="file.displayName || file.file">
-                    <i class="el-icon-document"></i>
+                  <div class="excel-item-content" :title="file.displayName || file.file" @click="handleViewExcel(file)">
+                    <i class="el-icon-document" />
                     <span class="file-name">{{ file.displayName || file.file }}</span>
                   </div>
                   <div class="excel-item-actions always-visible">
@@ -155,15 +155,15 @@
                     >删除</el-button>
                   </div>
                 </div>
-                <div class="excel-list-empty" v-if="getVehicleExcelFiles(scope.row.id).length === 0">
-                  <i class="el-icon-document"></i><span>车辆版本{{ scope.row.version }}</span>
+                <div v-if="getVehicleExcelFiles(scope.row.id).length === 0" class="excel-list-empty">
+                  <i class="el-icon-document" /><span>车辆版本{{ scope.row.version }}</span>
                 </div>
-                <el-divider v-if="getVehicleExcelFiles(scope.row.id).length > 0" class="dashed-divider"></el-divider>
+                <el-divider v-if="getVehicleExcelFiles(scope.row.id).length > 0" class="dashed-divider" />
                 <div
                   class="excel-item upload-button"
                   @click="handleUploadFile(scope.row.id, 'vehicle')"
                 >
-                  <i class="el-icon-upload2"></i>
+                  <i class="el-icon-upload2" />
                   <span class="upload-text">上传</span>
                 </div>
               </div>
@@ -208,7 +208,7 @@
       >
         <el-form :model="projectForm" label-width="100px">
           <el-form-item label="项目名称" required>
-            <el-input v-model="projectForm.project_name" autocomplete="off" placeholder="请输入项目名称"></el-input>
+            <el-input v-model="projectForm.project_name" autocomplete="off" placeholder="请输入项目名称" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -225,23 +225,23 @@
       >
         <el-form :model="editForm" label-width="150px">
           <el-form-item label="项目名称" required>
-            <el-input v-model="editForm.project_name" autocomplete="off" placeholder="请输入项目名称"></el-input>
+            <el-input v-model="editForm.project_name" autocomplete="off" placeholder="请输入项目名称" />
             <div class="form-tip">
-              <i class="el-icon-warning"></i>
+              <i class="el-icon-warning" />
               project_name若与当前project_name不一致，则会直接新建项目
             </div>
           </el-form-item>
           <el-form-item label="输入文件数量">
-            <el-input-number v-model="editForm.project_inputfile_count" :min="0" :step="1"></el-input-number>
+            <el-input-number v-model="editForm.project_inputfile_count" :min="0" :step="1" />
           </el-form-item>
           <el-form-item label="输出Excel数量">
-            <el-input-number v-model="editForm.project_outputfile_excel_count" :min="0" :step="1"></el-input-number>
+            <el-input-number v-model="editForm.project_outputfile_excel_count" :min="0" :step="1" />
           </el-form-item>
           <el-form-item label="输出图片数量">
-            <el-input-number v-model="editForm.project_output_file_picture_count" :min="0" :step="1"></el-input-number>
+            <el-input-number v-model="editForm.project_output_file_picture_count" :min="0" :step="1" />
           </el-form-item>
           <el-form-item label="编辑人">
-            <el-input v-model="editForm.edit_user_name" autocomplete="off" placeholder="请输入编辑人"></el-input>
+            <el-input v-model="editForm.edit_user_name" autocomplete="off" placeholder="请输入编辑人" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -308,7 +308,7 @@ export default {
     // 获取项目列表
     fetchProjectList() {
       this.loading = true
-      
+
       // 前端写的项目，始终保留在第一位
       const frontendProject = {
         id: 99999, // 使用一个不太可能与后端项目ID冲突的值
@@ -322,12 +322,12 @@ export default {
         examine_user_name: 'admin',
         version: 1
       }
-      
+
       // 调用API获取项目列表，不传入任何参数
       getProjectList()
         .then(response => {
           let projects = []
-          
+
           // 处理多种可能的响应格式
           if (Array.isArray(response)) {
             // 如果直接返回数组
@@ -339,7 +339,7 @@ export default {
             // 标准响应格式
             projects = response.data || []
           }
-          
+
           // 格式化项目数据
           const formattedProjects = projects.map(project => {
             return {
@@ -355,7 +355,7 @@ export default {
               version: project.version || 1
             }
           })
-          
+
           // 将前端项目放在第一位，后端项目列表添加在后面
           this.projectList = [frontendProject, ...formattedProjects]
           this.loading = false
@@ -384,7 +384,7 @@ export default {
       // 修正文件后缀，确保与Track1.vue中的逻辑一致
       const fileInfo = {
         ...file,
-        file: file.file.replace('.xls', '.json')  // 因为Track1.vue中加载的是JSON文件
+        file: file.file.replace('.xls', '.json') // 因为Track1.vue中加载的是JSON文件
       }
 
       // 存储选中的文件信息到localStorage
@@ -400,7 +400,7 @@ export default {
       if (project.id !== 99999) {
         // 存储项目信息到localStorage
         localStorage.setItem('selectedProject', JSON.stringify(project))
-        
+
         // 跳转到新的track1yuanapi页面，而不是track0607
         this.$router.push(`/excelInput/track1yuanapi?projectId=${project.id}`)
       } else {
@@ -452,10 +452,10 @@ export default {
         createProject(projectData)
           .then(response => {
             console.log('创建项目响应:', response)
-            
+
             // 处理多种可能的响应格式
-            const isSuccess = 
-              (response && response.msg && response.msg.includes('success')) || 
+            const isSuccess =
+              (response && response.msg && response.msg.includes('success')) ||
               (response && response.code === 20000) ||
               (response && response.code === 0)
 
@@ -488,7 +488,7 @@ export default {
         project_output_file_picture_count: project.project_output_file_picture_count || 0,
         edit_user_name: this.$store.getters.name || 'admin'
       }
-      
+
       // 显示编辑对话框
       this.editDialogVisible = true
     },
@@ -502,7 +502,7 @@ export default {
 
       // 获取用户ID
       const userId = this.$store.getters.userId
-      
+
       // 准备更新的项目数据
       const projectData = {
         project_name: this.editForm.project_name,
@@ -516,8 +516,8 @@ export default {
       updateProject(projectData)
         .then(response => {
           // 处理多种可能的响应格式
-          const isSuccess = 
-            (response && response.msg && response.msg.includes('success')) || 
+          const isSuccess =
+            (response && response.msg && response.msg.includes('success')) ||
             (response && response.code === 20000) ||
             (response && response.code === 0)
 
@@ -546,8 +546,8 @@ export default {
         deleteProject(project.id)
           .then(response => {
             // 处理多种可能的响应格式
-            const isSuccess = 
-              (response && response.msg && response.msg.includes('success')) || 
+            const isSuccess =
+              (response && response.msg && response.msg.includes('success')) ||
               (response && response.code === 20000) ||
               (response && response.code === 0)
 
@@ -564,17 +564,16 @@ export default {
           })
           .catch(error => {
             console.error('删除项目错误:', error)
-            
+
             // 检查是否是Internal Server Error但实际上删除成功的情况
-            if (error.response && error.response.status === 500 && 
-                error.response.data && 
-                (error.response.data.detail === "Internal server error" || 
-                 JSON.stringify(error.response.data).includes("Internal server error"))) {
-              
+            if (error.response && error.response.status === 500 &&
+                error.response.data &&
+                (error.response.data.detail === 'Internal server error' ||
+                 JSON.stringify(error.response.data).includes('Internal server error'))) {
               console.log('收到500错误但视为删除成功')
               this.$message.success('删除成功')
               this.fetchProjectList() // 重新加载项目列表
-              
+
               // 删除相关的Excel文件
               delete this.civilExcelFiles[project.id]
               delete this.vehicleExcelFiles[project.id]
@@ -605,7 +604,7 @@ export default {
         } else if (civilResponse && civilResponse.files) {
           civilFiles = civilResponse.files
         }
-        
+
         // 处理车辆参数文件响应
         let vehicleFiles = []
         if (Array.isArray(vehicleResponse)) {
@@ -676,17 +675,17 @@ export default {
         // 调用API保存文件
         saveFile(fileData).then(response => {
           // 处理多种可能的响应格式
-          const isSuccess = 
-            (response && response.msg && response.msg.includes('success')) || 
+          const isSuccess =
+            (response && response.msg && response.msg.includes('success')) ||
             (response && response.code === 20000) ||
             (response && response.code === 0)
 
           if (isSuccess) {
             this.$message.success(`添加${typeName}版本成功`)
-            
+
             // 重新加载文件列表
             this.loadProjectFiles(project)
-            
+
             // 初始化模板数据
             if (type === 'civil') {
               // 初始化土建参数模板数据
@@ -696,28 +695,27 @@ export default {
                 data: []
               }
               localStorage.setItem('tracksData', JSON.stringify(tracksData))
-              
+
               const gradientData = {
                 project_id: projectId,
                 direction: 'up',
                 data: []
               }
               localStorage.setItem('gradientData', JSON.stringify(gradientData))
-              
+
               const stationData = {
                 project_id: projectId,
                 direction: 'up',
                 data: []
               }
               localStorage.setItem('stationData', JSON.stringify(stationData))
-              
+
               const psrData = {
                 project_id: projectId,
                 direction: 'up',
                 data: []
               }
               localStorage.setItem('psrData', JSON.stringify(psrData))
-              
             } else if (type === 'vehicle') {
               // 初始化车辆参数模板数据
               const genParamData = {

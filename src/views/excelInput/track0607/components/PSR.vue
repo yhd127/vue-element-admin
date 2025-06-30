@@ -9,12 +9,13 @@
       <el-table-column
         prop="id"
         label="ID"
-        width="80">
-      </el-table-column>
+        width="80"
+      />
       <el-table-column
         prop="T1"
         label="T1"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.T1" size="small" />
         </template>
@@ -22,7 +23,8 @@
       <el-table-column
         prop="T2"
         label="T2"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.T2" size="small" />
         </template>
@@ -30,7 +32,8 @@
       <el-table-column
         prop="Track1"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Track1" size="small" />
         </template>
@@ -38,7 +41,8 @@
       <el-table-column
         prop="KP"
         label="KP (m)"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.KP" :controls="false" size="small" />
         </template>
@@ -46,7 +50,8 @@
       <el-table-column
         prop="PSR"
         label="PSR (km/h)"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.PSR" :controls="false" size="small" />
         </template>
@@ -54,7 +59,8 @@
       <el-table-column
         prop="Track2"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Track2" size="small" />
         </template>
@@ -62,7 +68,8 @@
       <el-table-column
         prop="KP_correction"
         label="KP correction"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.KP_correction" size="small" />
         </template>
@@ -70,7 +77,8 @@
       <el-table-column
         prop="Distance"
         label="Distance"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Distance" :controls="false" size="small" />
         </template>
@@ -78,14 +86,16 @@
       <el-table-column
         prop="PSR_ms"
         label="PSR (m/s)"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.PSR_ms" :controls="false" size="small" />
         </template>
       </el-table-column>
-      <el-table-column 
-        label="操作" 
-        width="200">
+      <el-table-column
+        label="操作"
+        width="200"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -146,7 +156,7 @@ export default {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 确认删除提示
@@ -157,10 +167,10 @@ export default {
       }).then(() => {
         // 删除数据
         this.sheetData.splice(index, 1)
-        
+
         // 重新设置ID
         this.updateRowIds()
-        
+
         // 提示删除成功
         this.$message({
           type: 'success',
@@ -170,12 +180,12 @@ export default {
         // 取消删除
       })
     },
-    
+
     // 添加新行数据
     addNewRow(componentName, rowData) {
       // 只处理当前组件的数据
       if (componentName !== 'PSR') return
-      
+
       // 构造新行数据，包含默认值
       const newRow = {
         id: this.sheetData.length + 1,
@@ -189,7 +199,7 @@ export default {
         Distance: rowData.Distance || '0',
         PSR_ms: rowData.PSR_ms || '22.22'
       }
-      
+
       // 根据insertPosition决定在哪里插入新行
       if (rowData.index >= 0 && rowData.index < this.sheetData.length) {
         // 在指定位置插入
@@ -198,17 +208,17 @@ export default {
         // 在末尾插入
         this.sheetData.push(newRow)
       }
-      
+
       // 更新所有行的ID
       this.updateRowIds()
-      
+
       // 提示添加成功
       this.$message({
         type: 'success',
         message: '添加行成功!'
       })
     },
-    
+
     // 更新所有行的ID
     updateRowIds() {
       this.sheetData.forEach((row, index) => {
@@ -223,4 +233,4 @@ export default {
 .psr-container {
   padding: 0;
 }
-</style> 
+</style>

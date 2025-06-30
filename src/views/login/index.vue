@@ -167,8 +167,8 @@ export default {
             })
             .catch(error => {
               // 确保错误是字符串
-              let errorMsg = typeof error === 'string' ? error : 
-                           (error && error.message ? error.message : '登录失败，请重试')
+              const errorMsg = typeof error === 'string' ? error
+                : (error && error.message ? error.message : '登录失败，请重试')
               this.$message.error(errorMsg)
               this.refreshCode() // 刷新验证码
               this.loading = false

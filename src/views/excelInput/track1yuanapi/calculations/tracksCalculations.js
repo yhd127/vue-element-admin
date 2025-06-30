@@ -11,11 +11,11 @@ export function calculateJumpLength(row) {
   const kpBeforeJump = row.KP_before_jump
   const kpAfterJump = row.KP_after_jump
 
-  if (kpBeforeJump === '' || kpAfterJump === '' || 
+  if (kpBeforeJump === '' || kpAfterJump === '' ||
       kpBeforeJump === undefined || kpAfterJump === undefined) {
     return ''
   }
-  
+
   const kpBeforeValue = Number(kpBeforeJump) || 0
   const kpAfterValue = Number(kpAfterJump) || 0
   return kpBeforeValue - kpAfterValue
@@ -32,14 +32,14 @@ export function calculateCorrectionValue(tracks, currentIndex) {
   if (!Array.isArray(tracks) || currentIndex < 0 || currentIndex >= tracks.length) {
     return ''
   }
-  
+
   const row = tracks[currentIndex]
   const jumpLength = row.Jump_length
-  
+
   if (jumpLength === '' || jumpLength === undefined) {
     return ''
   }
-  
+
   // 计算从第一行到当前行的所有Jump length的和
   let sum = 0
   for (let j = 0; j <= currentIndex; j++) {
@@ -60,20 +60,20 @@ export function calculateCorrectionValue(tracks, currentIndex) {
  */
 export function calculateDistanceFromOrigin(row, direction) {
   if (!row) return ''
-  
+
   const kpAfterJump = row.KP_after_jump
   const correction = row.Correction_applied_to_KP
-  
-  if (kpAfterJump === '' || kpAfterJump === undefined || 
+
+  if (kpAfterJump === '' || kpAfterJump === undefined ||
       correction === '' || correction === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
   const kpValue = Number(kpAfterJump) || 0
   const correctionValue = Number(correction) || 0
-  
+
   return dir * (kpValue + correctionValue)
 }
 
@@ -87,15 +87,15 @@ export function updateNextRowTrackId(tracks, currentIndex) {
   if (!Array.isArray(tracks) || currentIndex < 0 || currentIndex >= tracks.length - 1) {
     return
   }
-  
+
   const currentRow = tracks[currentIndex]
   const nextRow = tracks[currentIndex + 1]
-  
+
   // 确保两行都有效
   if (!currentRow || !nextRow) return
-  
+
   const currentValue = currentRow.Track_ID_after_jump
-  
+
   if (currentValue === '' || currentValue === undefined || currentValue === null) {
     nextRow.Track_ID_before_jump = ''
   } else {
@@ -113,14 +113,14 @@ export function updateRowsAfterInsert(tracks, startIndex) {
   if (!Array.isArray(tracks) || startIndex < 0 || startIndex >= tracks.length) {
     return
   }
-  
+
   for (let i = startIndex; i < tracks.length - 1; i++) {
     const currentRow = tracks[i]
     const nextRow = tracks[i + 1]
-    
+
     if (currentRow && nextRow) {
       const currentValue = currentRow.Track_ID_after_jump
-      
+
       if (currentValue === '' || currentValue === undefined || currentValue === null) {
         nextRow.Track_ID_before_jump = ''
       } else {
@@ -138,7 +138,7 @@ export function updateRowsAfterInsert(tracks, startIndex) {
  */
 export function needsWarningStyle(row, prop) {
   if (!row) return false
-  
+
   // 检查核心字段是否为空
   const keyCells = ['Track_ID_after_jump', 'KP_before_jump', 'KP_after_jump']
   if (keyCells.includes(prop) && (row[prop] === '' || row[prop] === undefined || row[prop] === null)) {
@@ -150,22 +150,22 @@ export function needsWarningStyle(row, prop) {
     // KP值跳变检查：判断KP_before_jump > KP_after_jump
     const kpBeforeJump = parseFloat(row.KP_before_jump)
     const kpAfterJump = parseFloat(row.KP_after_jump)
-    
+
     // 检查是否存在KP值跳变
     const hasKpJump = !isNaN(kpBeforeJump) && !isNaN(kpAfterJump) && kpBeforeJump > kpAfterJump
-    
+
     // 获取Track ID值并转换为字符串
     const beforeJumpID = String(row.Track_ID_before_jump || '').trim()
     const afterJumpID = String(row.Track_ID_after_jump || '').trim()
-    
+
     // 检查Track ID是否相同
     const isSameTrackID = beforeJumpID === afterJumpID
-    
+
     // 当KP值跳变且Track ID相同时需要警告
     if (hasKpJump && isSameTrackID) {
       return true
     }
   }
-  
+
   return false
-} 
+}

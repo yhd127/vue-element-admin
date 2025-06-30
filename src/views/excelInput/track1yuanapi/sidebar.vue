@@ -60,7 +60,7 @@ import { getFolderTreeData } from './services/folderManager'
 
 export default {
   name: 'Sidebar',
-  
+
   props: {
     // 当前选中的菜单项
     activeMenuIndex: {
@@ -88,7 +88,7 @@ export default {
       default: () => []
     }
   },
-  
+
   data() {
     return {
       filterText: '',
@@ -96,42 +96,42 @@ export default {
       permanentlyExpandedFolders: []
     }
   },
-  
+
   watch: {
     filterText(val) {
       this.$nextTick(() => {
         this.applyMenuFilter(val)
       })
     },
-    
+
     // 监听folderTreeData的变化
     folderTreeData: {
       handler(newVal) {
-        console.log('侧边栏接收到新的folderTreeData:', newVal);
+        console.log('侧边栏接收到新的folderTreeData:', newVal)
       },
       deep: true
     }
   },
-  
+
   created() {
     // 初始树形数据从props获取，不再从服务调用
-    console.log('侧边栏组件创建，初始folderTreeData:', this.folderTreeData);
+    console.log('侧边栏组件创建，初始folderTreeData:', this.folderTreeData)
   },
-  
+
   methods: {
     /**
      * 更新文件夹树形结构数据
      */
     updateFolderTreeData() {
       try {
-        console.log('侧边栏更新树形数据，当前props传递的folderTreeData:', this.folderTreeData);
+        console.log('侧边栏更新树形数据，当前props传递的folderTreeData:', this.folderTreeData)
         // 触发组件刷新
-        this.$forceUpdate();
+        this.$forceUpdate()
       } catch (error) {
-        console.error('侧边栏获取文件夹数据失败:', error);
+        console.error('侧边栏获取文件夹数据失败:', error)
       }
     },
-    
+
     /**
      * 清空搜索过滤器
      */
@@ -139,7 +139,7 @@ export default {
       this.filterText = ''
       this.applyMenuFilter('')
     },
-    
+
     /**
      * 应用菜单过滤器
      */
@@ -190,7 +190,7 @@ export default {
         }
       })
     },
-    
+
     /**
      * 显示所有菜单项
      */
@@ -200,14 +200,14 @@ export default {
         item.style.display = ''
       })
     },
-    
+
     /**
      * 处理菜单选择事件
      */
     handleMenuSelect(index) {
       this.$emit('menu-select', index)
     },
-    
+
     /**
      * 处理菜单点击事件
      */
@@ -230,11 +230,11 @@ export default {
           this.expandedFolders.push(folderId)
         }
       }
-      
+
       // 触发点击事件
       this.$emit('folder-click', folderId)
     },
-    
+
     /**
      * 判断文件夹是否永久展开
      */
@@ -283,4 +283,4 @@ export default {
   margin-left: 5px;
   flex: 1;
 }
-</style> 
+</style>

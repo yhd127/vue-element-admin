@@ -47,7 +47,7 @@
     <el-row :gutter="20">
       <!-- 左侧侧边栏 -->
       <el-col :span="6">
-        <Sidebar 
+        <Sidebar
           :active-menu-index="activeMenuIndex"
           :file-id="fileId"
           @menu-select="handleMenuSelect"
@@ -66,7 +66,7 @@
             </div>
 
             <!-- 操作按钮区域 -->
-            <div class="button-group" v-if="activeFolder">
+            <div v-if="activeFolder" class="button-group">
               <!-- 添加查看所有文件下拉菜单 -->
               <el-dropdown trigger="click" @command="handleExcelSelect">
                 <el-button type="info">
@@ -411,7 +411,7 @@ import {
 } from './calculations/tracksCalculations'
 
 // 导入文件夹管理服务
-import { 
+import {
   initFolderManager,
   getFolderTreeData,
   setFolderFiles,
@@ -422,10 +422,10 @@ import {
   parseMenuId
 } from './services/folderManager'
 
-import { 
-  folderConfig, 
+import {
+  folderConfig,
   getAllFolderIds,
-  getFolderConfig 
+  getFolderConfig
 } from './config/folders'
 
 export default {
@@ -465,7 +465,7 @@ export default {
       downloadLoading: false,
       showDeleteConfirm: false,
       deleteTarget: '',
-      
+
       // 添加缺少的数据属性
       showRowDialog: false,
       currentHeaders: [],
@@ -541,7 +541,7 @@ export default {
       activeFolder: null,
       folderExcelFiles: [],
       activeMenuIndex: '',
-      
+
       // 初始化示例文件数据
       folderExamples: {
         'Track': [
@@ -559,31 +559,31 @@ export default {
   computed: {
     currentSheets() {
       if (!this.activeExcel || !this.excelFiles[this.activeExcel]) return {}
-      
+
       // 获取原始工作表数据
       const originalSheets = this.excelFiles[this.activeExcel]
-      
+
       // 创建一个新的对象，包含原始数据和映射后的数据
       const sheets = {}
-      
+
       // 复制原始数据
       Object.keys(originalSheets).forEach(key => {
         sheets[key] = originalSheets[key]
-        
+
         // 添加中文名称的映射
         const displayName = getDisplaySheetName(key)
         if (displayName !== key) {
           sheets[displayName] = originalSheets[key]
         }
       })
-      
+
       return sheets
     },
 
     // 添加获取Direction值的计算属性
     directionValue() {
       const genParamKey = this.getGenParamKey()
-      
+
       if (this.excelFiles[this.activeExcel] &&
           this.excelFiles[this.activeExcel][genParamKey]) {
         const directionParam = this.excelFiles[this.activeExcel][genParamKey].data.find(
@@ -654,7 +654,7 @@ export default {
 
     // 初始化文件夹管理器
     this.initializeFolderManager()
-    
+
     // 默认打开第一个文件夹
     const folderIds = getAllFolderIds()
     if (folderIds.length > 0) {
@@ -666,14 +666,14 @@ export default {
   methods: {
     // 初始化文件夹管理器
     initializeFolderManager() {
-      initFolderManager();
-      
+      initFolderManager()
+
       // 设置文件夹示例数据
       Object.keys(this.folderExamples).forEach(folderId => {
         setFolderFiles(folderId, this.folderExamples[folderId])
       })
     },
-    
+
     // 返回到列表页面
     goBack() {
       this.$router.push('/excelInput/project')
@@ -1073,13 +1073,13 @@ export default {
     handleMenuSelect(index) {
       // 使用解析函数分析选中的菜单ID
       const menuItem = parseMenuId(index)
-      
+
       if (menuItem.type === 'folder') {
         // 如果是文件夹，显示文件夹内容
         this.activeFolder = menuItem.folderId
         this.folderExcelFiles = getFolderFiles(menuItem.folderId)
         this.activeMenuIndex = index
-        
+
         // 清空当前选择
         this.activeExcel = null
         this.activeSheet = null
@@ -1088,7 +1088,7 @@ export default {
         this.activeFolder = menuItem.folderId
         this.folderExcelFiles = getFolderFiles(menuItem.folderId)
         this.activeMenuIndex = index
-        
+
         // 加载文件
         const fileName = menuItem.file.name
         this.loadExcelFile(fileName)
@@ -1120,7 +1120,7 @@ export default {
         // 返回可用工作表列表（使用新的中文名称）
         return getAvailableSheetsByFolderId(this.activeFolder)
       }
-      
+
       return []
     },
 
@@ -1131,7 +1131,7 @@ export default {
 
     // 判断是否是Gen. Param.工作表
     isGenParamSheet(sheetName) {
-      return sheetName === 'Gen. Param.' || getInternalSheetName(sheetName) === 'Gen. Param.' || 
+      return sheetName === 'Gen. Param.' || getInternalSheetName(sheetName) === 'Gen. Param.' ||
              sheetName === '总体参数(Gen. Param.)'
     },
 
@@ -1139,7 +1139,7 @@ export default {
     handleSheetChange(sheet) {
       // 将显示名称转换为内部名称
       const internalSheetName = getInternalSheetName(sheet)
-      
+
       // 如果内部名称存在于数据结构中，使用显示名称
       if (this.excelFiles[this.activeExcel][internalSheetName]) {
         this.activeSheet = sheet
@@ -1147,7 +1147,7 @@ export default {
         // 否则尝试使用原始名称
         this.activeSheet = sheet
       }
-      
+
       console.log('Sheet changed to:', sheet, 'Internal name:', internalSheetName)
     },
 
@@ -1334,17 +1334,17 @@ export default {
         this.activeSheet = originalActiveSheet // 恢复原始选中的工作表
       }
     },
-    
+
     // 更新单行的从轨道原点到跳跃点的距离
     updateDistanceFromOrigin(index) {
       if (this.activeSheet === 'Tracks' && this.currentSheets[this.activeSheet] && this.currentSheets[this.activeSheet].data) {
         const row = this.currentSheets[this.activeSheet].data[index]
-        
+
         // 应用计算公式
         const kpAfterJump = Number(row.KP_after_jump) || 0
         const correctionAppliedToKP = Number(row.Correction_applied_to_KP) || 0
         const directionValue = this.getDirectionValue()
-        
+
         row.Distance_from_track_origin_to_jump_point = (kpAfterJump + correctionAppliedToKP) * directionValue
       }
     },
@@ -1429,11 +1429,11 @@ export default {
       if (this.activeSheet === 'Gradient' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用T1计算逻辑
         const kpValue = Number(row.KP) || 0
         const direction = this.getDirectionValue()
-        
+
         // 查找适当的Track ID
         let foundTrackID = null
         for (let i = 0; i < tracksData.length; i++) {
@@ -1441,14 +1441,14 @@ export default {
           const kpAfterJump = Number(track.KP_after_jump) || 0
           const correctionAppliedToKP = Number(track.Correction_applied_to_KP) || 0
           const distanceFromOrigin = (kpAfterJump + correctionAppliedToKP) * direction
-          
+
           // 根据方向判断KP是否在范围内
-          if ((direction > 0 && kpValue >= distanceFromOrigin) || 
+          if ((direction > 0 && kpValue >= distanceFromOrigin) ||
               (direction < 0 && kpValue <= distanceFromOrigin)) {
             foundTrackID = track.Track_ID_after_jump
           }
         }
-        
+
         row.T1 = foundTrackID || ''
       }
     },
@@ -1476,12 +1476,12 @@ export default {
       if (this.activeSheet === 'Gradient' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用KP_correction计算逻辑
         const kpValue = Number(row.KP) || 0
         const trackID = row.Track2 || ''
         let correctionValue = 0
-        
+
         // 查找对应的Track记录并获取correction值
         for (let i = 0; i < tracksData.length; i++) {
           if (tracksData[i].Track_ID_after_jump === trackID) {
@@ -1489,7 +1489,7 @@ export default {
             break
           }
         }
-        
+
         row.KP_correction = correctionValue
       }
     },
@@ -1498,12 +1498,12 @@ export default {
     updateGradientDistance(index) {
       if (this.activeSheet === 'Gradient' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
-        
+
         // 应用Distance计算逻辑
         const kpValue = Number(row.KP) || 0
         const kpCorrection = Number(row.KP_correction) || 0
         const direction = this.getDirectionValue()
-        
+
         row.Distance = (kpValue + kpCorrection) * direction
       }
     },
@@ -1533,11 +1533,11 @@ export default {
       if (this.activeSheet === 'Stations' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用T1计算逻辑，类似于Gradient的T1计算
         const kpValue = Number(row.KP_of_SSP) || 0
         const direction = this.getDirectionValue()
-        
+
         // 查找适当的Track ID
         let foundTrackID = null
         for (let i = 0; i < tracksData.length; i++) {
@@ -1545,14 +1545,14 @@ export default {
           const kpAfterJump = Number(track.KP_after_jump) || 0
           const correctionAppliedToKP = Number(track.Correction_applied_to_KP) || 0
           const distanceFromOrigin = (kpAfterJump + correctionAppliedToKP) * direction
-          
+
           // 根据方向判断KP是否在范围内
-          if ((direction > 0 && kpValue >= distanceFromOrigin) || 
+          if ((direction > 0 && kpValue >= distanceFromOrigin) ||
               (direction < 0 && kpValue <= distanceFromOrigin)) {
             foundTrackID = track.Track_ID_after_jump
           }
         }
-        
+
         row.T1 = foundTrackID || ''
       }
     },
@@ -1580,11 +1580,11 @@ export default {
       if (this.activeSheet === 'Stations' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用KP_correction计算逻辑
         const trackID = row.Track2 || ''
         let correctionValue = 0
-        
+
         // 查找对应的Track记录并获取correction值
         for (let i = 0; i < tracksData.length; i++) {
           if (tracksData[i].Track_ID_after_jump === trackID) {
@@ -1592,7 +1592,7 @@ export default {
             break
           }
         }
-        
+
         row.KP_correction = correctionValue
       }
     },
@@ -1601,12 +1601,12 @@ export default {
     updateStationsDistanceOfPFCenter(index) {
       if (this.activeSheet === 'Stations' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
-        
+
         // 应用Distance_of_PF_center计算逻辑
         const kpValue = Number(row.KP_of_platform_center) || 0
         const kpCorrection = Number(row.KP_correction) || 0
         const direction = this.getDirectionValue()
-        
+
         row.Distance_of_PF_center = (kpValue + kpCorrection) * direction
       }
     },
@@ -1615,12 +1615,12 @@ export default {
     updateStationsDistanceOfSSP(index) {
       if (this.activeSheet === 'Stations' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
-        
+
         // 应用Distance_of_SSP计算逻辑
         const kpValue = Number(row.KP_of_SSP) || 0
         const kpCorrection = Number(row.KP_correction) || 0
         const direction = this.getDirectionValue()
-        
+
         row.Distance_of_SSP = (kpValue + kpCorrection) * direction
       }
     },
@@ -1646,11 +1646,11 @@ export default {
       if (this.activeSheet === 'PSR' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用T1计算逻辑，类似于Gradient的T1计算
         const kpValue = Number(row.KP) || 0
         const direction = this.getDirectionValue()
-        
+
         // 查找适当的Track ID
         let foundTrackID = null
         for (let i = 0; i < tracksData.length; i++) {
@@ -1658,14 +1658,14 @@ export default {
           const kpAfterJump = Number(track.KP_after_jump) || 0
           const correctionAppliedToKP = Number(track.Correction_applied_to_KP) || 0
           const distanceFromOrigin = (kpAfterJump + correctionAppliedToKP) * direction
-          
+
           // 根据方向判断KP是否在范围内
-          if ((direction > 0 && kpValue >= distanceFromOrigin) || 
+          if ((direction > 0 && kpValue >= distanceFromOrigin) ||
               (direction < 0 && kpValue <= distanceFromOrigin)) {
             foundTrackID = track.Track_ID_after_jump
           }
         }
-        
+
         row.T1 = foundTrackID || ''
       }
     },
@@ -1761,11 +1761,11 @@ export default {
       if (this.activeSheet === 'PSR' && this.currentSheets[this.activeSheet]) {
         const row = this.currentSheets[this.activeSheet].data[index]
         const tracksData = this.excelFiles[this.activeExcel].Tracks ? this.excelFiles[this.activeExcel].Tracks.data : []
-        
+
         // 应用KP_correction计算逻辑
         const trackID = row.Track2 || ''
         let correctionValue = 0
-        
+
         // 查找对应的Track记录并获取correction值
         for (let i = 0; i < tracksData.length; i++) {
           if (tracksData[i].Track_ID_after_jump === trackID) {
@@ -1773,7 +1773,7 @@ export default {
             break
           }
         }
-        
+
         row.KP_correction = correctionValue
       }
     },
@@ -1786,7 +1786,7 @@ export default {
         const kpCorrection = currentRow.KP_correction
 
         // 获取Direction值
-        let dir = this.getDirectionValue()
+        const dir = this.getDirectionValue()
 
         // 如果KP是文本类型
         if (kpValue !== '' && kpValue !== undefined && isNaN(Number(kpValue))) {
@@ -1833,7 +1833,7 @@ export default {
     // 获取当前活动文件的方向值
     getDirectionValue() {
       const genParamKey = this.getGenParamKey()
-      
+
       if (!this.activeExcel || !this.excelFiles[this.activeExcel] || !this.excelFiles[this.activeExcel][genParamKey]) {
         return 1
       }
@@ -2015,8 +2015,8 @@ export default {
 
         // 删除后重新分配ID
         this.currentSheets[this.activeSheet].data.forEach((row, idx) => {
-          row.id = idx + 1;
-        });
+          row.id = idx + 1
+        })
 
         // 更新数据修改状态
         this.handleDataModified()
@@ -2036,12 +2036,12 @@ export default {
     // 计算所有行（适用于Running list工作表）
     calculateAllRows() {
       if (!this.$refs.runningListSheet) {
-        this.$message.error('找不到Running list组件');
-        return;
+        this.$message.error('找不到Running list组件')
+        return
       }
 
       // 调用RunningListSheet组件的calculateAllRows方法
-      this.$refs.runningListSheet.calculateAllRows();
+      this.$refs.runningListSheet.calculateAllRows()
     },
 
     // 处理图片预览
@@ -2064,7 +2064,7 @@ export default {
     // 获取最大PSR值
     getMaxPSR() {
       const genParamKey = this.getGenParamKey()
-      
+
       if (!this.activeExcel || !this.excelFiles[this.activeExcel] || !this.excelFiles[this.activeExcel][genParamKey]) {
         return 350
       }
@@ -2447,7 +2447,7 @@ export default {
     // 获取trainLength
     getTrainLength() {
       const genParamKey = this.getGenParamKey()
-      
+
       if (!this.activeExcel || !this.excelFiles[this.activeExcel] || !this.excelFiles[this.activeExcel][genParamKey]) {
         return 0
       }
@@ -2478,46 +2478,46 @@ export default {
 
     // 提交行表单
     submitRowForm(formData) {
-      if (!this.activeSheet || !this.currentSheets[this.activeSheet]) return;
-      
+      if (!this.activeSheet || !this.currentSheets[this.activeSheet]) return
+
       try {
         // 创建新行数据
-        const newRow = { ...formData };
-        
+        const newRow = { ...formData }
+
         // 设置自增ID
         if (['Tracks', 'Gradient', 'Stations', 'PSR', 'Block description', 'Unbridgeable gap', 'Running list'].includes(this.activeSheet)) {
-          const currentData = this.currentSheets[this.activeSheet].data;
-          
+          const currentData = this.currentSheets[this.activeSheet].data
+
           // 使用插入位置后一行的ID或者当前位置ID+1
           const insertID = this.insertPosition < currentData.length - 1
             ? parseInt(currentData[this.insertPosition + 1].id) || 0
-            : (parseInt(currentData[this.insertPosition].id) || 0) + 1;
-          
-          newRow.id = insertID;
-          
+            : (parseInt(currentData[this.insertPosition].id) || 0) + 1
+
+          newRow.id = insertID
+
           // 将插入行后的所有行ID递增1
           for (let i = 0; i < currentData.length; i++) {
             if (i > this.insertPosition) {
               if (currentData[i].id !== undefined && currentData[i].id !== null && currentData[i].id !== '') {
-                currentData[i].id = parseInt(currentData[i].id) + 1;
+                currentData[i].id = parseInt(currentData[i].id) + 1
               }
             }
           }
         }
-        
+
         // 插入新行
-        this.currentSheets[this.activeSheet].data.splice(this.insertPosition + 1, 0, newRow);
-        
+        this.currentSheets[this.activeSheet].data.splice(this.insertPosition + 1, 0, newRow)
+
         // 标记数据已修改
-        this.dataModified = true;
-        
+        this.dataModified = true
+
         // 关闭对话框
-        this.showRowDialog = false;
-        
-        this.$message.success(`已在第 ${this.insertPosition + 1} 行后插入新行`);
+        this.showRowDialog = false
+
+        this.$message.success(`已在第 ${this.insertPosition + 1} 行后插入新行`)
       } catch (error) {
-        console.error('插入行时出错:', error);
-        this.$message.error('插入行失败: ' + error.message);
+        console.error('插入行时出错:', error)
+        this.$message.error('插入行失败: ' + error.message)
       }
     },
 
@@ -2527,47 +2527,47 @@ export default {
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['Gen. Param.']) {
         return 'Gen. Param.'
       }
-      
+
       // 然后尝试使用中文键名
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['总体参数(Gen. Param.)']) {
         return '总体参数(Gen. Param.)'
       }
-      
+
       // 默认返回英文键名
       return 'Gen. Param.'
     },
-    
+
     // 获取Tracks的键名
     getTracksKey() {
       // 首先尝试使用英文键名
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['Tracks']) {
         return 'Tracks'
       }
-      
+
       // 然后尝试使用中文键名
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['长短链(Tracks)']) {
         return '长短链(Tracks)'
       }
-      
+
       // 默认返回英文键名
       return 'Tracks'
     },
-    
+
     // 获取Stations的键名
     getStationsKey() {
       // 首先尝试使用英文键名
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['Stations']) {
         return 'Stations'
       }
-      
+
       // 然后尝试使用中文键名
       if (this.excelFiles[this.activeExcel] && this.excelFiles[this.activeExcel]['车站(Stations)']) {
         return '车站(Stations)'
       }
-      
+
       // 默认返回英文键名
       return 'Stations'
-    },
+    }
   }
 }
 </script>

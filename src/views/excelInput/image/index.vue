@@ -6,7 +6,7 @@
       </div>
       <div class="text item">
         <p>此页面用于显示系统中的图片文件。</p>
-        <el-empty description="暂无图片文件"></el-empty>
+        <el-empty description="暂无图片文件" />
       </div>
     </el-card>
   </div>
@@ -40,4 +40,4 @@ export default {
 .clearfix:after {
   clear: both
 }
-</style> 
+</style>

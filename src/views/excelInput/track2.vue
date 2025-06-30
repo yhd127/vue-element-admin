@@ -127,14 +127,14 @@
           <h3>选择计算类型</h3>
           <p v-if="selectedCalculationRow">正在计算: {{ selectedCalculationRow.data.departureStation }} 到 {{ selectedCalculationRow.data.arrivalStation }}</p>
         </div>
-        <el-divider></el-divider>
+        <el-divider />
 
         <div class="calculation-buttons">
           <div class="calculation-item">
             <el-button
               type="primary"
-              @click="calculateTravelTimeForRow"
               :disabled="calculationState.travelTime.status === 'warning'"
+              @click="calculateTravelTimeForRow"
             >
               计算通行时间
             </el-button>
@@ -144,7 +144,7 @@
                 type="circle"
                 :percentage="calculationState.travelTime.percentage"
                 :status="calculationState.travelTime.status"
-              ></el-progress>
+              />
             </div>
 
             <div v-if="calculationResults.travelTime" class="result-info">
@@ -161,8 +161,8 @@
           <div class="calculation-item">
             <el-button
               type="primary"
-              @click="calculateMinHeadwayForRow"
               :disabled="!calculationState.minHeadway.enabled || calculationState.minHeadway.status === 'warning'"
+              @click="calculateMinHeadwayForRow"
             >
               计算最小间隔时间
             </el-button>
@@ -172,7 +172,7 @@
                 type="circle"
                 :percentage="calculationState.minHeadway.percentage"
                 :status="calculationState.minHeadway.status"
-              ></el-progress>
+              />
             </div>
 
             <div v-if="calculationResults.minHeadway" class="result-info">
@@ -324,7 +324,7 @@
                 @command="handleCalculateCommand"
               >
                 <el-button type="warning" :loading="calculatingAllRows">
-                  计算所有行 <i class="el-icon-arrow-down el-icon--right"></i>
+                  计算所有行 <i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="travelTime">计算通行时间</el-dropdown-item>
@@ -338,14 +338,14 @@
               <div class="calculation-header">
                 <h3>计算功能</h3>
               </div>
-              <el-divider></el-divider>
+              <el-divider />
 
               <div class="calculation-buttons">
                 <div class="calculation-item">
                   <el-button
                     type="primary"
-                    @click="calculateTravelTime"
                     :disabled="calculationState.travelTime.status === 'warning'"
+                    @click="calculateTravelTime"
                   >
                     计算通行时间
                   </el-button>
@@ -355,7 +355,7 @@
                       type="circle"
                       :percentage="calculationState.travelTime.percentage"
                       :status="calculationState.travelTime.status"
-                    ></el-progress>
+                    />
                   </div>
 
                   <div v-if="calculationResults.travelTime" class="result-actions">
@@ -367,8 +367,8 @@
                 <div class="calculation-item">
                   <el-button
                     type="primary"
-                    @click="calculateMinHeadway"
                     :disabled="!calculationState.minHeadway.enabled || calculationState.minHeadway.status === 'warning'"
+                    @click="calculateMinHeadway"
                   >
                     计算最小间隔时间
                   </el-button>
@@ -378,7 +378,7 @@
                       type="circle"
                       :percentage="calculationState.minHeadway.percentage"
                       :status="calculationState.minHeadway.status"
-                    ></el-progress>
+                    />
                   </div>
 
                   <div v-if="calculationResults.minHeadway" class="result-actions">
@@ -715,7 +715,7 @@
       </el-col>
     </el-row>
   </div>
-                    </template>
+</template>
 
 <script>
 import * as trackApi from '@/api/track1' // 导入分离出来的API方法
@@ -754,16 +754,16 @@ export default {
       activeFolder: null,
       availableFolders: [
         'Track',
-        //'Block_description',
-        'Running_profile',
-        //'Block_perturbation_drawing',
-        //'Block_perturbed_headway',
-        //'Constraint',
-        //'Headway_2trains_tool',
-        //'Interstation',
-        //'Mission',
-        //'Parameters',
-        //'Station'
+        // 'Block_description',
+        'Running_profile'
+        // 'Block_perturbation_drawing',
+        // 'Block_perturbed_headway',
+        // 'Constraint',
+        // 'Headway_2trains_tool',
+        // 'Interstation',
+        // 'Mission',
+        // 'Parameters',
+        // 'Station'
       ],
       folderFiles: {
         'Track': [
@@ -778,7 +778,7 @@ export default {
         */
         'Running_profile': [
           { name: 'running_profile.xls', displayName: 'running_profile.xls' }
-        ],
+        ]
         /*
         'Station': [
           { name: 'station_data.xls', displayName: 'station_data.xls' }
@@ -843,7 +843,7 @@ export default {
       calculationDialogVisible: false,
       calculatedRows: {}, // 记录每行的计算状态, 格式: { rowIndex: { calculated: true, calculating: false } }
       calculatingAllRows: false, // 是否正在进行全局计算
-      globalTravelTimeCalculated: false, // 是否已计算所有行的通行时间
+      globalTravelTimeCalculated: false // 是否已计算所有行的通行时间
     }
   },
 
@@ -1474,18 +1474,18 @@ export default {
         } else if (key === 'Block description' && Array.isArray(jsonData[key])) {
           // 处理Block description数据
           result[key] = jsonData[key].map((item, index) => ({
-            id: item[0] !== undefined ? item[0] : '',              // 第0位: id
-            Start_T1: item[1] !== undefined ? item[1] : '',        // 第1位: Start_T1
-            Start_T2: item[2] !== undefined ? item[2] : '',        // 第2位: Start_T2
-            Rule: item[3] !== undefined ? item[3] : '',            // 第3位: Rule
-            Timer: item[4] !== undefined ? item[4] : '',           // 第4位: Timer
-            SubBlock_Start: item[5] !== undefined ? item[5] : '',  // 第5位: SubBlock > Start
-            SubBlock_End: item[6] !== undefined ? item[6] : '',    // 第6位: SubBlock > End
-            SubBlock_StartDistance: '',                            // 新字段：SubBlock > Start distance
-            SubBlock_Track: item[7] !== undefined ? item[7] : '',  // 第7位: SubBlock > Track
-            Overlap_Value: item[8] !== undefined ? item[8] : '',   // 第8位: overlap > Value
-            Overlap_Track: item[9] !== undefined ? item[9] : '',   // 第9位: overlap > Track
-            Overlap_Sens: item[10] !== undefined ? item[10] : ''   // 第10位: overlap > Sens
+            id: item[0] !== undefined ? item[0] : '', // 第0位: id
+            Start_T1: item[1] !== undefined ? item[1] : '', // 第1位: Start_T1
+            Start_T2: item[2] !== undefined ? item[2] : '', // 第2位: Start_T2
+            Rule: item[3] !== undefined ? item[3] : '', // 第3位: Rule
+            Timer: item[4] !== undefined ? item[4] : '', // 第4位: Timer
+            SubBlock_Start: item[5] !== undefined ? item[5] : '', // 第5位: SubBlock > Start
+            SubBlock_End: item[6] !== undefined ? item[6] : '', // 第6位: SubBlock > End
+            SubBlock_StartDistance: '', // 新字段：SubBlock > Start distance
+            SubBlock_Track: item[7] !== undefined ? item[7] : '', // 第7位: SubBlock > Track
+            Overlap_Value: item[8] !== undefined ? item[8] : '', // 第8位: overlap > Value
+            Overlap_Track: item[9] !== undefined ? item[9] : '', // 第9位: overlap > Track
+            Overlap_Sens: item[10] !== undefined ? item[10] : '' // 第10位: overlap > Sens
           }))
         } else if (key === 'Gen. Param.' && Array.isArray(jsonData[key])) {
           result[key] = jsonData[key].map(item => ({
@@ -1686,7 +1686,7 @@ export default {
         // 轨道区段工作表只显示需要手动填写的7个特定字段
         this.currentHeaders = this.currentSheets[this.activeSheet].headers.filter(header => {
           return ['Rule', 'SubBlock_Start', 'SubBlock_End', 'SubBlock_Track',
-                  'Overlap_Value', 'Overlap_Track', 'Overlap_Sens'].includes(header.prop)
+            'Overlap_Value', 'Overlap_Track', 'Overlap_Sens'].includes(header.prop)
         })
       } else {
         this.currentHeaders = this.currentSheets[this.activeSheet].headers
@@ -1852,7 +1852,7 @@ export default {
 
     handleInputChange(prop, row, index) {
       // 更新数据修改标记
-      this.dataModified = true;
+      this.dataModified = true
 
       // 处理 Track_ID_after_jump 变化
       if (prop === 'Track_ID_after_jump' && this.activeSheet === 'Tracks') {
@@ -2291,7 +2291,7 @@ export default {
             label: folder,
             isFolder: true,
             children: files.map(file => ({
-              id: file.name,  // 恢复为原始格式，不使用folder-filename格式
+              id: file.name, // 恢复为原始格式，不使用folder-filename格式
               label: file.displayName || file.name,
               isFolder: false
             }))
@@ -2917,7 +2917,7 @@ export default {
       if (this.activeSheet === 'PSR' && property === 'Track1') {
         // 检查同一行的T1和T2是否相等
         if (row.T1 !== row.T2 && row.T1 !== '' && row.T2 !== '') {
-          return 'warning-cell'  // PSR使用淡红色警告
+          return 'warning-cell' // PSR使用淡红色警告
         }
       }
 
@@ -3119,7 +3119,6 @@ export default {
         }
 
         // 添加调试日志来帮助排查问题
-
       }
     },
 
@@ -3919,7 +3918,7 @@ export default {
       if (value === null || value === undefined) return ''
       const temp = parseFloat(value)
       if (isNaN(temp)) return value
-      return `${temp}°C (${(temp * 9/5 + 32).toFixed(1)}°F)`
+      return `${temp}°C (${(temp * 9 / 5 + 32).toFixed(1)}°F)`
     },
 
     // 计算T2值
@@ -3947,130 +3946,130 @@ export default {
         this.selectedCalculationRow = {
           data: row,
           index: index
-        };
-        this.calculationDialogVisible = true;
-        return;
+        }
+        this.calculationDialogVisible = true
+        return
       }
 
       // 如果正在计算，不做任何操作
       if (this.isCalculating(row)) {
-        return;
+        return
       }
 
       // 设置当前选中行
       this.selectedCalculationRow = {
         data: row,
         index: index
-      };
+      }
 
       // 重置计算状态
-      this.resetCalculationState();
+      this.resetCalculationState()
 
       // 显示计算对话框
-      this.calculationDialogVisible = true;
+      this.calculationDialogVisible = true
     },
 
     // 重置计算状态
     resetCalculationState() {
       // 只重置状态，不清除结果
-      this.calculationState.travelTime.status = '';
-      this.calculationState.travelTime.percentage = 0;
-      this.calculationState.minHeadway.status = '';
-      this.calculationState.minHeadway.percentage = 0;
-      this.calculationState.minHeadway.enabled = !!this.calculationResults.travelTime;
+      this.calculationState.travelTime.status = ''
+      this.calculationState.travelTime.percentage = 0
+      this.calculationState.minHeadway.status = ''
+      this.calculationState.minHeadway.percentage = 0
+      this.calculationState.minHeadway.enabled = !!this.calculationResults.travelTime
     },
 
     // 获取计算按钮文本
     getCalculationButtonText(row) {
-      if (!row || !row.id) return "计算";
+      if (!row || !row.id) return '计算'
 
       // 获取行ID以标识行
-      const rowId = this.getRowId(row);
+      const rowId = this.getRowId(row)
 
       // 检查是否正在计算
       if (this.calculatedRows[rowId] && this.calculatedRows[rowId].calculating) {
-        return "计算中";
+        return '计算中'
       }
 
       // 检查是否已计算
       if (this.hasCalculationResults(row)) {
-        return "查看结果";
+        return '查看结果'
       }
 
-      return "计算";
+      return '计算'
     },
 
     // 获取按钮类型
     getCalculationButtonType(row) {
       if (this.hasCalculationResults(row)) {
-        return "success"; // 已计算完成显示绿色
+        return 'success' // 已计算完成显示绿色
       }
-      return "warning"; // 默认显示黄色
+      return 'warning' // 默认显示黄色
     },
 
     // 检查是否正在计算
     isCalculating(row) {
-      if (!row) return false;
-      const rowId = this.getRowId(row);
-      return this.calculatedRows[rowId] && this.calculatedRows[rowId].calculating;
+      if (!row) return false
+      const rowId = this.getRowId(row)
+      return this.calculatedRows[rowId] && this.calculatedRows[rowId].calculating
     },
 
     // 检查行是否有计算结果
     hasCalculationResults(row) {
-      if (!row) return false;
-      const rowId = this.getRowId(row);
-      return this.calculatedRows[rowId] && this.calculatedRows[rowId].calculated;
+      if (!row) return false
+      const rowId = this.getRowId(row)
+      return this.calculatedRows[rowId] && this.calculatedRows[rowId].calculated
     },
 
     // 获取行ID
     getRowId(row) {
       // 使用一个唯一标识符，如果有id使用id，否则使用组合字符串
-      return row.id || `${row.departureStation}-${row.arrivalStation}-${row.track}-${row.train}`;
+      return row.id || `${row.departureStation}-${row.arrivalStation}-${row.track}-${row.train}`
     },
 
     // 对单行数据计算通行时间
     calculateTravelTimeForRow() {
-      if (!this.selectedCalculationRow) return;
+      if (!this.selectedCalculationRow) return
 
-      const row = this.selectedCalculationRow.data;
-      const rowId = this.getRowId(row);
+      const row = this.selectedCalculationRow.data
+      const rowId = this.getRowId(row)
 
       // 设置状态为计算中
-      this.calculationState.travelTime.status = 'warning';
-      this.calculationState.travelTime.percentage = 70;
+      this.calculationState.travelTime.status = 'warning'
+      this.calculationState.travelTime.percentage = 70
 
       // 更新行计算状态
       this.$set(this.calculatedRows, rowId, {
         calculating: true,
         calculated: false
-      });
+      })
 
       // 这里可以使用行数据进行特定计算
       setTimeout(() => {
         // 模拟计算成功
-        this.calculationState.travelTime.status = 'success';
-        this.calculationState.travelTime.percentage = 100;
+        this.calculationState.travelTime.status = 'success'
+        this.calculationState.travelTime.percentage = 100
 
         // 启用计算最小间隔时间按钮
-        this.calculationState.minHeadway.enabled = true;
+        this.calculationState.minHeadway.enabled = true
 
         // 设置计算结果，可以使用行特定数据
         this.calculationResults.travelTime = {
           time: '3.2分钟',
           details: `从 ${row.departureStation || row.Departure_Station_name} 到 ${row.arrivalStation || row.Arrival_Station_name} 的通行时间计算完成`
-        };
+        }
 
         // 更新行计算状态
         this.$set(this.calculatedRows, rowId, {
           calculating: false,
           calculated: true
-        });
+        })
 
         this.$message({
           type: 'success',
           message: '通行时间计算成功！'
-        });
-      }, 2000); // 模拟2秒的计算时间
+        })
+      }, 2000) // 模拟2秒的计算时间
     },
 
     // 对单行数据计算最小间隔时间
@@ -4079,33 +4078,33 @@ export default {
         this.$message({
           type: 'warning',
           message: '请先计算通行时间！'
-        });
-        return;
+        })
+        return
       }
 
-      const row = this.selectedCalculationRow.data;
+      const row = this.selectedCalculationRow.data
 
       // 设置状态为计算中
-      this.calculationState.minHeadway.status = 'warning';
-      this.calculationState.minHeadway.percentage = 70;
+      this.calculationState.minHeadway.status = 'warning'
+      this.calculationState.minHeadway.percentage = 70
 
       // 这里可以使用行数据进行特定计算
       setTimeout(() => {
         // 模拟计算成功
-        this.calculationState.minHeadway.status = 'success';
-        this.calculationState.minHeadway.percentage = 100;
+        this.calculationState.minHeadway.status = 'success'
+        this.calculationState.minHeadway.percentage = 100
 
         // 设置计算结果，可以使用行特定数据
         this.calculationResults.minHeadway = {
           time: '1.8分钟',
           details: `从 ${row.departureStation || row.Departure_Station_name} 到 ${row.arrivalStation || row.Arrival_Station_name} 的最小间隔时间计算完成`
-        };
+        }
 
         this.$message({
           type: 'success',
           message: '最小间隔时间计算成功！'
-        });
-      }, 3000); // 模拟3秒的计算时间
+        })
+      }, 3000) // 模拟3秒的计算时间
     },
 
     // 在updateAllStationsFields方法之后添加
@@ -4129,7 +4128,7 @@ export default {
     updateStartT1(index) {
       if (this.activeSheet === 'Block description') {
         const currentRow = this.currentSheets[this.activeSheet].data[index]
-        const startKp = currentRow.SubBlock_Start  // Start_KP字段
+        const startKp = currentRow.SubBlock_Start // Start_KP字段
 
         // 获取 Direction 值
         let dir = 1
@@ -4200,7 +4199,7 @@ export default {
     updateStartT2(index) {
       if (this.activeSheet === 'Block description') {
         const currentRow = this.currentSheets[this.activeSheet].data[index]
-        const startKp = currentRow.SubBlock_Start  // Start_KP字段
+        const startKp = currentRow.SubBlock_Start // Start_KP字段
 
         // 获取 Direction 值
         let dir = 1
@@ -4307,8 +4306,8 @@ export default {
     updateKPCorrection(index) {
       if (this.activeSheet === 'Block description') {
         const currentRow = this.currentSheets[this.activeSheet].data[index]
-        const startKP = currentRow.SubBlock_Start  // G列: Start-KP
-        const trackValue = currentRow.SubBlock_Track  // I列: Track
+        const startKP = currentRow.SubBlock_Start // G列: Start-KP
+        const trackValue = currentRow.SubBlock_Track // I列: Track
 
         // 最外层判断：如果Start-KP为空，返回空值
         if (!startKP || startKP === '') {
@@ -4377,8 +4376,8 @@ export default {
     updateStartDistance(index) {
       if (this.activeSheet === 'Block description') {
         const currentRow = this.currentSheets[this.activeSheet].data[index]
-        const startKP = currentRow.SubBlock_Start  // G列: Start-KP
-        const kpCorrection = currentRow.KP_correction  // J列: KP correction
+        const startKP = currentRow.SubBlock_Start // G列: Start-KP
+        const kpCorrection = currentRow.KP_correction // J列: KP correction
 
         // 获取Direction参数
         let dir = 1
@@ -4424,7 +4423,7 @@ export default {
         const result = (Number(startKP) + kpCorrectionValue) * dir
         currentRow.SubBlock_StartDistance = !isNaN(result) ? result : 0
       }
-    },
+    }
   }
 }
 </script>

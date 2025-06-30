@@ -11,7 +11,8 @@
         prop="id"
         label="ID"
         width="80"
-        align="center">
+        align="center"
+      >
         <template slot-scope="scope">
           <el-input
             v-model="scope.row.id"
@@ -25,16 +26,17 @@
         prop="Distance"
         label="Distance (m)"
         width="180"
-        align="center">
+        align="center"
+      >
         <template slot-scope="scope">
           <el-tooltip :content="String(scope.row.Distance || '')" placement="top" :disabled="!shouldShowTooltip(scope.row.Distance)">
-            <el-input-number 
-              v-model="scope.row.Distance" 
-              :controls="false" 
-              size="small" 
+            <el-input-number
+              v-model="scope.row.Distance"
+              :controls="false"
+              size="small"
               class="cell-input text-center"
               :precision="2"
-              @change="handleInputChange('Distance', scope.row, scope.$index)" 
+              @change="handleInputChange('Distance', scope.row, scope.$index)"
             />
           </el-tooltip>
         </template>
@@ -43,22 +45,24 @@
         prop="Unbridgable_gap"
         label="Unbridgable gap"
         width="150"
-        align="center">
+        align="center"
+      >
         <template slot-scope="scope">
           <el-tooltip :content="String(scope.row.Unbridgable_gap || '')" placement="top" :disabled="!shouldShowTooltip(scope.row.Unbridgable_gap)">
-            <el-input 
-              v-model="scope.row.Unbridgable_gap" 
-              size="small" 
+            <el-input
+              v-model="scope.row.Unbridgable_gap"
+              size="small"
               class="cell-input text-center"
-              @input="handleInputChange('Unbridgable_gap', scope.row, scope.$index)" 
+              @input="handleInputChange('Unbridgable_gap', scope.row, scope.$index)"
             />
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column 
-        label="操作" 
+      <el-table-column
+        label="操作"
         width="200"
-        align="center">
+        align="center"
+      >
         <template slot-scope="scope">
           <div class="operation-buttons">
             <el-button
@@ -103,19 +107,19 @@ export default {
       // 通知父组件数据已修改
       this.$emit('data-modified')
     },
-    
+
     // 在表格中插入行的处理函数
     handleInsertRow(index) {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 通过事件通知父组件
       this.$emit('delete-row', index)
     },
-    
+
     // 判断是否应该显示tooltip
     shouldShowTooltip(value) {
       if (value === undefined || value === null || value === '') {
@@ -124,7 +128,7 @@ export default {
       const strValue = String(value)
       return strValue.length > 10
     },
-    
+
     // 设置单元格样式
     cellClassName({ column, row }) {
       // ID列居中
@@ -133,12 +137,12 @@ export default {
       }
       return ''
     },
-    
+
     // 重置计算值
     resetCalculations() {
       // 没有需要重置的计算值
     },
-    
+
     // 更新所有计算
     updateAllCalculations() {
       // 没有需要更新的计算值
@@ -194,4 +198,4 @@ export default {
 .unbridgeable-gap-container .el-table .el-table__body td:first-child .el-input .el-input__inner {
   text-align: center !important;
 }
-</style> 
+</style>

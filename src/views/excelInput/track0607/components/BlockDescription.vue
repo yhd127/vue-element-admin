@@ -9,12 +9,13 @@
       <el-table-column
         prop="id"
         label="id"
-        width="80">
-      </el-table-column>
+        width="80"
+      />
       <el-table-column
         prop="Start_T1"
         label="Start_T1"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Start_T1" size="small" />
         </template>
@@ -22,7 +23,8 @@
       <el-table-column
         prop="Start_T2"
         label="Start_T2"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Start_T2" size="small" />
         </template>
@@ -30,7 +32,8 @@
       <el-table-column
         prop="Start_Track"
         label="Start_Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Start_Track" size="small" />
         </template>
@@ -38,7 +41,8 @@
       <el-table-column
         prop="Rule"
         label="Rule"
-        width="100">
+        width="100"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Rule" size="small" />
         </template>
@@ -46,7 +50,8 @@
       <el-table-column
         prop="Timer"
         label="Timer"
-        width="100">
+        width="100"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Timer" :controls="false" size="small" />
         </template>
@@ -54,7 +59,8 @@
       <el-table-column
         prop="SubBlock_Start"
         label="Start_KP"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.SubBlock_Start" :controls="false" size="small" />
         </template>
@@ -62,7 +68,8 @@
       <el-table-column
         prop="SubBlock_End"
         label="End"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.SubBlock_End" :controls="false" size="small" />
         </template>
@@ -70,7 +77,8 @@
       <el-table-column
         prop="Track2"
         label="Track2"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Track2" size="small" />
         </template>
@@ -78,7 +86,8 @@
       <el-table-column
         prop="KP_correction"
         label="KP correction"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.KP_correction" size="small" />
         </template>
@@ -86,7 +95,8 @@
       <el-table-column
         prop="SubBlock_StartDistance"
         label="Start distance"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.SubBlock_StartDistance" :controls="false" size="small" />
         </template>
@@ -94,7 +104,8 @@
       <el-table-column
         prop="SubBlock_Track"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.SubBlock_Track" size="small" />
         </template>
@@ -102,7 +113,8 @@
       <el-table-column
         prop="Overlap_Value"
         label="Value"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.Overlap_Value" :controls="false" size="small" />
         </template>
@@ -110,7 +122,8 @@
       <el-table-column
         prop="Overlap_Track"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Overlap_Track" size="small" />
         </template>
@@ -118,14 +131,16 @@
       <el-table-column
         prop="Overlap_Sens"
         label="Sens"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.Overlap_Sens" size="small" />
         </template>
       </el-table-column>
-      <el-table-column 
-        label="操作" 
-        width="200">
+      <el-table-column
+        label="操作"
+        width="200"
+      >
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -191,7 +206,7 @@ export default {
       // 通过事件通知父组件
       this.$emit('insert-row', index)
     },
-    
+
     // 删除行
     handleDeleteRow(index) {
       // 确认删除提示
@@ -202,10 +217,10 @@ export default {
       }).then(() => {
         // 删除数据
         this.sheetData.splice(index, 1)
-        
+
         // 重新设置ID
         this.updateRowIds()
-        
+
         // 提示删除成功
         this.$message({
           type: 'success',
@@ -215,12 +230,12 @@ export default {
         // 取消删除
       })
     },
-    
+
     // 添加新行数据
     addNewRow(componentName, rowData) {
       // 只处理当前组件的数据
       if (componentName !== 'BlockDescription') return
-      
+
       // 构造新行数据，包含默认值
       const newRow = {
         id: this.sheetData.length + 1,
@@ -239,7 +254,7 @@ export default {
         Overlap_Track: rowData.Overlap_Track || '0',
         Overlap_Sens: rowData.Overlap_Sens || '0'
       }
-      
+
       // 根据insertPosition决定在哪里插入新行
       if (rowData.index >= 0 && rowData.index < this.sheetData.length) {
         // 在指定位置插入
@@ -248,17 +263,17 @@ export default {
         // 在末尾插入
         this.sheetData.push(newRow)
       }
-      
+
       // 更新所有行的ID
       this.updateRowIds()
-      
+
       // 提示添加成功
       this.$message({
         type: 'success',
         message: '添加行成功!'
       })
     },
-    
+
     // 更新所有行的ID
     updateRowIds() {
       this.sheetData.forEach((row, index) => {
@@ -273,4 +288,4 @@ export default {
 .block-description-container {
   padding: 0;
 }
-</style> 
+</style>

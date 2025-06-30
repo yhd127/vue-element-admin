@@ -26,7 +26,7 @@ export async function calculateTravelTime(row, rowIndex, projectId) {
     }
 
     const response = await runningProfileApi.calculateTravelTime(params)
-    
+
     if (!response || !response.data) {
       throw new Error('计算结果为空')
     }
@@ -79,7 +79,7 @@ export async function calculateMinHeadway(row, rowIndex, projectId, travelTimeRe
     }
 
     const response = await runningProfileApi.calculateMinHeadway(params)
-    
+
     if (!response || !response.data) {
       throw new Error('计算结果为空')
     }
@@ -128,10 +128,10 @@ export async function calculateAllTravelTimes(rows, projectId, progressCallback)
 
       const result = await calculateTravelTime(rows[i], i, projectId)
       results.push(result)
-      
+
       if (!result.success) {
         success = false
-        message = `第${i+1}行计算失败: ${result.message}`
+        message = `第${i + 1}行计算失败: ${result.message}`
       }
 
       completedCount++
@@ -140,10 +140,10 @@ export async function calculateAllTravelTimes(rows, projectId, progressCallback)
         success: false,
         rowIndex: i,
         error,
-        message: `第${i+1}行计算出错: ${error.message || '未知错误'}`
+        message: `第${i + 1}行计算出错: ${error.message || '未知错误'}`
       })
       success = false
-      message = `第${i+1}行计算出错: ${error.message || '未知错误'}`
+      message = `第${i + 1}行计算出错: ${error.message || '未知错误'}`
       completedCount++
     }
   }
@@ -185,10 +185,10 @@ export async function calculateAllMinHeadways(rows, travelTimeResults, projectId
       const travelTimeResult = travelTimeResults.find(r => r.rowIndex === i)
       const result = await calculateMinHeadway(rows[i], i, projectId, travelTimeResult)
       results.push(result)
-      
+
       if (!result.success) {
         success = false
-        message = `第${i+1}行计算失败: ${result.message}`
+        message = `第${i + 1}行计算失败: ${result.message}`
       }
 
       completedCount++
@@ -197,10 +197,10 @@ export async function calculateAllMinHeadways(rows, travelTimeResults, projectId
         success: false,
         rowIndex: i,
         error,
-        message: `第${i+1}行计算出错: ${error.message || '未知错误'}`
+        message: `第${i + 1}行计算出错: ${error.message || '未知错误'}`
       })
       success = false
-      message = `第${i+1}行计算出错: ${error.message || '未知错误'}`
+      message = `第${i + 1}行计算出错: ${error.message || '未知错误'}`
       completedCount++
     }
   }
@@ -254,4 +254,4 @@ export function formatDetailData(detailData) {
       trainInterval: detailData.receive_interval || '0'
     }
   }
-} 
+}

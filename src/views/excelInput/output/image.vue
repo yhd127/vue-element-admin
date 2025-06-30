@@ -7,7 +7,7 @@
       <div class="image-container">
         <div v-for="(image, index) in images" :key="index" class="image-item">
           <div class="image-card">
-            <img :src="image.url" class="image-preview" />
+            <img :src="image.url" class="image-preview">
             <div class="image-info">
               <div class="image-name">{{ image.name }}</div>
               <div class="image-meta">
@@ -140,4 +140,4 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-</style> 
+</style>

@@ -50,12 +50,12 @@
 </template>
 
 <script>
-import { 
-  calculateT1, 
-  calculateT2, 
-  calculateTrack2, 
-  calculateKPCorrection, 
-  calculateDistance, 
+import {
+  calculateT1,
+  calculateT2,
+  calculateTrack2,
+  calculateKPCorrection,
+  calculateDistance,
   calculatePSRMs,
   initializePSRCalculations
 } from '../calculations/psrCalculations'
@@ -80,20 +80,13 @@ export default {
       default: 350
     }
   },
-  
-  created() {
-    // 组件创建时初始化计算值
-    this.$nextTick(() => {
-      this.initializeCalculatedValues()
-    })
-  },
-  
+
   watch: {
     // 监听方向值变化
     directionValue() {
       this.updateAllDistances()
     },
-    
+
     // 监听Tracks表数据变化
     tracksData: {
       handler() {
@@ -101,7 +94,7 @@ export default {
       },
       deep: true
     },
-    
+
     // 监听数据变化
     'sheetData.data': {
       handler(newVal) {
@@ -112,7 +105,14 @@ export default {
       deep: true
     }
   },
-  
+
+  created() {
+    // 组件创建时初始化计算值
+    this.$nextTick(() => {
+      this.initializeCalculatedValues()
+    })
+  },
+
   methods: {
     /**
      * 初始化所有计算值
@@ -121,10 +121,10 @@ export default {
       if (!this.sheetData || !this.sheetData.data || !Array.isArray(this.sheetData.data)) {
         return
       }
-      
+
       // 确保maxPSR是有效的数值
-      const maxPSRValue = Number(this.maxPSR) || 350;
-      
+      const maxPSRValue = Number(this.maxPSR) || 350
+
       // 使用集中初始化函数计算所有值
       initializePSRCalculations(
         this.sheetData.data,
@@ -133,11 +133,11 @@ export default {
         maxPSRValue
       )
     },
-    
+
     cellClassName({ row, column }) {
       // 为计算字段添加不同的样式
       const calculatedFields = ['T1', 'T2', 'Track2', 'KP_correction', 'Distance', 'PSR_ms']
-      
+
       // 标红和标蓝逻辑 - 为Track1字段
       if (column.property === 'Track1') {
         // 当T1和T2不相等（且都不为空）时，Track1标红
@@ -149,18 +149,18 @@ export default {
           return 'info-cell'
         }
       }
-      
+
       // ID列居中
       if (column.property === 'id') {
         return 'id-column'
       }
-      
+
       if (calculatedFields.includes(column.property)) {
         return 'calculated-cell'
       }
       return ''
     },
-    
+
     getColumnMinWidth(prop) {
       const widthMap = {
         id: 80,
@@ -176,18 +176,18 @@ export default {
       }
       return widthMap[prop] || 100
     },
-    
+
     shouldShowTooltip(value) {
       if (value === null || value === undefined || value === '') return false
       return String(value).length > 10
     },
-    
+
     isFieldDisabled(prop) {
       // 这些字段是计算得出的，用户不能直接编辑
       const disabledFields = ['T1', 'T2', 'Track2', 'KP_correction', 'Distance', 'PSR_ms', 'id']
       return disabledFields.includes(prop)
     },
-    
+
     handleInputChange(prop, row, index) {
       // 处理输入变化并计算相关字段
       if (prop === 'KP') {
@@ -196,66 +196,66 @@ export default {
         this.updateKPCorrection(row)
         this.updateDistance(row)
       }
-      
+
       if (prop === 'PSR') {
         this.updatePSRMs(row)
       }
-      
+
       if (prop === 'Track1') {
         this.updateTrack2(row)
         this.updateKPCorrection(row)
         this.updateDistance(row)
       }
-      
+
       // 发出数据修改事件
       this.$emit('data-modified')
     },
-    
+
     updateT1AndT2(row) {
       // 计算T1值
       row.T1 = calculateT1(row, this.tracksData, Number(this.directionValue))
-      
+
       // 计算T2值
       row.T2 = calculateT2(row, this.tracksData, Number(this.directionValue))
     },
-    
+
     updateTrack2(row) {
       // 计算Track2值
       row.Track2 = calculateTrack2(row)
     },
-    
+
     updateKPCorrection(row) {
       // 计算KP_correction值
       row.KP_correction = calculateKPCorrection(row, this.tracksData, Number(this.directionValue))
     },
-    
+
     updateDistance(row) {
       // 计算Distance值
       row.Distance = calculateDistance(row, Number(this.directionValue))
     },
-    
+
     updatePSRMs(row) {
       // 计算PSR_ms值，使用从props获取的maxPSR值
-      const maxPSRValue = Number(this.maxPSR) || 350;
+      const maxPSRValue = Number(this.maxPSR) || 350
       // 将maxPSR传递给计算函数
-      row.PSR_ms = calculatePSRMs(row, maxPSRValue);
+      row.PSR_ms = calculatePSRMs(row, maxPSRValue)
     },
-    
+
     // 更新所有行的Distance值
     updateAllDistances() {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       for (let i = 0; i < this.sheetData.data.length; i++) {
         const row = this.sheetData.data[i]
         row.Distance = calculateDistance(row, Number(this.directionValue))
       }
     },
-    
+
     handleInsertRow(index) {
       // 通知父组件在指定位置插入新行
       this.$emit('insert-row', index)
     },
-    
+
     handleDeleteRow(index) {
       // 通知父组件删除指定行
       this.$emit('delete-row', index)
@@ -327,4 +327,4 @@ td.id-column .el-input .el-input__inner {
 .calculated-cell .el-input .el-input__inner {
   text-align: center !important;
 }
-</style> 
+</style>

@@ -29,10 +29,10 @@
         <el-table-column prop="update_time" align="center" label="更新时间" width="180" />
         <el-table-column label="操作" align="center" min-width="180">
           <template slot-scope="scope">
-            <el-button size="medium" type="warning" @click="updateUserInfo(scope.row)" :disabled="isSpecialAdmin(scope.row)">
+            <el-button size="medium" type="warning" :disabled="isSpecialAdmin(scope.row)" @click="updateUserInfo(scope.row)">
               修改信息
             </el-button>
-            <el-button size="medium" type="danger" @click="delUser(scope.row.id)" :disabled="isSpecialAdmin(scope.row)">
+            <el-button size="medium" type="danger" :disabled="isSpecialAdmin(scope.row)" @click="delUser(scope.row.id)">
               删除
             </el-button>
           </template>
@@ -41,14 +41,20 @@
     </div>
     <pagination :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.size" @pagination="handlePagination" />
 
-    <el-dialog :title="formTextMap[formOperationType]"
-      :visible.sync="userDialogFormVisible" :modal="true" custom-class="ly-running-info-body"
-      @close="createUserDialogClosed" class="view-dialog" :show-close="false">
+    <el-dialog
+      :title="formTextMap[formOperationType]"
+      :visible.sync="userDialogFormVisible"
+      :modal="true"
+      custom-class="ly-running-info-body"
+      class="view-dialog"
+      :show-close="false"
+      @close="createUserDialogClosed"
+    >
       <el-form ref="userForm" :model="userForm" label-width="40%" style="width:60%;" :rules="rules">
-        <el-form-item label="ID:" v-if="formOperationType == 'edit'">
+        <el-form-item v-if="formOperationType == 'edit'" label="ID:">
           <el-input v-model="userForm.id" disabled />
         </el-form-item>
-        <el-form-item label="用户名:" prop="user_name" key="userName1">
+        <el-form-item key="userName1" label="用户名:" prop="user_name">
           <el-input v-model="userForm.user_name" />
         </el-form-item>
         <el-form-item v-if="formOperationType == 'create'" label="密码：" prop="user_password">
@@ -57,7 +63,7 @@
         <el-form-item v-if="formOperationType == 'create'" label="确认密码：" prop="password1">
           <el-input v-model="userForm.password1" placeholder="请再次输入密码" show-password />
         </el-form-item>
-        <el-form-item label="姓名:" key="personName1" prop="user_full_name">
+        <el-form-item key="personName1" label="姓名:" prop="user_full_name">
           <el-input v-model="userForm.user_full_name" />
         </el-form-item>
         <el-form-item label="项目信息:">
@@ -65,8 +71,7 @@
         </el-form-item>
         <el-form-item label="角色:" prop="user_role">
           <el-select v-model="userForm.user_role" placeholder="请选择角色" style="width: 60%;">
-            <el-option v-for="item in roleOptions" :key="item.id" :label="item.role_name" :value="item.id">
-            </el-option>
+            <el-option v-for="item in roleOptions" :key="item.id" :label="item.role_name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -99,7 +104,7 @@
         <el-button type="primary" @click="submitPasswordReset">确认</el-button>
       </span>
     </el-dialog>
-    
+
     <!-- 修改用户信息时的密码确认对话框 -->
     <el-dialog
       title="请输入当前用户密码"
@@ -137,12 +142,12 @@ export default {
           return
         }
       }
-      
+
       // 在前端检查用户名是否已存在
-      const userExists = this.allUsers.some(user => 
+      const userExists = this.allUsers.some(user =>
         user.user_name && user.user_name.toLowerCase() === value.toLowerCase()
       )
-      
+
       if (userExists) {
         callback(new Error('用户名已存在，请更换其他用户名'))
       } else {
@@ -228,7 +233,7 @@ export default {
   methods: {
     // 判断是否是特殊的管理员账号（用户名为admin且姓名为Administrator）
     isSpecialAdmin(user) {
-      return user.user_name === 'admin' && user.user_full_name === 'Administrator' && user.role_name === 'admin';
+      return user.user_name === 'admin' && user.user_full_name === 'Administrator' && user.role_name === 'admin'
     },
     // 获取角色列表
     getRoleList() {
@@ -248,7 +253,7 @@ export default {
     // 获取角色名称
     getRoleName(roleId) {
       if (!roleId) return '无角色'
-      
+
       // 查找具有此角色ID的用户，并返回其角色名称
       const userWithRole = this.allUsers.find(user => user.user_role === roleId && user.role_name)
       if (userWithRole && userWithRole.role_name) {
@@ -258,11 +263,11 @@ export default {
           'user': '用户',
           'viewer': '审核员'
         }
-        
+
         // 如果角色名在映射表中存在，返回中文名称，否则返回原名
         return roleNameMap[userWithRole.role_name] || userWithRole.role_name
       }
-      
+
       return `角色(${roleId})`
     },
     // 获取用户列表
@@ -271,7 +276,7 @@ export default {
       getUserListV1().then(response => {
         this.loading = false
         // 直接返回数组
-        let userData = Array.isArray(response) ? response : (response.data || [])
+        const userData = Array.isArray(response) ? response : (response.data || [])
         this.allUsers = userData.map(user => ({
           id: user.idx,
           user_name: user.user_name,
@@ -297,23 +302,23 @@ export default {
     // 应用过滤器 - 在前端过滤数据
     applyFilters() {
       const { user_name, user_full_name } = this.listQuery
-      
+
       // 如果没有搜索条件，显示所有数据
       if (!user_name && !user_full_name) {
         this.filterPageData()
         return
       }
-      
+
       // 过滤符合条件的用户
       const filteredUsers = this.allUsers.filter(user => {
         const matchUsername = !user_name || (user.user_name && user.user_name.toLowerCase().includes(user_name.toLowerCase()))
         const matchFullname = !user_full_name || (user.user_full_name && user.user_full_name.toLowerCase().includes(user_full_name.toLowerCase()))
         return matchUsername && matchFullname
       })
-      
+
       // 设置总数并应用分页
       this.total = filteredUsers.length
-      
+
       // 获取当前页的数据
       const start = (this.listQuery.page - 1) * this.listQuery.size
       const end = start + this.listQuery.size
@@ -342,7 +347,7 @@ export default {
           } else if (response.code === 0 || response.code === 20000) {
             userData = response.data || []
           }
-          
+
           // 更新allUsers数组
           this.allUsers = userData.map(user => ({
             id: user.idx,
@@ -355,7 +360,7 @@ export default {
             create_time: user.created_at,
             update_time: user.updated_at
           }))
-          
+
           // 打开创建用户对话框
           this.openCreateUserDialog()
         }).catch(error => {
@@ -386,9 +391,9 @@ export default {
       // 先调用API获取用户详细信息
       getUserByIdxV1(row.id).then(response => {
         // 获取返回的用户数据
-        const userData = response;
-        console.log('获取到的用户详情:', userData);
-        
+        const userData = response
+        console.log('获取到的用户详情:', userData)
+
         this.formOperationType = 'edit'
         this.userForm = {
           id: userData.idx,
@@ -419,13 +424,13 @@ export default {
           this.getList() // 重新获取所有用户数据
         }).catch((error) => {
           console.error('删除用户错误:', error)
-          
+
           // 处理错误信息
-          let errorMsg = '删除失败';
+          let errorMsg = '删除失败'
           if (error.response && error.response.data && error.response.data.detail) {
-            errorMsg = error.response.data.detail;
+            errorMsg = error.response.data.detail
           }
-          
+
           this.$message.error(errorMsg)
         })
       }).catch(() => {})
@@ -450,11 +455,11 @@ export default {
         this.$message.warning('新密码长度至少为5位')
         return
       }
-      
+
       // 调用新的API
       updatePasswordV1(
-        this.userForm.id, 
-        this.passwordForm.oldPassword, 
+        this.userForm.id,
+        this.passwordForm.oldPassword,
         this.passwordForm.newPassword
       ).then(response => {
         // 密码更新成功
@@ -462,17 +467,17 @@ export default {
         this.passwordDialogVisible = false
       }).catch(error => {
         console.error('密码重置错误:', error)
-        
+
         // 处理错误信息
-        let errorMsg = '密码重置失败';
+        let errorMsg = '密码重置失败'
         if (error.response && error.response.data && error.response.data.detail) {
           if (error.response.data.detail === 'Incorrect old password') {
-            errorMsg = '旧密码不正确';
+            errorMsg = '旧密码不正确'
           } else {
-            errorMsg = error.response.data.detail;
+            errorMsg = error.response.data.detail
           }
         }
-        
+
         this.$message.error(errorMsg)
       })
     },
@@ -482,15 +487,15 @@ export default {
         if (valid) {
           // 在提交前再次检查用户名是否已存在
           const username = this.userForm.user_name.toLowerCase()
-          const userExists = this.allUsers.some(user => 
+          const userExists = this.allUsers.some(user =>
             user.user_name && user.user_name.toLowerCase() === username
           )
-          
+
           if (userExists) {
             this.$message.error('用户名已存在，请更换其他用户名')
             return
           }
-          
+
           // 准备请求数据
           const requestData = {
             user_name: this.userForm.user_name,
@@ -499,7 +504,7 @@ export default {
             user_role: this.userForm.user_role,
             user_project_infor: this.userForm.user_project_infor || ''
           }
-          
+
           // 验证通过，提交表单
           createOrUpdateUserV1(requestData).then(response => {
             this.userDialogFormVisible = false
@@ -507,8 +512,8 @@ export default {
             this.getList() // 重新获取所有用户数据
           }).catch((error) => {
             console.error('创建用户失败:', error)
-            const errorMsg = error.response && error.response.data && error.response.data.detail 
-              ? error.response.data.detail 
+            const errorMsg = error.response && error.response.data && error.response.data.detail
+              ? error.response.data.detail
               : (error.message || '未知错误')
             this.$message.error(`创建失败: ${errorMsg}`)
           })
@@ -526,12 +531,12 @@ export default {
             user_role: this.userForm.user_role,
             user_project_infor: this.userForm.user_project_infor
           }
-          
+
           // 如果密码为空，则先请求用户输入密码
           if (!this.userForm.user_password || this.userForm.user_password === '') {
             // 保存待提交的表单数据
             this.pendingFormData = formData
-            
+
             // 打开密码确认对话框
             this.confirmPasswordForm.password = ''
             this.confirmPasswordVisible = true
@@ -549,23 +554,23 @@ export default {
         this.$message.warning('请输入密码')
         return
       }
-      
+
       // 将密码添加到表单数据中
       const formData = {
         ...this.pendingFormData,
         user_password: this.confirmPasswordForm.password
       }
-      
+
       // 提交数据
       this.submitFormData(formData)
-      
+
       // 关闭密码确认对话框
       this.confirmPasswordVisible = false
     },
     // 提交表单数据的核心方法
     submitFormData(formData) {
       console.log('提交更新表单：', formData)
-      
+
       // 使用原来的API更新用户
       updateUserV1(this.userForm.id, formData).then(response => {
         console.log('更新成功，响应:', response)
@@ -574,13 +579,13 @@ export default {
         this.getList() // 重新获取所有用户数据
       }).catch(error => {
         console.error('修改用户错误:', error)
-        
+
         // 从错误中提取详细信息
         let errorMsg = '修改失败'
         if (error.response && error.response.data && error.response.data.detail) {
           errorMsg = error.response.data.detail
         }
-        
+
         this.$message.error(`修改失败: ${errorMsg}`)
       })
     },
@@ -607,4 +612,4 @@ export default {
 .block {
   margin: 20px 0;
 }
-</style> 
+</style>

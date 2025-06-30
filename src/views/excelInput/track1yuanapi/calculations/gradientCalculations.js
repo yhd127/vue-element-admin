@@ -11,32 +11,32 @@
  */
 export function calculateT1(row, tracksData, direction) {
   const kpValue = row.KP
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_before_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return ''
   }
-  
+
   // Excel公式中的IF判断
   const matchedRow = tracksData[matchIndex]
   const matchedKP = Number(matchedRow.KP_before_jump) || 0
-  
+
   // 检查找到的KP是否与输入的KP完全相等
   if (matchedKP === numericKP) {
     // 完全匹配，使用当前行的Track_ID_before_jump
@@ -62,28 +62,28 @@ export function calculateT1(row, tracksData, direction) {
  */
 export function calculateT2(row, tracksData, direction) {
   const kpValue = row.KP
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return ''
   }
-  
+
   // 获取对应行的Track_ID_after_jump值
   return tracksData[matchIndex].Track_ID_after_jump
 }
@@ -97,7 +97,7 @@ export function calculateTrack2(row) {
   const track1Value = row.Track1
   const t1Value = row.T1
   const t2Value = row.T2
-  
+
   // 应用公式: IF(AND(Track1="",T1=T2),T1,IF(Track1="","",Track1))
   if (track1Value === '' || track1Value === undefined) {
     if (t1Value === t2Value) {
@@ -120,28 +120,28 @@ export function calculateTrack2(row) {
 export function calculateKPCorrection(row, tracksData, direction) {
   const kpValue = row.KP
   const track2Value = row.Track2
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return '#N/A'
   }
-  
+
   // 实现公式中的多重IF判断
   // 第一种情况: INDEX(Tracks!E:E,MATCH(E4,Tracks!D:D,dir))=G4
   if (tracksData[matchIndex].Track_ID_after_jump == track2Value) {
@@ -170,12 +170,12 @@ export function calculateKPCorrection(row, tracksData, direction) {
 export function calculateDistance(row, direction) {
   const kpValue = row.KP
   const kpCorrection = row.KP_correction
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   // 应用修改后的公式: =IF(KP="",MAX(100000,Distance+1),(KP+KP_correction)*dir))
-  
+
   // 检查KP是否为空
   if (kpValue === '' || kpValue === undefined) {
     // 如果KP为空，使用当前Distance值+1与100000的较大值
@@ -186,16 +186,16 @@ export function calculateDistance(row, direction) {
     if (kpCorrection === '#N/A') {
       return '#N/A'
     }
-    
+
     // 如果KP不为空，使用当前行的KP和KP_correction计算
     const numericKP = Number(kpValue) || 0
-    
+
     // 处理KP_correction
     let correctionValue = 0
     if (kpCorrection !== '' && kpCorrection !== undefined && kpCorrection !== '#N/A') {
       correctionValue = Number(kpCorrection) || 0
     }
-    
+
     // 计算(KP + KP_correction) * dir
     return (numericKP + correctionValue) * dir
   }
@@ -208,12 +208,12 @@ export function calculateDistance(row, direction) {
  */
 export function calculateSlopePermille(row) {
   const slopeValue = row.slope
-  
+
   // 如果slope为空，返回空
   if (slopeValue === '' || slopeValue === undefined) {
     return ''
   }
-  
+
   // 计算千分比
   const numericSlope = Number(slopeValue) || 0
   return numericSlope * 10
@@ -228,26 +228,26 @@ export function calculateSlopePermille(row) {
  * @returns {Number} 匹配的行索引，如果未找到则返回-1
  */
 function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
-  if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0 || 
+  if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0 ||
       kpValue === undefined || kpValue === null) {
     return -1
   }
-  
+
   let matchIndex = -1
   const dir = Number(direction) || 1
-  
+
   // 根据dir的值决定查找方式
   if (dir === 1) {
     // dir=1时，假设数据是升序排列，查找小于等于numericValue的最大值
     // 从前向后遍历，保持与Track1.vue相同的实现
     for (let i = 0; i < tracksData.length; i++) {
       const rawValue = tracksData[i][fieldName]
-      
+
       // 跳过空行或值为空字符串的行
       if (rawValue === '' || rawValue === undefined) {
         continue
       }
-      
+
       const rowValue = Number(rawValue) || 0
       if (rowValue <= kpValue) {
         matchIndex = i
@@ -259,12 +259,12 @@ function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
     // dir=0时，假设数据是降序排列，查找大于等于numericValue的最小值
     for (let i = 0; i < tracksData.length; i++) {
       const rawValue = tracksData[i][fieldName]
-      
+
       // 跳过空行或值为空字符串的行
       if (rawValue === '' || rawValue === undefined) {
         continue
       }
-      
+
       const rowValue = Number(rawValue) || 0
       if (rowValue >= kpValue) {
         matchIndex = i
@@ -273,7 +273,7 @@ function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
       }
     }
   }
-  
+
   return matchIndex
 }
 
@@ -287,10 +287,10 @@ export function initializeGradientCalculations(gradientData, tracksData, directi
   if (!gradientData || !Array.isArray(gradientData) || gradientData.length === 0) {
     return
   }
-  
+
   for (let i = 0; i < gradientData.length; i++) {
     const row = gradientData[i]
-    
+
     // 按顺序计算，保证依赖关系
     row.T1 = calculateT1(row, tracksData, direction)
     row.T2 = calculateT2(row, tracksData, direction)
@@ -299,4 +299,4 @@ export function initializeGradientCalculations(gradientData, tracksData, directi
     row.Distance = calculateDistance(row, direction)
     row.Slope_permille = calculateSlopePermille(row)
   }
-} 
+}

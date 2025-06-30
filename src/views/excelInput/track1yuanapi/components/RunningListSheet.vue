@@ -18,7 +18,7 @@
           <span class="disabled-cell id-cell">{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      
+
       <!-- 数据列 -->
       <el-table-column
         prop="departureStation"
@@ -31,10 +31,10 @@
             v-model="scope.row.departureStation"
             placeholder="请输入..."
             @input="() => handleInputChange('departureStation', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="departureDistance"
         label="Departure Station Distance"
@@ -46,10 +46,10 @@
             v-model="scope.row.departureDistance"
             placeholder="请输入..."
             @input="() => handleInputChange('departureDistance', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="arrivalStation"
         label="Arrival Station name"
@@ -61,10 +61,10 @@
             v-model="scope.row.arrivalStation"
             placeholder="请输入..."
             @input="() => handleInputChange('arrivalStation', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="arrivalDistance"
         label="Arrival Station Distance"
@@ -76,10 +76,10 @@
             v-model="scope.row.arrivalDistance"
             placeholder="请输入..."
             @input="() => handleInputChange('arrivalDistance', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="track"
         label="Track"
@@ -91,10 +91,10 @@
             v-model="scope.row.track"
             placeholder="请输入..."
             @input="() => handleInputChange('track', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="train"
         label="Train"
@@ -106,10 +106,10 @@
             v-model="scope.row.train"
             placeholder="请输入..."
             @input="() => handleInputChange('train', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="trainLoad"
         label="train load [0 1]"
@@ -117,14 +117,14 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-input 
-            v-model="scope.row.trainLoad" 
+          <el-input
+            v-model="scope.row.trainLoad"
             placeholder="请输入..."
             @input="() => handleInputChange('trainLoad', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <el-table-column
         prop="stationStopTime"
         label="Station Stop Time"
@@ -136,10 +136,10 @@
             v-model="scope.row.stationStopTime"
             placeholder="请输入..."
             @input="() => handleInputChange('stationStopTime', scope.row, scope.$index)"
-          ></el-input>
+          />
         </template>
       </el-table-column>
-      
+
       <!-- 操作列 - 移到最后，不固定 -->
       <el-table-column label="操作" width="320" align="center">
         <template slot-scope="scope">
@@ -147,8 +147,8 @@
             <el-button
               size="mini"
               :type="getCalculationButtonType(scope.row)"
-              @click="handleSingleRowCalculate(scope.row, scope.$index)"
               :loading="isCalculating(scope.row)"
+              @click="handleSingleRowCalculate(scope.row, scope.$index)"
             >{{ getCalculationButtonText(scope.row) }}</el-button>
             <el-button
               size="mini"
@@ -191,20 +191,20 @@
             >
               计算通行时间
             </el-button>
-            
-            <el-progress 
-              v-if="calculationState.travelTime.status" 
+
+            <el-progress
+              v-if="calculationState.travelTime.status"
               :percentage="calculationState.travelTime.percentage"
               :status="calculationState.travelTime.status"
               type="circle"
-            ></el-progress>
-            
+            />
+
             <div v-if="calculationResults.travelTime" class="result-box">
               <div class="result-inner">
                 <p class="result-title">结果: {{ calculationResults.travelTime.time }}</p>
                 <p class="result-details">{{ calculationResults.travelTime.details }}</p>
               </div>
-              
+
               <div class="result-actions">
                 <el-button size="small" @click="exportResultToExcel('travelTime')">
                   输出Excel文件
@@ -215,10 +215,10 @@
               </div>
             </div>
           </div>
-          
+
           <!-- 分隔线 -->
-          <el-divider direction="vertical" class="column-divider"></el-divider>
-          
+          <el-divider direction="vertical" class="column-divider" />
+
           <!-- 右侧：最小间隔时间计算 -->
           <div class="calculation-column">
             <el-button
@@ -229,20 +229,20 @@
             >
               计算最小间隔时间
             </el-button>
-            
-            <el-progress 
-              v-if="calculationState.minHeadway.status" 
+
+            <el-progress
+              v-if="calculationState.minHeadway.status"
               :percentage="calculationState.minHeadway.percentage"
               :status="calculationState.minHeadway.status"
               type="circle"
-            ></el-progress>
-            
+            />
+
             <div v-if="calculationResults.minHeadway" class="result-box">
               <div class="result-inner">
                 <p class="result-title">结果: {{ calculationResults.minHeadway.time }}</p>
                 <p class="result-details">{{ calculationResults.minHeadway.details }}</p>
               </div>
-              
+
               <div class="result-actions">
                 <el-button size="small" @click="viewDetailResults">
                   查看详情
@@ -253,7 +253,7 @@
         </div>
       </div>
     </el-dialog>
-    
+
     <!-- 添加图片预览对话框 -->
     <el-dialog
       :visible.sync="imagePreviewVisible"
@@ -264,19 +264,19 @@
       custom-class="full-screen-image-dialog"
     >
       <div class="full-screen-image-container">
-        <img v-if="previewImageInfo" :src="previewImageInfo.path" class="full-screen-image" />
+        <img v-if="previewImageInfo" :src="previewImageInfo.path" class="full-screen-image">
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="imagePreviewVisible = false">关闭</el-button>
         <el-button type="primary" @click="downloadImageFromPreview">下载图片</el-button>
       </span>
     </el-dialog>
-    
+
     <!-- 添加JSON预览对话框 -->
     <el-dialog
       title="运行配置数据"
       :visible.sync="jsonPreviewVisible"
-      :dangerouslyUseHTMLString="true"
+      :dangerously-use-h-t-m-l-string="true"
       :center="true"
       custom-class="json-preview-dialog"
     >
@@ -295,7 +295,7 @@
         <el-button type="primary" @click="downloadExcelFile">下载Excel</el-button>
       </span>
     </el-dialog>
-    
+
     <!-- 添加详情表单对话框 -->
     <el-dialog
       title="计算结果详情"
@@ -335,8 +335,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(1, 0)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(1, 0)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(1, 0)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(1, 0)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -398,8 +398,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(2, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(2, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(2, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(2, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -454,8 +454,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(3, 0)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(3, 0)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(3, 0)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(3, 0)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -466,7 +466,7 @@
 </template>
 
 <script>
-import { 
+import {
   calculateTravelTime,
   calculateMinHeadway,
   formatDetailData
@@ -496,7 +496,7 @@ export default {
       default: 350
     }
   },
-  
+
   data() {
     return {
       // 计算相关状态
@@ -575,25 +575,18 @@ export default {
       }
     }
   },
-  
-  created() {
-    // 组件创建时初始化计算值
-    this.$nextTick(() => {
-      this.initializeCalculatedValues()
-    })
-  },
-  
+
   watch: {
     // 监听方向值变化
     directionValue() {
       this.initializeCalculatedValues()
     },
-    
+
     // 监听最大PSR值变化
     maxPSR() {
       this.initializeCalculatedValues()
     },
-    
+
     // 监听Tracks表数据变化
     tracksData: {
       handler() {
@@ -601,7 +594,7 @@ export default {
       },
       deep: true
     },
-    
+
     // 监听Stations表数据变化
     stationsData: {
       handler() {
@@ -609,7 +602,7 @@ export default {
       },
       deep: true
     },
-    
+
     // 监听数据变化
     'sheetData.data': {
       handler(newVal) {
@@ -620,7 +613,14 @@ export default {
       deep: true
     }
   },
-  
+
+  created() {
+    // 组件创建时初始化计算值
+    this.$nextTick(() => {
+      this.initializeCalculatedValues()
+    })
+  },
+
   methods: {
     /**
      * 初始化所有计算值
@@ -628,25 +628,25 @@ export default {
     initializeCalculatedValues() {
       // 只需对数据执行必要的初始化
       if (this.sheetData && this.sheetData.length > 0) {
-        console.log('初始化RunningList计算字段');
-        this.initializeRunningListCalculations();
+        console.log('初始化RunningList计算字段')
+        this.initializeRunningListCalculations()
       }
     },
-    
+
     // 初始化RunningList计算 - 添加此缺失的函数
     initializeRunningListCalculations() {
       // 此方法用于初始化运行列表的计算字段
       // 根据需要进行计算初始化
-      console.log('初始化运行列表计算');
-      
+      console.log('初始化运行列表计算')
+
       // 遍历所有行，初始化计算字段
       this.sheetData.forEach((row, index) => {
         // 这里可以根据需要添加具体的计算逻辑
         // 目前仅记录日志，不执行实际计算
-        console.log(`初始化第 ${index + 1} 行计算`);
-      });
+        console.log(`初始化第 ${index + 1} 行计算`)
+      })
     },
-    
+
     cellClassName({ column, row }) {
       // ID列居中
       if (column.property === 'id') {
@@ -661,7 +661,7 @@ export default {
       }
       return ''
     },
-    
+
     getColumnMinWidth(prop) {
       const minWidthMap = {
         'id': 80,
@@ -682,12 +682,12 @@ export default {
       }
       return minWidthMap[prop] || 100
     },
-    
+
     shouldShowTooltip(value) {
       if (value === null || value === undefined || value === '') return false
       return String(value).length > 10
     },
-    
+
     isFieldDisabled(prop) {
       // 这些字段是计算得出的，用户不能直接编辑
       const disabledFields = [
@@ -695,90 +695,90 @@ export default {
       ]
       return disabledFields.includes(prop)
     },
-    
+
     handleCellDblClick(row, column) {
       // 双击单元格的处理逻辑，如有需要可以实现
     },
-    
+
     handleInputChange(prop, row, index) {
       // 处理输入变化并计算相关字段
       if (['departureStation', 'arrivalStation', 'Distance', 'StopTime'].includes(prop)) {
         this.updateCalculatedValues(row, index)
       }
-      
+
       // 发出数据修改事件
       this.$emit('data-modified')
     },
-    
+
     updateCalculatedValues(row, index) {
       // 计算行程时间
       row.TravelTime = calculateTravelTime(row, this.sheetData.data, index)
-      
+
       // 计算速度
       row.Speed = calculateSpeed(row, this.sheetData.data, index)
-      
+
       // 计算到达时间
       row.Arrival = calculateArrival(row, this.sheetData.data, index)
-      
+
       // 计算出发时间
       row.Departure = calculateDeparture(row)
-      
+
       // 如果当前行更新了，也需要更新后续行
       this.updateFollowingRows(index + 1)
     },
-    
+
     updateFollowingRows(startIndex) {
       if (!this.sheetData || !this.sheetData.data) return
-      
+
       for (let i = startIndex; i < this.sheetData.data.length; i++) {
         const row = this.sheetData.data[i]
-        
+
         // 计算行程时间
         row.TravelTime = calculateTravelTime(row, this.sheetData.data, i)
-        
+
         // 计算速度
         row.Speed = calculateSpeed(row, this.sheetData.data, i)
-        
+
         // 计算到达时间
         row.Arrival = calculateArrival(row, this.sheetData.data, i)
-        
+
         // 计算出发时间
         row.Departure = calculateDeparture(row)
       }
     },
-    
+
     handleInsertRow(index) {
       // 通知父组件在指定位置插入新行
       this.$emit('insert-row', index)
     },
-    
+
     handleDeleteRow(index) {
       // 通知父组件删除指定行
       this.$emit('delete-row', index)
     },
-    
+
     // 获取计算按钮类型
     getCalculationButtonType(row) {
       if (this.isCalculating(row)) {
         return 'warning'
       }
-      
+
       if (this.isCalculated(row)) {
         return 'success'
       }
-      
+
       return 'warning'
     },
-    
+
     // 获取计算按钮文本
     getCalculationButtonText(row) {
       const rowId = this.getRowId(row)
-      
+
       // 如果正在计算（无论是通行时间还是最小间隔时间）
       if (this.isCalculating(row)) {
         return '计算中...'
       }
-      
+
       // 如果已计算过通行时间
       if (this.calculatedRows[rowId] && this.calculatedRows[rowId].travelTimeResult) {
         // 如果已计算过最小间隔时间
@@ -788,32 +788,32 @@ export default {
         // 只计算了通行时间
         return '查看通行时间结果'
       }
-      
+
       // 默认情况
       return '计算'
     },
-    
+
     // 判断行是否正在计算
     isCalculating(row) {
       const rowId = this.getRowId(row)
       // 检查是否正在计算通行时间，或者是否正在计算最小间隔时间
-      return (this.calculatedRows[rowId] && this.calculatedRows[rowId].calculating) || 
-             (this.selectedCalculationRow && 
-              this.selectedCalculationRow.data === row && 
+      return (this.calculatedRows[rowId] && this.calculatedRows[rowId].calculating) ||
+             (this.selectedCalculationRow &&
+              this.selectedCalculationRow.data === row &&
               this.calculationState.minHeadway.status === 'warning')
     },
-    
+
     // 判断行是否已经计算
     isCalculated(row) {
       const rowId = this.getRowId(row)
       return this.calculatedRows[rowId] && this.calculatedRows[rowId].calculated
     },
-    
+
     // 获取行ID
     getRowId(row) {
       return row.id || this.sheetData.data.findIndex(r => r === row)
     },
-    
+
     // 处理单行计算
     handleSingleRowCalculate(row, rowIndex) {
       if (this.isCalculated(row)) {
@@ -824,11 +824,11 @@ export default {
         this.startCalculation(row, rowIndex)
       }
     },
-    
+
     // 显示计算结果
     showCalculationResults(row, rowIndex) {
       this.selectedCalculationRow = { data: row, index: rowIndex }
-      
+
       // 如果已经计算过通行时间
       const rowId = this.getRowId(row)
       if (this.calculatedRows[rowId] && this.calculatedRows[rowId].travelTimeResult) {
@@ -836,197 +836,197 @@ export default {
           time: `${this.calculatedRows[rowId].travelTimeResult}秒`,
           details: `从 ${row.departureStation} 到 ${row.arrivalStation} 的通行时间计算完成`
         }
-        
+
         this.calculationState.travelTime.status = 'success'
         this.calculationState.travelTime.percentage = 100
         this.calculationState.minHeadway.enabled = true
       }
-      
+
       // 如果已经计算过最小间隔时间
       if (this.calculatedRows[rowId] && this.calculatedRows[rowId].minHeadwayResult) {
         this.calculationResults.minHeadway = {
           time: `${this.calculatedRows[rowId].minHeadwayResult.minHeadway}分钟`,
           details: `从 ${row.departureStation} 到 ${row.arrivalStation} 的最小间隔时间计算完成`
         }
-        
+
         this.calculationState.minHeadway.status = 'success'
         this.calculationState.minHeadway.percentage = 100
         this.detailData = this.calculatedRows[rowId].minHeadwayResult.detailData
       }
-      
+
       this.calculationDialogVisible = true
     },
-    
+
     // 开始计算
     startCalculation(row, rowIndex) {
       // 设置当前选中的行
       this.selectedCalculationRow = { data: row, index: rowIndex }
-      
+
       // 重置计算状态
       this.resetCalculationState()
-      
+
       // 标记行正在计算
       const rowId = this.getRowId(row)
       this.$set(this.calculatedRows, rowId, {
         calculating: true,
         calculated: false
       })
-      
+
       // 显示计算对话框
       this.calculationDialogVisible = true
-      
+
       // 自动触发通行时间计算
       this.$nextTick(() => {
         this.calculateTravelTimeForRow()
       })
     },
-    
+
     // 重置计算状态
     resetCalculationState() {
       this.calculationState.travelTime.status = ''
       this.calculationState.travelTime.percentage = 0
       this.calculationState.travelTime.enabled = true
-      
+
       this.calculationState.minHeadway.status = ''
       this.calculationState.minHeadway.percentage = 0
       this.calculationState.minHeadway.enabled = false
-      
+
       this.calculationResults.travelTime = null
       this.calculationResults.minHeadway = null
       this.detailData = null
     },
-    
+
     // 计算通行时间
     calculateTravelTimeForRow() {
       if (!this.selectedCalculationRow) return
-      
+
       const row = this.selectedCalculationRow.data
       const rowIndex = this.selectedCalculationRow.index
       const rowId = this.getRowId(row)
-      
+
       // 设置为计算中状态
       this.calculationState.travelTime.status = 'warning'
       this.calculationState.travelTime.percentage = 30
-      
+
       // 模拟异步计算
       setTimeout(() => {
         // 调用计算函数
         const travelTime = calculateTravelTime(row, rowIndex)
-        
+
         // 更新状态
         this.calculationState.travelTime.status = 'success'
         this.calculationState.travelTime.percentage = 100
-        
+
         // 保存结果
         this.calculationResults.travelTime = {
           time: `${travelTime}秒`,
           details: `从 ${row.departureStation} 到 ${row.arrivalStation} 的通行时间计算完成`
         }
-        
+
         // 更新行计算状态
         this.$set(this.calculatedRows, rowId, {
           calculating: false,
           calculated: true,
           travelTimeResult: travelTime
         })
-        
+
         // 启用最小间隔时间计算
         this.calculationState.minHeadway.enabled = true
-        
+
         // 通知成功
         this.$message.success('通行时间计算完成！')
       }, 2000) // 模拟2秒的计算时间
     },
-    
+
     // 计算最小间隔时间
     calculateMinHeadwayForRow() {
       if (!this.selectedCalculationRow || !this.calculationState.minHeadway.enabled) return
-      
+
       const row = this.selectedCalculationRow.data
       const rowIndex = this.selectedCalculationRow.index
       const rowId = this.getRowId(row)
       const travelTime = this.calculatedRows[rowId].travelTimeResult
-      
+
       // 设置为计算中状态
       this.calculationState.minHeadway.status = 'warning'
       this.calculationState.minHeadway.percentage = 30
-      
+
       // 模拟异步计算
       setTimeout(() => {
         // 调用计算函数
         const result = calculateMinHeadway(row, rowIndex, travelTime)
-        
+
         // 更新状态
         this.calculationState.minHeadway.status = 'success'
         this.calculationState.minHeadway.percentage = 100
-        
+
         // 保存结果
         this.calculationResults.minHeadway = {
           time: `${result.minHeadway}分钟`,
           details: `从 ${row.departureStation} 到 ${row.arrivalStation} 的最小间隔时间计算完成`
         }
-        
+
         // 保存详细数据
         this.detailData = result.detailData
-        
+
         // 更新行计算状态
         this.$set(this.calculatedRows, rowId, {
           ...this.calculatedRows[rowId],
           minHeadwayResult: result,
-          calculating: false,  // 确保设置为非计算中状态
-          calculated: true     // 确保设置为已计算状态
+          calculating: false, // 确保设置为非计算中状态
+          calculated: true // 确保设置为已计算状态
         })
-        
+
         // 通知成功
         this.$message.success('最小间隔时间计算完成！')
       }, 2500) // 模拟2.5秒的计算时间
     },
-    
+
     // 查看详细结果
     viewDetailResults() {
       if (!this.detailData) {
-        this.$message.warning('没有可显示的详细数据');
-        return;
+        this.$message.warning('没有可显示的详细数据')
+        return
       }
-      
+
       // 获取出发站和到达站
       if (this.selectedCalculationRow && this.selectedCalculationRow.data) {
-        const departureStation = this.extractStationCode(this.selectedCalculationRow.data.departureStation || '');
-        const arrivalStation = this.extractStationCode(this.selectedCalculationRow.data.arrivalStation || '');
-        
+        const departureStation = this.extractStationCode(this.selectedCalculationRow.data.departureStation || '')
+        const arrivalStation = this.extractStationCode(this.selectedCalculationRow.data.arrivalStation || '')
+
         // 加载xjwb.json数据
-        this.loadDetailData(departureStation, arrivalStation);
+        this.loadDetailData(departureStation, arrivalStation)
       } else {
         // 如果没有选中行，使用默认数据
-        this.setDefaultDetailData();
-        this.detailFormVisible = true;
+        this.setDefaultDetailData()
+        this.detailFormVisible = true
       }
-      
+
       // 关闭当前计算对话框
-      this.calculationDialogVisible = false;
+      this.calculationDialogVisible = false
     },
-    
+
     // 从xjwb.json加载详细数据
     loadDetailData(departureStation, arrivalStation) {
       // 构造文件路径
-      const folderName = `${departureStation}-${arrivalStation}的时间间隔数据以及图片`;
-      const filePath = `/data/result/min_time/${folderName}/xjwb.json`;
-      
+      const folderName = `${departureStation}-${arrivalStation}的时间间隔数据以及图片`
+      const filePath = `/data/result/min_time/${folderName}/xjwb.json`
+
       // 显示加载中消息
       const loading = this.$loading({
         lock: true,
         text: '加载详细数据中...',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
-      });
-      
+      })
+
       // 加载JSON文件
       fetch(filePath)
         .then(response => {
           if (!response.ok) {
-            throw new Error(`HTTP错误 ${response.status}`);
+            throw new Error(`HTTP错误 ${response.status}`)
           }
-          return response.json();
+          return response.json()
         })
         .then(data => {
           // 更新发车模块数据
@@ -1036,8 +1036,8 @@ export default {
             time2: `${data.departure.cleanDelayTime} 秒`,
             time3: `${data.departure.departureRouteTime} 秒`,
             interval: `${data.departure.timeFromDepartureToBlockClear + data.departure.cleanDelayTime + data.departure.departureRouteTime} 秒`
-          };
-          
+          }
+
           // 更新区间模块数据 - 动态生成
           this.detailFormData.module2 = data.blocks.map((block, index) => ({
             intervalTitle: `区间间隔 ${index + 1}`,
@@ -1049,8 +1049,8 @@ export default {
             bottleneckToClearTime: `${block.timeFromBottleneckToBlockClear} 秒`,
             clearDelayTime: `${block.cleanDelayTime} 秒`,
             sectionInterval: `${block.timeFromBottleneckToBlockClear + block.cleanDelayTime} 秒`
-          }));
-          
+          }))
+
           // 更新接车模块数据
           this.detailFormData.module3 = {
             intervalTitle: '接车间隔',
@@ -1062,26 +1062,26 @@ export default {
             receiveTrainTime: `${data.arriver.arriverRouteTime} 秒`,
             rearTrainToStopTime: `${data.arriver.timeFromBottleneckToStop} 秒`,
             trainInterval: `${data.arriver.stionStopTime + data.arriver.blockClearPoint + data.arriver.timeClearDelay + data.arriver.arriverRouteTime + data.arriver.timeFromBottleneckToStop} 秒`
-          };
-          
+          }
+
           // 关闭加载提示
-          loading.close();
-          
+          loading.close()
+
           // 显示详情表单
-          this.detailFormVisible = true;
+          this.detailFormVisible = true
         })
         .catch(error => {
           // 关闭加载提示
-          loading.close();
-          console.error('加载数据失败:', error);
-          this.$message.error(`加载数据失败: ${error.message}`);
-          
+          loading.close()
+          console.error('加载数据失败:', error)
+          this.$message.error(`加载数据失败: ${error.message}`)
+
           // 使用默认数据
-          this.setDefaultDetailData();
-          this.detailFormVisible = true;
-        });
+          this.setDefaultDetailData()
+          this.detailFormVisible = true
+        })
     },
-    
+
     // 设置默认的详情数据
     setDefaultDetailData() {
       this.detailFormData = {
@@ -1127,84 +1127,84 @@ export default {
           rearTrainToStopTime: '35.0 秒',
           trainInterval: '73.5 秒'
         }
-      };
+      }
     },
-    
+
     // 获取区间模块数量
     getBlockCount(jsonData) {
       if (jsonData && jsonData.blocks && Array.isArray(jsonData.blocks)) {
-        return jsonData.blocks.length;
+        return jsonData.blocks.length
       }
-      return 0;
+      return 0
     },
-    
+
     // 查看图片
     viewImage(module, index) {
       // 获取当前选中行的数据
-      const currentRow = this.selectedCalculationRow ? this.selectedCalculationRow.data : null;
+      const currentRow = this.selectedCalculationRow ? this.selectedCalculationRow.data : null
       if (!currentRow) {
-        this.$message.error('未找到行数据，无法查看图片');
-        return;
+        this.$message.error('未找到行数据，无法查看图片')
+        return
       }
 
       // 获取出发站和到达站
-      const departureStation = this.extractStationCode(currentRow.departureStation || '');
-      const arrivalStation = this.extractStationCode(currentRow.arrivalStation || '');
-      
-      const folderName = `${departureStation}-${arrivalStation}的时间间隔数据以及图片`;
-      
+      const departureStation = this.extractStationCode(currentRow.departureStation || '')
+      const arrivalStation = this.extractStationCode(currentRow.arrivalStation || '')
+
+      const folderName = `${departureStation}-${arrivalStation}的时间间隔数据以及图片`
+
       // 基础路径
-      const basePath = `/data/result/min_time/${folderName}/`;
-      
-      let title = '';
-      let fileName = '';
-      let path = '';
-      
+      const basePath = `/data/result/min_time/${folderName}/`
+
+      let title = ''
+      let fileName = ''
+      let path = ''
+
       // 根据模块类型和索引确定图片路径
       if (module === 1) {
         // 发车模块
-        title = '发车模块图片';
-        fileName = '发车.png';
-        path = `${basePath}发车.png`;
+        title = '发车模块图片'
+        fileName = '发车.png'
+        path = `${basePath}发车.png`
       } else if (module === 2) {
         // 区间模块 - 使用提供的索引生成图片名称
-        title = `区间模块图片 ${index + 1}`;
-        fileName = `block-${index+1}.png`;
-        path = `${basePath}${fileName}`;
+        title = `区间模块图片 ${index + 1}`
+        fileName = `block-${index + 1}.png`
+        path = `${basePath}${fileName}`
       } else if (module === 3) {
         // 接车模块
-        title = '接车模块图片';
-        fileName = '接车.png';
-        path = `${basePath}接车.png`;
+        title = '接车模块图片'
+        fileName = '接车.png'
+        path = `${basePath}接车.png`
       }
-      
+
       // 设置图片预览信息
       this.previewImageInfo = {
         title,
         path
-      };
-      
+      }
+
       // 显示图片预览对话框
-      this.imagePreviewVisible = true;
+      this.imagePreviewVisible = true
     },
-    
+
     // 导出Excel
     exportExcel(module, index) {
       // 获取当前选中行的数据
-      const currentRow = this.selectedCalculationRow ? this.selectedCalculationRow.data : null;
+      const currentRow = this.selectedCalculationRow ? this.selectedCalculationRow.data : null
       if (!currentRow) {
-        this.$message.error('未找到行数据，无法导出Excel');
-        return;
+        this.$message.error('未找到行数据，无法导出Excel')
+        return
       }
 
       // 获取出发站和到达站（去掉可能的数字后缀）
-      const departureStation = this.extractStationCode(currentRow.departureStation || '');
-      const arrivalStation = this.extractStationCode(currentRow.arrivalStation || '');
-      
+      const departureStation = this.extractStationCode(currentRow.departureStation || '')
+      const arrivalStation = this.extractStationCode(currentRow.arrivalStation || '')
+
       // 准备导出数据
-      let exportData = {};
-      let filename = '';
-      
+      let exportData = {}
+      let filename = ''
+
       if (module === 1) {
         // 发车模块数据
         exportData = {
@@ -1214,11 +1214,11 @@ export default {
           '出清延迟时间(秒)': this.detailFormData.module1.time2.replace(' 秒', ''),
           '发车进路办理时间(秒)': this.detailFormData.module1.time3.replace(' 秒', ''),
           '发车时间间隔(秒)': this.detailFormData.module1.interval.replace(' 秒', '')
-        };
-        filename = `发车模块_${departureStation}-${arrivalStation}_${new Date().getTime()}`;
+        }
+        filename = `发车模块_${departureStation}-${arrivalStation}_${new Date().getTime()}`
       } else if (module === 2 && this.detailFormData.module2[index]) {
         // 区间模块数据
-        const blockData = this.detailFormData.module2[index];
+        const blockData = this.detailFormData.module2[index]
         exportData = {
           '模块类型': '区间模块',
           '区间': `${departureStation}-${arrivalStation}`,
@@ -1231,8 +1231,8 @@ export default {
           '瓶颈点至出清点时间(秒)': blockData.bottleneckToClearTime.replace(' 秒', ''),
           '出清延迟时间(秒)': blockData.clearDelayTime.replace(' 秒', ''),
           '区段时间间隔(秒)': blockData.sectionInterval.replace(' 秒', '')
-        };
-        filename = `区间模块${index + 1}_${departureStation}-${arrivalStation}_${new Date().getTime()}`;
+        }
+        filename = `区间模块${index + 1}_${departureStation}-${arrivalStation}_${new Date().getTime()}`
       } else if (module === 3) {
         // 接车模块数据
         exportData = {
@@ -1246,71 +1246,71 @@ export default {
           '接车进路办理时间(秒)': this.detailFormData.module3.receiveTrainTime.replace(' 秒', ''),
           '后车从瓶颈点至停车点时间(秒)': this.detailFormData.module3.rearTrainToStopTime.replace(' 秒', ''),
           '接车时间间隔(秒)': this.detailFormData.module3.trainInterval.replace(' 秒', '')
-        };
-        filename = `接车模块_${departureStation}-${arrivalStation}_${new Date().getTime()}`;
+        }
+        filename = `接车模块_${departureStation}-${arrivalStation}_${new Date().getTime()}`
       }
-      
+
       // 显示下载消息
       this.$message({
         message: `正在导出Excel文件: ${filename}.xlsx`,
         type: 'success',
         duration: 2000
-      });
-      
+      })
+
       // 模拟下载完成
       setTimeout(() => {
         this.$message({
           message: 'Excel文件导出完成',
           type: 'success'
-        });
-      }, 1500);
+        })
+      }, 1500)
     },
-    
+
     // 提取站点代码（移除数字后缀）
     extractStationCode(stationName) {
-      if (!stationName) return '';
-      
+      if (!stationName) return ''
+
       // 使用正则表达式匹配字母部分
-      const match = stationName.match(/^([A-Za-z]+)/);
-      return match ? match[1] : stationName;
+      const match = stationName.match(/^([A-Za-z]+)/)
+      return match ? match[1] : stationName
     },
-    
+
     // 从预览对话框下载图片
     downloadImageFromPreview() {
-      if (!this.previewImageInfo) return;
-      
+      if (!this.previewImageInfo) return
+
       // 模拟下载过程
-      const filename = `${this.previewImageInfo.title}_${new Date().getTime()}.png`;
-      
+      const filename = `${this.previewImageInfo.title}_${new Date().getTime()}.png`
+
       this.$message({
         message: `正在下载图片: ${filename}`,
         type: 'success',
         duration: 2000
-      });
-      
+      })
+
       // 模拟下载完成
       setTimeout(() => {
         this.$message({
           message: '图片下载完成',
           type: 'success'
-        });
-        this.imagePreviewVisible = false;
-      }, 1500);
+        })
+        this.imagePreviewVisible = false
+      }, 1500)
     },
-    
+
     // 导出结果到Excel
     exportResultToExcel(type) {
       if (!this.selectedCalculationRow) return
-      
+
       const row = this.selectedCalculationRow.data
-      
+
       // 获取出发站和到达站
       const departureStation = row.departureStation || ''
       const arrivalStation = row.arrivalStation || ''
-      
+
       // 保存导出类型
       this.exportType = type
-      
+
       // 显示加载中提示
       const loading = this.$loading({
         lock: true,
@@ -1318,28 +1318,28 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      
+
       // 根据类型加载不同的JSON数据
       if (type === 'travelTime') {
         // 通行时间结果数据 - 读取running_profile_up_slow.json
         const jsonPath = `/data/result/running_profile_up_slow.json`
-        
+
         this.loadJsonData(jsonPath)
           .then(data => {
             // 关闭加载提示
             loading.close()
-            
+
             // 查找匹配当前行的数据
             let matchedItem = null
             if (Array.isArray(data)) {
-              matchedItem = data.find(item => 
-                (item['Departure Station name'] === departureStation || 
-                 item['Departure Station name'].includes(departureStation)) && 
-                (item['Arrival Station name'] === arrivalStation || 
+              matchedItem = data.find(item =>
+                (item['Departure Station name'] === departureStation ||
+                 item['Departure Station name'].includes(departureStation)) &&
+                (item['Arrival Station name'] === arrivalStation ||
                  item['Arrival Station name'].includes(arrivalStation))
               )
             }
-            
+
             // 保存完整的JSON数据用于预览
             if (matchedItem) {
               this.previewJsonData = matchedItem
@@ -1355,14 +1355,14 @@ export default {
                 '注意': '在running_profile_up_slow.json中未找到匹配数据'
               }
             }
-            
+
             // 显示JSON预览对话框
             this.jsonPreviewVisible = true
           })
           .catch(error => {
             // 关闭加载提示
             loading.close()
-            
+
             // 使用默认数据
             this.previewJsonData = {
               '出发站': departureStation,
@@ -1373,7 +1373,7 @@ export default {
               '計算时间': new Date().toLocaleString(),
               '错误信息': error.message || '加载JSON数据失败'
             }
-            
+
             // 显示JSON预览对话框
             this.jsonPreviewVisible = true
           })
@@ -1382,12 +1382,12 @@ export default {
         const departureCode = this.extractStationCode(departureStation)
         const arrivalCode = this.extractStationCode(arrivalStation)
         const jsonPath = `/data/result/min_time/${departureCode}-${arrivalCode}的时间间隔数据以及图片/xjwb.json`
-        
+
         this.loadJsonData(jsonPath)
           .then(data => {
             // 关闭加载提示
             loading.close()
-            
+
             // 保存完整的JSON数据用于预览
             this.previewJsonData = data || {
               '出发站': departureStation,
@@ -1398,14 +1398,14 @@ export default {
               '計算时间': new Date().toLocaleString(),
               '注意': '未找到完整JSON数据'
             }
-            
+
             // 显示JSON预览对话框
             this.jsonPreviewVisible = true
           })
           .catch(error => {
             // 关闭加载提示
             loading.close()
-            
+
             // 使用默认数据
             this.previewJsonData = {
               '出发站': departureStation,
@@ -1416,7 +1416,7 @@ export default {
               '計算时间': new Date().toLocaleString(),
               '错误信息': error.message || '加载JSON数据失败'
             }
-            
+
             // 显示JSON预览对话框
             this.jsonPreviewVisible = true
           })
@@ -1442,72 +1442,72 @@ export default {
           })
       })
     },
-    
+
     // 显示数据预览
     showDataPreview(jsonData) {
       // 保存JSON数据用于预览
-      this.previewJsonData = jsonData;
-      
+      this.previewJsonData = jsonData
+
       // 显示JSON预览对话框
-      this.jsonPreviewVisible = true;
+      this.jsonPreviewVisible = true
     },
-    
+
     // 下载Excel文件
     downloadExcelFile() {
       // 这里模拟Excel文件的下载过程
       // 在实际应用中，应该使用Export2Excel模块
-      
-      this.jsonPreviewVisible = false;
-      
+
+      this.jsonPreviewVisible = false
+
       // 生成文件名
-      const timestamp = new Date().getTime();
-      const filename = `运行配置_${timestamp}.xlsx`;
-      
+      const timestamp = new Date().getTime()
+      const filename = `运行配置_${timestamp}.xlsx`
+
       // 显示下载消息
       this.$message({
         message: `正在下载Excel文件: ${filename}`,
         type: 'success',
         duration: 2000
-      });
-      
+      })
+
       // 模拟下载完成
       setTimeout(() => {
         this.$message({
           message: 'Excel文件下载完成',
           type: 'success'
-        });
-      }, 1500);
+        })
+      }, 1500)
     },
-    
+
     // 导出结果到图片
     exportResultToImage(calculationType) {
-      if (!this.selectedCalculationRow || !this.selectedCalculationRow.data) return;
-      
-      const row = this.selectedCalculationRow.data;
-      
+      if (!this.selectedCalculationRow || !this.selectedCalculationRow.data) return
+
+      const row = this.selectedCalculationRow.data
+
       // 提取站点代码（移除可能的数字后缀）
-      let departureCode = this.extractStationCode(row.departureStation);
-      let arrivalCode = this.extractStationCode(row.arrivalStation);
-      
+      const departureCode = this.extractStationCode(row.departureStation)
+      const arrivalCode = this.extractStationCode(row.arrivalStation)
+
       // 构建图片文件名
-      const fileName = `${departureCode}-${arrivalCode}.png`;
-      
+      const fileName = `${departureCode}-${arrivalCode}.png`
+
       // 设置图片路径
-      let imagePath = '';
+      let imagePath = ''
       if (calculationType === 'travelTime') {
-        imagePath = `/data/result/tongxing_time/${fileName}`;
+        imagePath = `/data/result/tongxing_time/${fileName}`
       } else {
-        imagePath = `/data/result/min_headway/${fileName}`;
+        imagePath = `/data/result/min_headway/${fileName}`
       }
-      
+
       // 设置预览图片信息
       this.previewImageInfo = {
         title: calculationType === 'travelTime' ? '通行时间计算结果' : '最小间隔时间计算结果',
         path: imagePath
-      };
-      
+      }
+
       // 显示图片预览对话框
-      this.imagePreviewVisible = true;
+      this.imagePreviewVisible = true
     }
   }
 }
@@ -1883,4 +1883,4 @@ export default {
   background-color: #67c23a;
   border-color: #67c23a;
 }
-</style> 
+</style>

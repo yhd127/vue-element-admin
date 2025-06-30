@@ -7,7 +7,7 @@
           {{ collapsed ? '展开' : '收起' }}
         </el-button>
       </div>
-      
+
       <div v-show="!collapsed">
         <el-collapse v-model="activeNames">
           <el-collapse-item title="基本使用说明" name="1">
@@ -15,7 +15,7 @@
             <p>您可以通过导入JSON或Excel文件来快速加载数据，也可以手动添加和编辑数据。所有计算字段将根据您的输入自动更新。</p>
             <p>所有数据会自动保存到浏览器的本地存储中，您也可以随时将数据导出为JSON或Excel文件进行备份。</p>
           </el-collapse-item>
-          
+
           <el-collapse-item title="轨道数据说明" name="2">
             <div class="help-section">
               <h4>轨道数据字段说明</h4>
@@ -30,7 +30,7 @@
               </ul>
             </div>
           </el-collapse-item>
-          
+
           <el-collapse-item title="坡度数据说明" name="3">
             <div class="help-section">
               <h4>坡度数据字段说明</h4>
@@ -47,7 +47,7 @@
               </ul>
             </div>
           </el-collapse-item>
-          
+
           <el-collapse-item title="曲线数据说明" name="4">
             <div class="help-section">
               <h4>曲线数据字段说明</h4>
@@ -63,7 +63,7 @@
               </ul>
             </div>
           </el-collapse-item>
-          
+
           <el-collapse-item title="站台数据说明" name="5">
             <div class="help-section">
               <h4>站台数据字段说明</h4>
@@ -78,12 +78,12 @@
               </ul>
             </div>
           </el-collapse-item>
-          
+
           <el-collapse-item title="导入/导出说明" name="6">
             <div class="help-section">
               <h4>数据导入</h4>
               <p>您可以导入JSON或Excel格式的数据文件。导入的文件应包含与系统匹配的数据结构。</p>
-              
+
               <h4>JSON格式示例</h4>
               <pre>
 {
@@ -106,7 +106,7 @@
   }
 }
               </pre>
-              
+
               <h4>数据导出</h4>
               <p>您可以将当前编辑的数据导出为JSON或Excel格式的文件进行备份或分享。</p>
             </div>
@@ -159,4 +159,4 @@ pre {
   border-radius: 4px;
   overflow-x: auto;
 }
-</style> 
+</style>

@@ -74,23 +74,23 @@ export default {
       }
       this.formData = formData
     },
-    
+
     handleConfirm() {
       // 发送事件通知父组件
       this.$emit('confirm', { ...this.formData }, this.insertPosition)
       this.resetForm()
     },
-    
+
     handleCancel() {
       this.$emit('cancel')
       this.resetForm()
     },
-    
+
     handleClose() {
       this.$emit('update:visible', false)
       this.resetForm()
     },
-    
+
     resetForm() {
       this.initFormData()
     }
@@ -103,4 +103,4 @@ export default {
   max-height: 60vh;
   overflow-y: auto;
 }
-</style> 
+</style>

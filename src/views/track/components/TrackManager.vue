@@ -134,7 +134,7 @@
 <script>
 import TrackTable from './TrackTable'
 import DataImportExport from './DataImportExport'
-import { debounce, deepClone } from '@/utils/track/commonUtils'
+import { debounce } from '@/utils/track/commonUtils'
 import { saveToLocalStorage, loadFromLocalStorage } from '@/utils/track/fileUtils'
 import { calculateJumpLength, calculateCorrectionValues, calculateDistanceFromOrigin, updateTrackRowsAfterInsert } from '@/utils/track/trackCalculations'
 import { updateAllGradientFields } from '@/utils/track/gradientCalculations'
@@ -626,7 +626,7 @@ export default {
           const retryResult = await trackApi.saveAllTrackData(this.allData)
           console.log('使用固定token重试结果:', retryResult.success ? '成功' : '失败')
         } else {
-          console.error('保存到API失败:', result.message)
+          console.error('保存到API失败11:', result.message)
         }
       } catch (error) {
         console.error('保存到API出错:', error)

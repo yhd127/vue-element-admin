@@ -207,7 +207,7 @@ export function calculateStationStoppingAccuracy(row, stationType) {
  */
 export function calculateStationDelay(row, baseDelay) {
   const stationClass = row.Station_class
-  
+
   // 根据站台等级计算延误时间
   if (stationClass === 'Major') {
     return baseDelay * 1.5
@@ -249,4 +249,4 @@ export default {
   calculateStationStoppingAccuracy,
   calculateStationDelay,
   updateAllStationFields
-} 
+}

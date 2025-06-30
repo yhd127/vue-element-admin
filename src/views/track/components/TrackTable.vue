@@ -8,7 +8,7 @@
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDeleteRows">删除选中</el-button>
         </el-button-group>
       </div>
-      
+
       <el-table
         ref="trackTable"
         v-loading="loading"
@@ -20,9 +20,9 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-        
+
         <el-table-column label="序号" type="index" width="60" />
-        
+
         <template v-for="(column, index) in columns">
           <el-table-column
             :key="index"
@@ -45,7 +45,7 @@
           </el-table-column>
         </template>
       </el-table>
-      
+
       <div class="pagination-container">
         <el-pagination
           :current-page.sync="currentPage"
@@ -118,10 +118,10 @@ export default {
     handleAddRow() {
       // 创建新行对象，使用初始模板
       const newRow = deepClone(this.initialRowTemplate)
-      
+
       // 添加到数据中并发送事件
       this.$emit('add-row', newRow)
-      
+
       // 确保分页显示新添加的行
       this.ensureRowVisible(this.data.length - 1)
     },
@@ -130,7 +130,7 @@ export default {
         this.$message.warning('请至少选择一行')
         return
       }
-      
+
       this.$confirm('确认删除选中的数据吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -138,10 +138,10 @@ export default {
       }).then(() => {
         // 发送删除事件
         this.$emit('delete-rows', this.selectedRows)
-        
+
         // 清空选择
         this.selectedRows = []
-        
+
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -183,4 +183,4 @@ export default {
   margin-top: 15px;
   text-align: right;
 }
-</style> 
+</style>

@@ -14,19 +14,19 @@ export function calculateBlockDescriptionFields(row, tracksData, direction = 1) 
 
   // 计算T1值
   result.T1 = calculateBlockT1(row, tracksData, direction)
-  
+
   // 计算T2值
   result.T2 = calculateBlockT2(row, tracksData, direction)
-  
+
   // 计算Track2值
   result.Track2 = calculateBlockTrack2(row)
-  
+
   // 计算KP_correction值
   result.KP_correction = calculateBlockKPCorrection(row, tracksData)
-  
+
   // 计算SubBlock_StartDistance值
   result.SubBlock_StartDistance = calculateBlockStartDistance(row, direction)
-  
+
   return result
 }
 
@@ -43,18 +43,18 @@ function calculateBlockT1(row, tracksData, direction = 1) {
   }
 
   const kpValue = Number(row.SubBlock_Start) || 0
-  
+
   // 找到KP值最接近且小于当前KP值的轨道记录
   let closestTrack = null
   for (let i = 0; i < tracksData.length; i++) {
     const track = tracksData[i]
     const trackKP = Number(track.KP_after_jump) || 0
-    
+
     if (trackKP <= kpValue && (!closestTrack || trackKP > (Number(closestTrack.KP_after_jump) || 0))) {
       closestTrack = track
     }
   }
-  
+
   return closestTrack ? closestTrack.Track_ID_after_jump || '' : ''
 }
 
@@ -71,18 +71,18 @@ function calculateBlockT2(row, tracksData, direction = 1) {
   }
 
   const kpValue = Number(row.SubBlock_End) || 0
-  
+
   // 找到KP值最接近且大于当前KP值的轨道记录
   let closestTrack = null
   for (let i = 0; i < tracksData.length; i++) {
     const track = tracksData[i]
     const trackKP = Number(track.KP_before_jump) || 0
-    
+
     if (trackKP >= kpValue && (!closestTrack || trackKP < (Number(closestTrack.KP_before_jump) || 0))) {
       closestTrack = track
     }
   }
-  
+
   return closestTrack ? closestTrack.Track_ID_before_jump || '' : ''
 }
 
@@ -101,7 +101,7 @@ function calculateBlockTrack2(row) {
   if (row.T1 === row.T2 && row.T1 !== '') {
     return row.SubBlock_Track || ''
   }
-  
+
   return ''
 }
 
@@ -123,7 +123,7 @@ function calculateBlockKPCorrection(row, tracksData) {
       return track.Correction_applied_to_KP || 0
     }
   }
-  
+
   return 0
 }
 
@@ -140,7 +140,7 @@ function calculateBlockStartDistance(row, direction = 1) {
 
   const kpValue = Number(row.SubBlock_Start) || 0
   const kpCorrection = Number(row.KP_correction) || 0
-  
+
   // 计算公式: direction * (SubBlock_Start + KP_correction)
   return direction * (kpValue + kpCorrection)
 }
@@ -158,32 +158,32 @@ function calculateBlockStartDistance(row, direction = 1) {
  */
 export function calculateStartT1(row, tracksData, direction) {
   const kpValue = row.Start_KP
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_before_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return ''
   }
-  
+
   // Excel公式中的IF判断
   const matchedRow = tracksData[matchIndex]
   const matchedKP = Number(matchedRow.KP_before_jump) || 0
-  
+
   // 检查找到的KP是否与输入的KP完全相等
   if (matchedKP === numericKP) {
     // 完全匹配，返回当前行的Track_ID_before_jump
@@ -209,32 +209,32 @@ export function calculateStartT1(row, tracksData, direction) {
  */
 export function calculateEndT1(row, tracksData, direction) {
   const kpValue = row.End_KP
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_before_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return ''
   }
-  
+
   // Excel公式中的IF判断
   const matchedRow = tracksData[matchIndex]
   const matchedKP = Number(matchedRow.KP_before_jump) || 0
-  
+
   // 检查找到的KP是否与输入的KP完全相等
   if (matchedKP === numericKP) {
     // 完全匹配，返回当前行的Track_ID_before_jump
@@ -261,35 +261,35 @@ export function calculateEndT1(row, tracksData, direction) {
 export function calculateStartKPCorrection(row, tracksData, direction) {
   const kpValue = row.Start_KP
   const t1Value = row.Start_T1
-  
+
   // 如果KP为空或T1为空，返回空
   if (kpValue === '' || kpValue === undefined || t1Value === '' || t1Value === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return '#N/A'
   }
-  
+
   // 查找与T1值匹配的轨道
   for (let i = 0; i < tracksData.length; i++) {
     if (tracksData[i].Track_ID_before_jump === t1Value) {
       return tracksData[i].Correction_applied_to_KP
     }
   }
-  
+
   return '#N/A'
 }
 
@@ -303,35 +303,35 @@ export function calculateStartKPCorrection(row, tracksData, direction) {
 export function calculateEndKPCorrection(row, tracksData, direction) {
   const kpValue = row.End_KP
   const t1Value = row.End_T1
-  
+
   // 如果KP为空或T1为空，返回空
   if (kpValue === '' || kpValue === undefined || t1Value === '' || t1Value === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0) {
     return ''
   }
-  
+
   // 查找匹配的索引
   const numericKP = Number(kpValue)
   const matchIndex = findMatchIndexInTracks('KP_after_jump', numericKP, tracksData, dir)
-  
+
   // 如果没找到匹配项
   if (matchIndex === -1) {
     return '#N/A'
   }
-  
+
   // 查找与T1值匹配的轨道
   for (let i = 0; i < tracksData.length; i++) {
     if (tracksData[i].Track_ID_before_jump === t1Value) {
       return tracksData[i].Correction_applied_to_KP
     }
   }
-  
+
   return '#N/A'
 }
 
@@ -344,29 +344,29 @@ export function calculateEndKPCorrection(row, tracksData, direction) {
 export function calculateStartDistance(row, direction) {
   const kpValue = row.Start_KP
   const kpCorrection = row.Start_KP_correction
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   // 如果KP_correction为#N/A，结果也应该是#N/A
   if (kpCorrection === '#N/A') {
     return '#N/A'
   }
-  
+
   // 计算公式: (KP + KP_correction) * direction
   const numericKP = Number(kpValue) || 0
-  
+
   // 处理KP_correction
   let correctionValue = 0
   if (kpCorrection !== '' && kpCorrection !== undefined && kpCorrection !== '#N/A') {
     correctionValue = Number(kpCorrection) || 0
   }
-  
+
   return (numericKP + correctionValue) * dir
 }
 
@@ -379,29 +379,29 @@ export function calculateStartDistance(row, direction) {
 export function calculateEndDistance(row, direction) {
   const kpValue = row.End_KP
   const kpCorrection = row.End_KP_correction
-  
+
   // 如果KP为空，返回空
   if (kpValue === '' || kpValue === undefined) {
     return ''
   }
-  
+
   // 确保direction是数字，默认值为1
   const dir = Number(direction) || 1
-  
+
   // 如果KP_correction为#N/A，结果也应该是#N/A
   if (kpCorrection === '#N/A') {
     return '#N/A'
   }
-  
+
   // 计算公式: (KP + KP_correction) * direction
   const numericKP = Number(kpValue) || 0
-  
+
   // 处理KP_correction
   let correctionValue = 0
   if (kpCorrection !== '' && kpCorrection !== undefined && kpCorrection !== '#N/A') {
     correctionValue = Number(kpCorrection) || 0
   }
-  
+
   return (numericKP + correctionValue) * dir
 }
 
@@ -413,17 +413,17 @@ export function calculateEndDistance(row, direction) {
 export function calculateLength(row) {
   const startDistance = row.Start_Distance
   const endDistance = row.End_Distance
-  
+
   // 如果Start_Distance或End_Distance为空或#N/A，返回空
   if (startDistance === '' || startDistance === undefined || startDistance === '#N/A' ||
       endDistance === '' || endDistance === undefined || endDistance === '#N/A') {
     return ''
   }
-  
+
   // 计算公式: End_Distance - Start_Distance
   const numericStartDistance = Number(startDistance) || 0
   const numericEndDistance = Number(endDistance) || 0
-  
+
   return Math.abs(numericEndDistance - numericStartDistance)
 }
 
@@ -436,26 +436,26 @@ export function calculateLength(row) {
  * @returns {Number} 匹配的行索引，如果未找到则返回-1
  */
 function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
-  if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0 || 
+  if (!tracksData || !Array.isArray(tracksData) || tracksData.length === 0 ||
       kpValue === undefined || kpValue === null) {
     return -1
   }
-  
+
   let matchIndex = -1
   const dir = Number(direction) || 1
-  
+
   // 根据dir的值决定查找方式
   if (dir === 1) {
     // dir=1时，假设数据是升序排列，查找小于等于numericValue的最大值
     // 从前向后遍历，保持与Track1.vue相同的实现
     for (let i = 0; i < tracksData.length; i++) {
       const rawValue = tracksData[i][fieldName]
-      
+
       // 跳过空行或值为空字符串的行
       if (rawValue === '' || rawValue === undefined) {
         continue
       }
-      
+
       const rowValue = Number(rawValue) || 0
       if (rowValue <= kpValue) {
         matchIndex = i
@@ -467,12 +467,12 @@ function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
     // dir=0时，假设数据是降序排列，查找大于等于numericValue的最小值
     for (let i = 0; i < tracksData.length; i++) {
       const rawValue = tracksData[i][fieldName]
-      
+
       // 跳过空行或值为空字符串的行
       if (rawValue === '' || rawValue === undefined) {
         continue
       }
-      
+
       const rowValue = Number(rawValue) || 0
       if (rowValue >= kpValue) {
         matchIndex = i
@@ -481,7 +481,7 @@ function findMatchIndexInTracks(fieldName, kpValue, tracksData, direction) {
       }
     }
   }
-  
+
   return matchIndex
 }
 
@@ -495,10 +495,10 @@ export function initializeBlockDescriptionCalculations(blockDescriptionData, tra
   if (!blockDescriptionData || !Array.isArray(blockDescriptionData) || blockDescriptionData.length === 0) {
     return
   }
-  
+
   for (let i = 0; i < blockDescriptionData.length; i++) {
     const row = blockDescriptionData[i]
-    
+
     // 按顺序计算，保证依赖关系
     row.Start_T1 = calculateStartT1(row, tracksData, direction)
     row.End_T1 = calculateEndT1(row, tracksData, direction)
@@ -508,4 +508,4 @@ export function initializeBlockDescriptionCalculations(blockDescriptionData, tra
     row.End_Distance = calculateEndDistance(row, direction)
     row.Length = calculateLength(row)
   }
-} 
+}

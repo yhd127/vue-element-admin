@@ -219,7 +219,7 @@ export function calculateCurveCantActual(row) {
  */
 export function calculateCurveCantDeficiency(row, speedValue) {
   const radiusValue = Number(row.Radius) || 0
-  
+
   // 防止除以零错误
   if (radiusValue === 0) {
     return 0
@@ -228,10 +228,10 @@ export function calculateCurveCantDeficiency(row, speedValue) {
   // 使用公式: 11.8 * v^2 / R - CantActual
   const speedSquared = speedValue * speedValue
   const cantActual = Number(row.CantActual) || 0
-  
+
   // 计算Cant不足量
   const deficiency = (11.8 * speedSquared / radiusValue) - cantActual
-  
+
   return Math.round(deficiency)
 }
 
@@ -243,7 +243,7 @@ export function calculateCurveCantDeficiency(row, speedValue) {
  */
 export function calculateCurveCantExcess(row, lowSpeedValue) {
   const radiusValue = Number(row.Radius) || 0
-  
+
   // 防止除以零错误
   if (radiusValue === 0) {
     return 0
@@ -252,10 +252,10 @@ export function calculateCurveCantExcess(row, lowSpeedValue) {
   // 使用公式: CantActual - 11.8 * v^2 / R
   const speedSquared = lowSpeedValue * lowSpeedValue
   const cantActual = Number(row.CantActual) || 0
-  
+
   // 计算Cant过剩量
   const excess = cantActual - (11.8 * speedSquared / radiusValue)
-  
+
   return Math.round(excess)
 }
 
@@ -292,4 +292,4 @@ export default {
   calculateCurveCantDeficiency,
   calculateCurveCantExcess,
   updateAllCurveFields
-} 
+}

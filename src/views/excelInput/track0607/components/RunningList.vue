@@ -9,7 +9,8 @@
       <el-table-column
         prop="departure_station_name"
         label="Departure Station name"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.departure_station_name" size="small" />
         </template>
@@ -17,7 +18,8 @@
       <el-table-column
         prop="departure_station_distance"
         label="Departure Station Distance"
-        width="200">
+        width="200"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.departure_station_distance" :precision="0" :controls="false" size="small" />
         </template>
@@ -25,7 +27,8 @@
       <el-table-column
         prop="arrival_station_name"
         label="Arrival Station name"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.arrival_station_name" size="small" />
         </template>
@@ -33,7 +36,8 @@
       <el-table-column
         prop="arrival_station_distance"
         label="Arrival Station Distance"
-        width="200">
+        width="200"
+      >
         <template slot-scope="scope">
           <el-input-number v-model="scope.row.arrival_station_distance" :precision="0" :controls="false" size="small" />
         </template>
@@ -41,7 +45,8 @@
       <el-table-column
         prop="track"
         label="Track"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.track" size="small" />
         </template>
@@ -49,7 +54,8 @@
       <el-table-column
         prop="train"
         label="Train"
-        width="120">
+        width="120"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.train" size="small" />
         </template>
@@ -57,14 +63,16 @@
       <el-table-column
         prop="train_load"
         label="train load [0 1]"
-        width="150">
+        width="150"
+      >
         <template slot-scope="scope">
           <el-switch v-model="scope.row.train_load" />
         </template>
       </el-table-column>
       <el-table-column
         label="操作"
-        width="300">
+        width="300"
+      >
         <template slot-scope="scope">
           <div style="display: flex; align-items: center;">
             <el-button
@@ -204,8 +212,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(1, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(1, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(1, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(1, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -266,8 +274,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(2, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(2, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(2, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(2, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -322,8 +330,8 @@
             </div>
             <div class="action-column" style="position: relative; padding: 0; width: 20%;">
               <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 140px;">
-                <el-button size="small" type="primary" @click="viewImage(3, index)" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;">查看图片</el-button>
-                <el-button size="small" type="success" @click="exportExcel(3, index)" style="width: 140px; margin: 0; display: block; box-sizing: border-box;">导出Excel</el-button>
+                <el-button size="small" type="primary" style="width: 140px; margin: 0 0 12px 0; display: block; box-sizing: border-box;" @click="viewImage(3, index)">查看图片</el-button>
+                <el-button size="small" type="success" style="width: 140px; margin: 0; display: block; box-sizing: border-box;" @click="exportExcel(3, index)">导出Excel</el-button>
               </div>
             </div>
           </div>
@@ -662,11 +670,11 @@ export default {
       for (let i = 0; i < sectionCount; i++) {
         this.detailData.module2.push({
           intervalTitle: '间隔值: ' + (Math.random() * 40).toFixed(2) + ' 秒',
-          startPoint: `起始点${i+1}`,
-          endPoint: `终点${i+1}`,
-          bottleneckPosition: `瓶颈位置${i+1}`,
-          clearPosition: `出清位置${i+1}`,
-          dangerPosition: `危险位置${i+1}`,
+          startPoint: `起始点${i + 1}`,
+          endPoint: `终点${i + 1}`,
+          bottleneckPosition: `瓶颈位置${i + 1}`,
+          clearPosition: `出清位置${i + 1}`,
+          dangerPosition: `危险位置${i + 1}`,
           bottleneckToClearTime: (Math.random() * 50).toFixed(2) + ' 秒',
           clearDelayTime: (Math.random() * 20).toFixed(2) + ' 秒',
           sectionInterval: (Math.random() * 150).toFixed(2) + ' 秒'

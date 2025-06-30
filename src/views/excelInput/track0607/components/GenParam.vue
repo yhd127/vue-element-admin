@@ -9,7 +9,8 @@
       <el-table-column
         prop="paramName"
         label="参数名称"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.paramName" size="small" />
         </template>
@@ -17,7 +18,8 @@
       <el-table-column
         prop="value"
         label="值"
-        width="180">
+        width="180"
+      >
         <template slot-scope="scope">
           <el-input-number v-if="isNumber(scope.row.value)" v-model.number="scope.row.value" :controls="false" size="small" />
           <el-input v-else v-model="scope.row.value" size="small" />
@@ -25,7 +27,8 @@
       </el-table-column>
       <el-table-column
         prop="description"
-        label="描述">
+        label="描述"
+      >
         <template slot-scope="scope">
           <el-input v-model="scope.row.description" size="small" />
         </template>
@@ -64,4 +67,4 @@ export default {
 .gen-param-container {
   padding: 0;
 }
-</style> 
+</style>

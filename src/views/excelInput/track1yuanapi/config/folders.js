@@ -21,7 +21,7 @@ export const folderConfig = {
     ],
     defaultSheet: '总体参数(Gen. Param.)'
   },
-  
+
   // Running_profile文件夹配置
   'Running_profile': {
     id: 'Running_profile',
@@ -33,16 +33,16 @@ export const folderConfig = {
     ],
     defaultSheet: 'Running list'
   }
-  
+
   // 未来可以在这里添加更多文件夹配置
-  //'New_Folder': {
-    // id: 'New_Folder',
-     //label: '新文件夹',
-    //icon: 'el-icon-folder',
-      //color: '#e6a23c',
-      //availableSheets: ['Sheet1', 'Sheet2'],
-      //defaultSheet: 'Sheet1'
-   //}
+  // 'New_Folder': {
+  // id: 'New_Folder',
+  // label: '新文件夹',
+  // icon: 'el-icon-folder',
+  // color: '#e6a23c',
+  // availableSheets: ['Sheet1', 'Sheet2'],
+  // defaultSheet: 'Sheet1'
+  // }
 }
 
 /**
@@ -79,4 +79,4 @@ export function getFolderAvailableSheets(folderId) {
 export function getFolderDefaultSheet(folderId) {
   const folder = getFolderConfig(folderId)
   return folder ? folder.defaultSheet : null
-} 
+}

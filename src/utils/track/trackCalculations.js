@@ -20,7 +20,7 @@ export function calculateJumpLength(row) {
   // 计算跳跃长度 = KP_after_jump - KP_before_jump
   const kpBefore = Number(row.KP_before_jump) || 0
   const kpAfter = Number(row.KP_after_jump) || 0
-  
+
   return kpAfter - kpBefore
 }
 
@@ -35,16 +35,16 @@ export function calculateCorrectionValues(tracks) {
 
   // 初始化第一行的修正值为0
   tracks[0].Correction_applied_to_KP = 0
-  
+
   // 从第二行开始，根据前面行的值计算修正值
   for (let i = 1; i < tracks.length; i++) {
     const prevRow = tracks[i - 1]
     const currentRow = tracks[i]
-    
+
     // 计算当前行的修正值 = 前一行修正值 + 前一行跳跃长度
     const prevCorrection = Number(prevRow.Correction_applied_to_KP) || 0
     const prevJumpLength = calculateJumpLength(prevRow)
-    
+
     currentRow.Correction_applied_to_KP = prevCorrection + prevJumpLength
   }
 }
@@ -62,7 +62,7 @@ export function calculateDistanceFromOrigin(row, direction) {
 
   // 计算距离 = KP_before_jump * direction
   const kpBefore = Number(row.KP_before_jump) || 0
-  
+
   return kpBefore * direction
 }
 
@@ -75,10 +75,10 @@ export function updateNextRowTrackId(tracks, index) {
   if (!tracks || index >= tracks.length - 1) {
     return
   }
-  
+
   const currentRow = tracks[index]
   const nextRow = tracks[index + 1]
-  
+
   // 将当前行的Track_ID_after_jump赋值给下一行的Track_ID_before_jump
   nextRow.Track_ID_before_jump = currentRow.Track_ID_after_jump
 }
@@ -108,7 +108,7 @@ export function findMatchIndexInTracks(columnName, numericValue, tracksData, dir
 
   // 查找第一个大于等于(或小于等于)目标值的项
   let matchIndex = -1
-  
+
   if (direction === 1) {
     // 升序查找: 找到第一个大于等于目标值的项
     matchIndex = sortedData.findIndex(item => {
@@ -164,4 +164,4 @@ export default {
   updateNextRowTrackId,
   findMatchIndexInTracks,
   updateTrackRowsAfterInsert
-} 
+}

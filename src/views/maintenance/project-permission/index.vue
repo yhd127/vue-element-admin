@@ -45,11 +45,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
-          <el-button 
-            type="primary" 
-            size="mini" 
-            @click="handleEditPermission(scope.row)"
+          <el-button
             v-if="scope.row.role_name === 'user'"
+            type="primary"
+            size="mini"
+            @click="handleEditPermission(scope.row)"
           >
             编辑权限
           </el-button>
@@ -57,18 +57,18 @@
       </el-table-column>
     </el-table>
 
-    <pagination 
-      v-show="total > 0" 
-      :total="total" 
-      :page.sync="listQuery.page" 
-      :limit.sync="listQuery.size" 
-      @pagination="getList" 
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.size"
+      @pagination="getList"
     />
 
     <!-- 编辑项目权限对话框 -->
-    <el-dialog 
-      title="编辑项目权限" 
-      :visible.sync="dialogVisible" 
+    <el-dialog
+      title="编辑项目权限"
+      :visible.sync="dialogVisible"
       width="700px"
       :close-on-click-modal="false"
     >
@@ -77,17 +77,17 @@
           <span>用户名: {{ currentUser.user_name }}</span>
           <span style="margin-left: 20px">姓名: {{ currentUser.user_full_name }}</span>
         </p>
-        
+
         <el-transfer
+          v-model="value"
           v-loading="transferLoading"
           filterable
           :filter-method="filterMethod"
           filter-placeholder="请输入城市拼音"
-          v-model="value"
           :titles="['所有项目', '授权项目']"
-          :data="data">
-        </el-transfer>
-        
+          :data="data"
+        />
+
         <div style="margin-top: 20px; text-align: right">
           <el-button @click="dialogVisible = false">取消</el-button>
           <el-button type="primary" @click="saveProjectPermissions">保存</el-button>
@@ -122,7 +122,7 @@ export default {
       dialogVisible: false,
       currentUser: null,
       data: [], // 穿梭框数据，将通过API获取
-      value: [],
+      value: []
     }
   },
   created() {
@@ -131,15 +131,15 @@ export default {
   },
   methods: {
     filterMethod(query, item) {
-      return item.label.indexOf(query) > -1;
+      return item.label.indexOf(query) > -1
     },
-    
+
     // 获取项目列表
     fetchProjectList() {
       this.transferLoading = true
       getProjectList().then(response => {
         const projects = Array.isArray(response) ? response : (response.data || [])
-        
+
         // 格式化项目数据为穿梭框所需格式
         this.data = projects.map(project => {
           return {
@@ -148,7 +148,7 @@ export default {
             pinyin: project.project_name || project.name // 可用于搜索
           }
         })
-        
+
         this.transferLoading = false
       }).catch(error => {
         console.error('获取项目列表失败', error)
@@ -156,13 +156,13 @@ export default {
         this.transferLoading = false
       })
     },
-    
+
     // 获取用户列表
     getList() {
       this.loading = true
       getUserListV1().then(response => {
         const userData = Array.isArray(response) ? response : (response.data || [])
-        
+
         // 只显示普通用户(user角色)
         this.userList = userData
           .filter(user => user.role && user.role.role_name === 'user')
@@ -173,7 +173,7 @@ export default {
             role_name: user.role ? user.role.role_name : '',
             projects: user.projects || [] // 假设API返回了用户的项目列表
           }))
-        
+
         this.total = this.userList.length
         this.loading = false
       }).catch(error => {
@@ -182,26 +182,26 @@ export default {
         this.loading = false
       })
     },
-    
+
     // 搜索
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
     },
-    
+
     // 编辑权限
     handleEditPermission(user) {
       this.currentUser = user
       this.dialogVisible = true
-      
+
       // 获取用户当前拥有的项目权限
       this.value = user.projects ? user.projects.map(project => project.id) : []
     },
-    
+
     // 保存项目权限
     saveProjectPermissions() {
       if (!this.currentUser) return
-      
+
       // 如果有真实API，可以调用updateUserProjects
       // updateUserProjects(this.currentUser.id, this.value).then(() => {
       //   this.$message.success('项目权限更新成功')
@@ -211,7 +211,7 @@ export default {
       //   console.error('更新项目权限失败', error)
       //   this.$message.error('更新项目权限失败')
       // })
-      
+
       // 模拟API调用成功
       this.$message.success('项目权限更新成功（模拟）')
       this.dialogVisible = false
@@ -223,11 +223,11 @@ export default {
 <style lang="scss" scoped>
 .box-card {
   margin-bottom: 20px;
-  
+
   .card-content {
     padding: 10px 0;
   }
-  
+
   .description {
     font-size: 14px;
     color: #606266;
@@ -237,7 +237,7 @@ export default {
 
 .filter-container {
   margin-bottom: 20px;
-  
+
   .filter-item {
     margin-right: 10px;
   }
@@ -254,4 +254,4 @@ export default {
   justify-content: center;
   margin: 20px 0;
 }
-</style> 
+</style>

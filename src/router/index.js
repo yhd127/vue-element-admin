@@ -177,7 +177,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   userRouter,
   roleRouter,
-  projectPermissionRouter,
+  projectPermissionRouter
   // componentsRouter,
   // chartsRouter,
   // nestedRouter,

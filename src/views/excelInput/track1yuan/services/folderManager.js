@@ -57,11 +57,11 @@ export function getAllFolderFiles() {
  */
 export function getFolderTreeData() {
   const folderIds = getAllFolderIds()
-  
+
   return folderIds.map(folderId => {
     const folder = getFolderConfig(folderId)
     const files = getFolderFiles(folderId)
-    
+
     return {
       id: folderId,
       label: folder.label,
@@ -112,19 +112,19 @@ export function parseMenuId(menuId) {
       file: null
     }
   }
-  
+
   // 尝试解析文件ID (格式：folderId-fileName)
   const parts = menuId.split('-')
   if (parts.length >= 2) {
     const folderId = parts[0]
     const folder = folderConfig[folderId]
-    
+
     if (folder) {
       // 获取文件部分 (文件名可能包含连字符)
       const fileName = parts.slice(1).join('-')
       const files = getFolderFiles(folderId)
       const file = files.find(f => f.name === fileName)
-      
+
       if (file) {
         return {
           type: 'file',
@@ -135,7 +135,7 @@ export function parseMenuId(menuId) {
       }
     }
   }
-  
+
   // 无法解析的情况
   return {
     type: 'unknown',
@@ -143,4 +143,4 @@ export function parseMenuId(menuId) {
     folder: null,
     file: null
   }
-} 
+}

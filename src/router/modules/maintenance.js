@@ -19,8 +19,8 @@ const userRouter = {
       path: 'index',
       component: User,
       name: 'UserIndex',
-      meta: { 
-        title: '用户管理', 
+      meta: {
+        title: '用户管理',
         icon: 'user',
         noCache: true,
         roles: ['admin']
@@ -43,8 +43,8 @@ const roleRouter = {
       path: 'index',
       component: Role,
       name: 'RoleIndex',
-      meta: { 
-        title: '角色管理', 
+      meta: {
+        title: '角色管理',
         icon: 'peoples',
         noCache: true,
         roles: ['admin']
@@ -68,8 +68,8 @@ const projectPermissionRouter = {
       path: 'index',
       component: () => import('@/views/maintenance/project-permission/index'),
       name: 'ProjectPermissionIndex',
-      meta: { 
-        title: '项目权限管理', 
+      meta: {
+        title: '项目权限管理',
         icon: 'lock',
         noCache: true,
         roles: ['admin', 'viewer']
@@ -78,4 +78,4 @@ const projectPermissionRouter = {
   ]
 }
 
-export { userRouter, roleRouter, projectPermissionRouter } 
+export { userRouter, roleRouter, projectPermissionRouter }
