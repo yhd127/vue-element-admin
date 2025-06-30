@@ -1,0 +1,45 @@
+{
+  "departure": {
+    "timeFromDepartureToBlockClear": 82,
+    "cleanDelayTime": 3,
+    "departureRouteTime": 18
+  },
+  "blocks": [
+    {
+      "blockStartDistance": 38950.0,
+      "blockEndDistance": 40276.0,
+      "blockBottleneckPoint": 976.616,
+      "blockClearPoint": 3139.717,
+      "blockDangerPoint": 38950.0,
+      "timeFromBottleneckToBlockClear": 64.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 40276.0,
+      "blockEndDistance": 41760.0,
+      "blockBottleneckPoint": 1885.929,
+      "blockClearPoint": 4609.905,
+      "blockDangerPoint": 40276.0,
+      "timeFromBottleneckToBlockClear": 67.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 41760.0,
+      "blockEndDistance": 42949.0,
+      "blockBottleneckPoint": 2914.621,
+      "blockClearPoint": 5810.194,
+      "blockDangerPoint": 41760.0,
+      "timeFromBottleneckToBlockClear": 73.5,
+      "cleanDelayTime": 3
+    }
+  ],
+  "arriver": {
+    "blockBottleneckPoint": 4122.275,
+    "stationStopPoint": 6288678, // 数值较大，建议确认是否为输入误差
+    "stionStopTime": 40, // 按要求保留原始拼写
+    "blockClearPoint": 15,
+    "timeClearDelay": 3,
+    "arriverRouteTime": 18,
+    "timeFromBottleneckToStop": 86.5
+  }
+}

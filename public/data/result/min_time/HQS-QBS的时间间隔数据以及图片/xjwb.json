@@ -1,0 +1,36 @@
+{
+  "departure": {
+    "timeFromDepartureToBlockClear": 63.5,
+    "cleanDelayTime": 3,
+    "departureRouteTime": 18
+  },
+  "blocks": [
+    {
+      "blockStartDistance": 1403.0,
+      "blockEndDistance": 2478.0,
+      "blockBottleneckPoint": 850.833,
+      "blockClearPoint": 2592.113,
+      "blockDangerPoint": 1403.0,
+      "timeFromBottleneckToBlockClear": 55.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 2478.0,
+      "blockEndDistance": 4780.0,
+      "blockBottleneckPoint": 1323.499,
+      "blockClearPoint": 4882.331,
+      "blockDangerPoint": 2478.0,
+      "timeFromBottleneckToBlockClear": 108.0,
+      "cleanDelayTime": 3
+    }
+  ],
+  "arriver": {
+    "blockBottleneckPoint": 2365.092,
+    "stationStopPoint": 5199699,
+    "stionStopTime": 40,
+    "blockClearPoint": 15,
+    "timeClearDelay": 3,
+    "arriverRouteTime": 18,
+    "timeFromBottleneckToStop": 110.0
+  }
+}

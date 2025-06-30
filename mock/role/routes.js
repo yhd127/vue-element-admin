@@ -435,6 +435,25 @@ const asyncRoutes = [
   },
 
   {
+    path: '/excelInput',
+    component: 'layout/Layout',
+    children: [
+      {
+        path: 'index',
+        component: 'views/excelInput/index',
+        name: 'Input',
+        meta: { title: 'input', icon: 'icon', noCache: true }
+      },
+      {
+        path: 'upload',
+        component: 'views/excelInput/upload',
+        name: 'PDF',
+        meta: { title: 'PDF', icon: 'pdf' }
+      }
+    ]
+  },
+
+  {
     path: '/zip',
     component: 'layout/Layout',
     redirect: '/zip/download',

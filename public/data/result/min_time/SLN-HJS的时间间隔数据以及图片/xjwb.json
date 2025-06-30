@@ -1,0 +1,72 @@
+{
+  "departure": {
+    "timeFromDepartureToBlockClear": 80.0,
+    "cleanDelayTime": 3,
+    "departureRouteTime": 18
+  },
+  "blocks": [
+    {
+      "blockStartDistance": 26800.0,
+      "blockEndDistance": 29829.0,
+      "blockBottleneckPoint": 1202.067,
+      "blockClearPoint": 5350.974,
+      "blockDangerPoint": 26800.0,
+      "timeFromBottleneckToBlockClear": 101.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 29829.0,
+      "blockEndDistance": 31399.0,
+      "blockBottleneckPoint": 3599.781,
+      "blockClearPoint": 6924.831,
+      "blockDangerPoint": 29829.0,
+      "timeFromBottleneckToBlockClear": 75.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 31399.0,
+      "blockEndDistance": 32950.0,
+      "blockBottleneckPoint": 5217.972,
+      "blockClearPoint": 8476.521,
+      "blockDangerPoint": 31399.0,
+      "timeFromBottleneckToBlockClear": 73.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 32950.0,
+      "blockEndDistance": 34499.0,
+      "blockBottleneckPoint": 6769.662,
+      "blockClearPoint": 10006.044,
+      "blockDangerPoint": 32950.0,
+      "timeFromBottleneckToBlockClear": 73.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 34499.0,
+      "blockEndDistance": 35650.0,
+      "blockBottleneckPoint": 8321.352,
+      "blockClearPoint": 11158.539,
+      "blockDangerPoint": 34499.0,
+      "timeFromBottleneckToBlockClear": 64.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 35650.0,
+      "blockEndDistance": 36835.0,
+      "blockBottleneckPoint": 9474.036,
+      "blockClearPoint": 12344.358,
+      "blockDangerPoint": 35650.0,
+      "timeFromBottleneckToBlockClear": 91.0,
+      "cleanDelayTime": 3
+    }
+  ],
+  "arriver": {
+    "blockBottleneckPoint": 10626.72,
+    "stationStopPoint": 12803757, // 数值较大，建议确认是否为输入误差
+    "stionStopTime": 40, // 按要求保留原始拼写
+    "blockClearPoint": 15,
+    "timeClearDelay": 3,
+    "arriverRouteTime": 18,
+    "timeFromBottleneckToStop": 102.5
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "departure": {
+    "timeFromDepartureToBlockClear": 69.5,
+    "cleanDelayTime": 3,
+    "departureRouteTime": 18
+  },
+  "blocks": [
+    {
+      "blockStartDistance": 60250.0,
+      "blockEndDistance": 61736.0,
+      "blockBottleneckPoint": 856.187,
+      "blockClearPoint": 3314.118,
+      "blockDangerPoint": 60250.0,
+      "timeFromBottleneckToBlockClear": 74.0,
+      "cleanDelayTime": 3
+    }
+  ],
+  "arriver": {
+    "blockBottleneckPoint": 1882.347,
+    "stationStopPoint": 3749.761,
+    "stionStopTime": 40, // 按要求保留原始拼写
+    "blockClearPoint": 15,
+    "timeClearDelay": 3,
+    "arriverRouteTime": 18,
+    "timeFromBottleneckToStop": 81.5
+  }
+}

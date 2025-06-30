@@ -1,0 +1,131 @@
+.track-container {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 84px);
+}
+
+.track-table {
+  margin-bottom: 20px;
+}
+
+.pagination-container {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.import-export-container {
+  margin-bottom: 20px;
+}
+
+.import-section, .export-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-area {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.button-area {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.el-form-item {
+  margin-bottom: 15px;
+}
+
+.box-card {
+  margin-bottom: 20px;
+}
+
+.readonly-cell {
+  color: #909399;
+  font-style: italic;
+}
+
+.error-cell {
+  color: #f56c6c;
+}
+
+.warning-cell {
+  color: #e6a23c;
+}
+
+.success-cell {
+  color: #67c23a;
+}
+
+.info-cell {
+  color: #909399;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.table-filters {
+  margin-bottom: 15px;
+}
+
+.table-actions {
+  margin-bottom: 15px;
+}
+
+.table-actions .el-button {
+  margin-right: 10px;
+}
+
+.track-form {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.track-form-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.track-form-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.track-form-footer .el-button {
+  margin-left: 10px;
+}
+
+/* 自适应样式 */
+@media screen and (max-width: 1200px) {
+  .track-container {
+    padding: 10px;
+  }
+  
+  .track-form {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .el-form-item {
+    margin-bottom: 10px;
+  }
+  
+  .button-area {
+    text-align: center;
+  }
+  
+  .track-form-footer {
+    text-align: center;
+  }
+} 

@@ -189,3 +189,28 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+// 表格单元格样式
+.warning-cell {
+  background-color: #fef0f0 !important;
+  color: #f56c6c !important;
+}
+
+.disabled-cell {
+  background-color: #f5f7fa !important;
+  color: #909399 !important;
+}
+
+.info-cell {
+  background-color: #ecf5ff !important;
+  color: #409eff !important;
+}
+
+.prompt-cell {
+  background-color: #f4f4f5 !important;
+  color: #909399 !important;
+}
+
+.numeric-cell {
+  text-align: right !important;
+}

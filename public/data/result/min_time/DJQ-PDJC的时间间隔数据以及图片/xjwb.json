@@ -1,0 +1,117 @@
+{
+  "departure": {
+    "timeFromDepartureToBlockClear": 60.5,
+    "cleanDelayTime": 3,
+    "departureRouteTime": 18
+  },
+  "blocks": [
+    {
+      "blockStartDistance": 44910.0,
+      "blockEndDistance": 46320.0,
+      "blockBottleneckPoint": 635.191,
+      "blockClearPoint": 2894.735,
+      "blockDangerPoint": 44910.0,
+      "timeFromBottleneckToBlockClear": 65.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 46320.0,
+      "blockEndDistance": 48736.0,
+      "blockBottleneckPoint": 1581.009,
+      "blockClearPoint": 5306.64,
+      "blockDangerPoint": 46320.0,
+      "timeFromBottleneckToBlockClear": 88.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 48736.0,
+      "blockEndDistance": 49560.0,
+      "blockBottleneckPoint": 3599.781,
+      "blockClearPoint": 6126.819,
+      "blockDangerPoint": 48736.0,
+      "timeFromBottleneckToBlockClear": 57.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 49560.0,
+      "blockEndDistance": 50690.0,
+      "blockBottleneckPoint": 4442.127,
+      "blockClearPoint": 7257.336,
+      "blockDangerPoint": 49560.0,
+      "timeFromBottleneckToBlockClear": 63.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 50690.0,
+      "blockEndDistance": 51650.0,
+      "blockBottleneckPoint": 5572.644,
+      "blockClearPoint": 8232.684,
+      "blockDangerPoint": 50690.0,
+      "timeFromBottleneckToBlockClear": 60.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 51650.0,
+      "blockEndDistance": 52610.0,
+      "blockBottleneckPoint": 6525.825,
+      "blockClearPoint": 9185.865,
+      "blockDangerPoint": 51650.0,
+      "timeFromBottleneckToBlockClear": 60.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 52610.0,
+      "blockEndDistance": 53660.0,
+      "blockBottleneckPoint": 7456.839,
+      "blockClearPoint": 10227.714,
+      "blockDangerPoint": 52610.0,
+      "timeFromBottleneckToBlockClear": 62.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 53660.0,
+      "blockEndDistance": 54574.0,
+      "blockBottleneckPoint": 8543.022,
+      "blockClearPoint": 11136.561,
+      "blockDangerPoint": 53660.0,
+      "timeFromBottleneckToBlockClear": 58.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 54574.0,
+      "blockEndDistance": 55730.0,
+      "blockBottleneckPoint": 9451.869,
+      "blockClearPoint": 12311.412,
+      "blockDangerPoint": 54574.0,
+      "timeFromBottleneckToBlockClear": 64.5,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 55730.0,
+      "blockEndDistance": 56910.0,
+      "blockBottleneckPoint": 10604.553,
+      "blockClearPoint": 13486.074,
+      "blockDangerPoint": 55730.0,
+      "timeFromBottleneckToBlockClear": 65.0,
+      "cleanDelayTime": 3
+    },
+    {
+      "blockStartDistance": 56910.0,
+      "blockEndDistance": 58008.0,
+      "blockBottleneckPoint": 11757.237,
+      "blockClearPoint": 14576.782,
+      "blockDangerPoint": 56910.0,
+      "timeFromBottleneckToBlockClear": 72.5,
+      "cleanDelayTime": 3
+    }
+  ],
+  "arriver": {
+    "blockBottleneckPoint": 12887.754,
+    "stationStopPoint": 14983.729,
+    "stionStopTime": 40,
+    "blockClearPoint": 15,
+    "timeClearDelay": 3,
+    "arriverRouteTime": 18,
+    "timeFromBottleneckToStop": 84.5
+  }
+}

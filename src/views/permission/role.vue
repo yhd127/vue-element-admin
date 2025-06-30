@@ -62,7 +62,7 @@
 <script>
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
+import { getRoutes, getRoleListV1, addRole, deleteRole, updateRole } from '@/api/role'
 
 const defaultRole = {
   key: '',
@@ -103,8 +103,16 @@ export default {
       this.routes = this.generateRoutes(res.data)
     },
     async getRoles() {
-      const res = await getRoles()
-      this.rolesList = res.data
+      console.log('getRoleListV1:', getRoleListV1)
+      const res = await getRoleListV1()
+      // 适配后端返回结构
+      this.rolesList = (Array.isArray(res) ? res : (res.data || [])).map(item => ({
+        key: item.idx,
+        name: item.role_name,
+        description: item.role_description,
+        created_at: item.created_at,
+        updated_at: item.updated_at
+      }))
     },
 
     // Reshape the routes structure so that it looks the same as the sidebar

@@ -7,25 +7,65 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 15000, // request timeout - 增加到15秒
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+    console.log('发送请求:', config.url, config.method, config.data || config.params)
 
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+    // 如果请求标记了noDefaultParams，则不添加默认参数
+    if (config.noDefaultParams) {
+      console.log('跳过添加默认参数')
+      return config
     }
+
+    // 确保所有请求都携带user_id参数
+    const token = getToken();
+    let userId = null;
+    
+    // 1. 尝试从token中提取，如果是旧格式
+    if (token && token.startsWith('user_id_')) {
+      userId = token.replace('user_id_', '');
+    }
+    
+    // 2. 如果无法从token提取，尝试从store获取
+    if (!userId && store.getters.userId) {
+      userId = store.getters.userId;
+    }
+    
+    // 3. 尝试从localStorage直接获取
+    if (!userId) {
+      const storedUserId = localStorage.getItem('userId');
+      if (storedUserId) {
+        userId = storedUserId;
+      }
+    }
+    
+    // 4. 最后的默认值
+    if (!userId) {
+      userId = '7'; // 使用已知的正确用户ID作为后备
+    }
+    
+    // 为所有请求添加user_id参数
+    if (config.params) {
+      config.params.user_id = config.params.user_id || userId;
+    } else {
+      config.params = { user_id: userId };
+    }
+    
+    console.log('最终请求参数:', config.params);
+    
     return config
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    console.log('请求错误:', error) // for debug
     return Promise.reject(error)
   }
 )
@@ -43,12 +83,28 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    console.log('收到响应:', response.config.url, response.status, response.data)
     const res = response.data
 
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    // 处理登录成功响应 - 包含user_id没有code字段
+    if (res.user_id !== undefined && res.code === undefined) {
+      return res
+    }
+    
+    // 处理成功但返回数组的情况 - 通常是列表数据
+    if (Array.isArray(res)) {
+      return res;
+    }
+    
+    // 处理普通对象但没有code字段的情况
+    if (typeof res === 'object' && res !== null && res.code === undefined) {
+      return res;
+    }
+
+    // 处理有code字段的标准响应 - 接受code为0和20000的响应
+    if (res.code !== 20000 && res.code !== 0) {
       Message({
-        message: res.message || 'Error',
+        message: res.message || res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -66,7 +122,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.message || res.msg || 'Error'))
     } else {
       return res
     }

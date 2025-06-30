@@ -33,13 +33,13 @@ export default {
     return {
       tableData: [
         {
-          name: 'fruit-1',
+          name: '苹果',
           apple: 'apple-10',
           banana: 'banana-10',
           orange: 'orange-10'
         },
         {
-          name: 'fruit-2',
+          name: '香蕉',
           apple: 'apple-20',
           banana: 'banana-20',
           orange: 'orange-20'

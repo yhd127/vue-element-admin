@@ -14,6 +14,13 @@ module.exports = {
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    // 针对之前遇到的错误配置
+    'no-trailing-spaces': 'error',      // 行尾空格
+    'no-unused-vars': 'warn',           // 未使用变量
+    'eol-last': ['error', 'always'],    // 文件末尾换行
+    // 其他常用规则
+    'vue/html-indent': ['error', 2],
+    'quotes': ['error', 'single'],
     "vue/max-attributes-per-line": [2, {
       "singleline": 10,
       "multiline": {
